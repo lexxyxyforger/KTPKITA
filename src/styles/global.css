@@ -26,11 +26,29 @@
 }
 
 /* High contrast mode custom overrides (Black & Bright Yellow #FACC15) */
+.netra-kontras,
 .high-contrast,
 .filter-high-contrast {
   background-color: #000000 !important;
   color: #facc15 !important;
+  font-weight: 700 !important;
 }
+
+.netra-kontras *,
+.high-contrast *,
+.filter-high-contrast * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.tema-protanopia {
+  filter: grayscale(85%) contrast(1.25) !important;
+}
+
+.tema-tritanopia {
+  filter: sepia(0.35) hue-rotate(90deg) contrast(1.15) !important;
+}
+
 
 .high-contrast input,
 .high-contrast select,
@@ -55,4 +73,28 @@
 .filter-high-contrast button,
 .filter-high-contrast a {
   border-color: #facc15 !important;
+}
+
+/* Motorik Ramah: extra large touch targets (min 56px), generous padding & spacing */
+.tema-motorik button,
+.tema-motorik a,
+.tema-motorik input,
+.tema-motorik select,
+.tema-motorik textarea,
+.scale-target button,
+.scale-target a,
+.scale-target input,
+.scale-target select,
+.scale-target textarea {
+  min-height: 56px !important;
+  padding-top: 0.85rem !important;
+  padding-bottom: 0.85rem !important;
+}
+
+.tema-motorik button,
+.tema-motorik a.btn,
+.scale-target button,
+.scale-target a.btn {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
