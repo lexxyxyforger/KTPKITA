@@ -273,6 +273,17 @@ import MainLayout from '../layouts/MainLayout.astro';
         searchError: '',
         isSpeaking: false,
 
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const q = params.get('q');
+          if (q) {
+            this.searchQuery = q.trim();
+            this.$nextTick(() => {
+              this.doSearch();
+            });
+          }
+        },
+
         playAudioGuide() {
           if (!('speechSynthesis' in window)) return;
           if (this.isSpeaking) {
