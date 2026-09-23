@@ -1,0 +1,265 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Layanan Umum - KITA-KTP" description="Pendaftaran nomor antrean mandiri untuk perekaman KTP baru atau cetak ulang di kantor kecamatan.">
+  <div x-data="umumPage()" class="max-w-2xl mx-auto space-y-6">
+
+    <!-- Top Navigation -->
+    <div class="flex items-center justify-between">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 font-bold text-xs sm:text-sm transition-colors focus:ring-2 rounded-lg px-2 py-1"
+        :class="colorFilter === 'high-contrast' ? 'text-[#FACC15] hover:underline' : 'text-slate-600 hover:text-blue-800'"
+      >
+        <span aria-hidden="true">⬅</span>
+        <span>Kembali ke Beranda</span>
+      </a>
+
+      <button
+        type="button"
+        @click="playAudioGuide()"
+        class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black border transition-all inline-flex items-center gap-2 cursor-pointer shadow-xs focus:ring-4"
+        :class="[
+          isSpeaking
+            ? (colorFilter === 'high-contrast' ? 'bg-amber-400 text-black border-amber-300 animate-pulse' : 'bg-red-600 text-white border-red-500 animate-pulse')
+            : (colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-blue-600 text-white border-blue-700 hover:bg-blue-700')
+        ]"
+      >
+        <span aria-hidden="true">🔊</span>
+        <span x-text="isSpeaking ? 'Hentikan Suara' : 'Dengarkan Panduan'"></span>
+      </button>
+    </div>
+
+    <!-- Header Section -->
+    <section
+      aria-labelledby="umum-title"
+      class="rounded-3xl p-6 sm:p-8 border-2 transition-all space-y-4"
+      :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-300 bg-linear-to-b from-blue-50 via-sky-50/40 to-white shadow-lg'"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl shadow-sm border shrink-0"
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-100 text-blue-900 border-blue-200'"
+          aria-hidden="true"
+        >
+          🏢
+        </div>
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider border"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-300 bg-blue-100 text-blue-900'"
+          >
+            Layanan Mandiri
+          </span>
+          <h1 id="umum-title" class="text-2xl sm:text-3xl font-black tracking-tight mt-1">
+            Antrean Online Kantor Kecamatan
+          </h1>
+        </div>
+      </div>
+
+      <p class="text-sm sm:text-base font-semibold leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/90' : 'text-slate-700'">
+        Ambil nomor antrean digital sebelum datang ke kantor kecamatan untuk pembuatan KTP pemula (usia 17 tahun) atau penggantian KTP yang rusak/hilang tanpa antre panjang di lokasi.
+      </p>
+    </section>
+
+    <!-- Success Feedback Banner -->
+    <div
+      x-show="isSuccess"
+      x-transition
+      role="alert"
+      class="rounded-3xl p-6 sm:p-8 border-2 text-center space-y-4 shadow-xl"
+      :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-neutral-900 text-[#FACC15]' : 'border-blue-300 bg-blue-50 text-blue-950'"
+    >
+      <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl font-black"
+        :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'"
+        aria-hidden="true"
+      >
+        ✓
+      </div>
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black">Nomor Antrean Berhasil Diterbitkan!</h2>
+        <p class="text-sm font-bold mt-1">Silakan hadir di loket Disdukcapil kantor kecamatan pada tanggal yang telah Anda pilih.</p>
+      </div>
+
+      <div class="p-4 rounded-2xl border font-mono text-center inline-block"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-300 bg-white text-blue-950'"
+      >
+        <span class="block text-xs uppercase font-black">Nomor Registrasi / Antrean:</span>
+        <span class="block text-2xl font-black tracking-widest mt-1" x-text="savedReg"></span>
+      </div>
+
+      <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="/lacak"
+          class="w-full sm:w-auto px-6 py-3 rounded-xl font-black text-sm border transition-all text-center focus:ring-4 cursor-pointer"
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-700 text-white border-blue-700 hover:bg-blue-800'"
+        >
+          Lacak Tiket Antrean ➔
+        </a>
+        <button
+          type="button"
+          @click="isSuccess = false"
+          class="w-full sm:w-auto px-4 py-3 rounded-xl font-bold text-xs text-center hover:underline cursor-pointer"
+          :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]' : 'text-slate-600'"
+        >
+          Daftar Antrean Baru
+        </button>
+      </div>
+    </div>
+
+    <!-- Form Antrean Mandiri -->
+    <div
+      x-show="!isSuccess"
+      class="rounded-3xl p-6 sm:p-8 border-2 transition-all"
+      :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black' : 'border-slate-300 bg-white shadow-md'"
+    >
+      <form @submit.prevent="submitUmum()" class="space-y-6" novalidate>
+        <!-- Field 1: NIK (16 digit) -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label for="umum-nik" class="block text-base font-black flex items-center gap-1.5">
+              <span>🪪 NIK (16 Digit Angka)</span>
+              <span class="text-red-500 font-bold" aria-hidden="true">*</span>
+            </label>
+            <span class="text-xs font-mono font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-500'" x-text="nik.length + '/16'"></span>
+          </div>
+          <input
+            id="umum-nik"
+            type="text"
+            inputmode="numeric"
+            maxlength="16"
+            x-model="nik"
+            @input="nik = nik.replace(/\D/g, '')"
+            placeholder="Contoh: 3201012345670001"
+            required
+            class="w-full px-4 py-3.5 rounded-2xl border-2 font-mono text-base font-bold transition-colors focus:ring-4 focus:outline-none"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-[#FACC15]' : 'border-slate-300 bg-white focus:border-blue-500 focus:ring-blue-300'"
+          />
+        </div>
+
+        <!-- Field 2: Nama Lengkap -->
+        <div class="space-y-2">
+          <label for="umum-nama" class="block text-base font-black flex items-center gap-1.5">
+            <span>👤 Nama Lengkap Pemohon</span>
+            <span class="text-red-500 font-bold" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="umum-nama"
+            type="text"
+            x-model="nama"
+            placeholder="Contoh: Muhammad Rizky"
+            required
+            class="w-full px-4 py-3.5 rounded-2xl border-2 text-base font-bold transition-colors focus:ring-4 focus:outline-none"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-[#FACC15]' : 'border-slate-300 bg-white focus:border-blue-500 focus:ring-blue-300'"
+          />
+        </div>
+
+        <!-- Field 3: Tanggal Kunjungan -->
+        <div class="space-y-2">
+          <label for="umum-tanggal" class="block text-base font-black flex items-center gap-1.5">
+            <span>📅 Rencana Tanggal Kunjungan</span>
+            <span class="text-red-500 font-bold" aria-hidden="true">*</span>
+          </label>
+          <input
+            id="umum-tanggal"
+            type="date"
+            x-model="tanggal"
+            required
+            class="w-full px-4 py-3.5 rounded-2xl border-2 text-base font-bold transition-colors focus:ring-4 focus:outline-none cursor-pointer"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-[#FACC15]' : 'border-slate-300 bg-white focus:border-blue-500 focus:ring-blue-300'"
+          />
+          <p class="text-xs font-semibold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-500'">
+            Pelayanan loket buka Senin - Jumat pukul 08.00 - 15.00 WIB.
+          </p>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button
+            type="submit"
+            class="w-full py-4 px-6 rounded-2xl font-black text-lg border-2 transition-all focus:ring-4 flex items-center justify-center gap-3 cursor-pointer shadow-lg active:scale-98"
+            :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300 focus:ring-white' : 'bg-blue-700 text-white border-blue-800 hover:bg-blue-800 focus:ring-blue-300'"
+          >
+            <span>Dapatkan Nomor Antrean Sekarang</span>
+            <span aria-hidden="true">➔</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <script is:inline>
+    function umumPage() {
+      return {
+        nik: '',
+        nama: '',
+        tanggal: new Date().toISOString().split('T')[0],
+        isSuccess: false,
+        savedReg: '',
+        isSpeaking: false,
+
+        playAudioGuide() {
+          if (!('speechSynthesis' in window)) return;
+          if (this.isSpeaking) {
+            window.speechSynthesis.cancel();
+            this.isSpeaking = false;
+            return;
+          }
+
+          window.speechSynthesis.cancel();
+          const text = 'Halaman Layanan Umum. Anda dapat mengambil nomor antrean daring untuk perekaman KTP atau cetak ulang di kantor kecamatan. Masukkan 16 digit NIK, Nama Lengkap, dan pilih tanggal kunjungan Anda.';
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = 'id-ID';
+          u.rate = 0.95;
+
+          u.onstart = () => { this.isSpeaking = true; };
+          u.onend = () => { this.isSpeaking = false; };
+          u.onerror = () => { this.isSpeaking = false; };
+
+          window.speechSynthesis.speak(u);
+        },
+
+        submitUmum() {
+          if (this.nik.length !== 16 || !this.nama.trim() || !this.tanggal) {
+            alert('Mohon isi NIK dengan 16 digit angka, Nama Lengkap, dan Tanggal Kunjungan.');
+            return;
+          }
+
+          const reg = 'KITA-2026-' + Math.floor(1000 + Math.random() * 9000);
+          const record = {
+            id: reg,
+            regNumber: reg,
+            nik: this.nik,
+            nama: this.nama,
+            kategori: 'Umum',
+            kebutuhan: 'Antrean Mandiri Kantor Kecamatan',
+            alamat: 'Kantor Kecamatan / Disdukcapil Terdekat',
+            tanggal: this.tanggal,
+            createdAt: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) + ' WIB',
+            step: 1,
+            statusTitle: 'Nomor Antrean Mandiri Berhasil Terbit',
+            statusMessage: 'Silakan datang langsung ke loket Disdukcapil kantor kecamatan pada tanggal ' + this.tanggal + ' dengan membawa bukti Kartu Keluarga asli.',
+            estimasi: 'Sesuai Jadwal Kunjungan'
+          };
+
+          const KEY = 'kita_ktp_records';
+          let records = [];
+          try { records = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { records = []; }
+          records.unshift(record);
+          localStorage.setItem(KEY, JSON.stringify(records));
+
+          this.savedReg = reg;
+          this.isSuccess = true;
+
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const v = new SpeechSynthesisUtterance('Nomor antrean Anda berhasil dibuat. Nomor registrasi adalah ' + reg.replace(/-/g, ' '));
+            v.lang = 'id-ID';
+            window.speechSynthesis.speak(v);
+          }
+        }
+      };
+    }
+  </script>
+</MainLayout>

@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@layer base {
+  /* High contrast focus ring for strict accessibility standards (WCAG AAA) */
+  :focus-visible {
+    outline: 3px solid #facc15 !important;
+    outline-offset: 3px !important;
+  }
+}
+
+/* Color blindness & vision filter classes */
+.filter-monokrom {
+  filter: grayscale(100%) contrast(1.15) !important;
+}
+
+.filter-deuteranopia {
+  filter: url(#deuteranopia-filter) contrast(1.1) !important;
+}
+
+.filter-protanopia {
+  filter: url(#protanopia-filter) contrast(1.1) !important;
+}
+
+.filter-tritanopia {
+  filter: url(#tritanopia-filter) contrast(1.1) !important;
+}
+
+/* High contrast mode custom overrides (Black & Bright Yellow #FACC15) */
+.high-contrast,
+.filter-high-contrast {
+  background-color: #000000 !important;
+  color: #facc15 !important;
+}
+
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea,
+.filter-high-contrast input,
+.filter-high-contrast select,
+.filter-high-contrast textarea {
+  background-color: #000000 !important;
+  color: #facc15 !important;
+  border-color: #facc15 !important;
+}
+
+.high-contrast input::placeholder,
+.high-contrast textarea::placeholder,
+.filter-high-contrast input::placeholder,
+.filter-high-contrast textarea::placeholder {
+  color: #ca8a04 !important;
+}
+
+.high-contrast button,
+.high-contrast a,
+.filter-high-contrast button,
+.filter-high-contrast a {
+  border-color: #facc15 !important;
+}

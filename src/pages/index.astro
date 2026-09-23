@@ -1,0 +1,182 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Beranda - KITA-KTP Pelayanan Inklusif">
+  <div class="space-y-8 sm:space-y-12">
+    <!-- Header Sapaan Ramah Masyarakat -->
+    <section aria-labelledby="welcome-heading" class="text-center max-w-3xl mx-auto space-y-4 pt-4 sm:pt-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black border border-blue-200 bg-blue-50 text-blue-800"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]!' : ''"
+      >
+        <span aria-hidden="true">🇮🇩</span>
+        <span>Portal Administrasi Kependudukan Terpadu</span>
+      </div>
+
+      <h1 id="welcome-heading" class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+        Selamat Datang di Portal KITA-KTP
+      </h1>
+
+      <p class="text-base sm:text-lg font-medium leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/90' : 'text-slate-600'">
+        Layanan kepengurusan KTP elektronik yang inklusif, tangkas, dan mudah diakses. Silakan pilih pintu layanan sesuai dengan kebutuhan Anda di bawah ini:
+      </p>
+    </section>
+
+    <!-- 3 Kartu Menu Pintu Layanan Utama Berukuran Besar (Mobile-First Touch Target) -->
+    <section aria-label="Pilihan Pintu Layanan Utama" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Pintu 1: Layanan Lansia (Aksen Amber/Oranye, Ikon Besar) -->
+      <a
+        href="/lansia"
+        class="group relative rounded-3xl p-6 sm:p-8 border-2 transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 flex flex-col justify-between"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-neutral-900 focus:ring-white' : 'border-amber-300 bg-linear-to-b from-amber-50 to-orange-50/60 hover:border-amber-400 hover:shadow-xl focus:ring-amber-400'"
+      >
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl shadow-sm border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-[#FACC15] text-black' : 'border-amber-200 bg-amber-100 text-amber-900'"
+              aria-hidden="true"
+            >
+              🧓
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-amber-300 bg-amber-100 text-amber-900'"
+            >
+              Prioritas 60+
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]' : 'text-slate-900'">
+              Layanan Lansia
+            </h2>
+            <p class="text-sm font-extrabold mt-1 text-amber-900" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]!' : ''">
+              Petugas Rekam KTP Datang ke Rumah
+            </p>
+          </div>
+
+          <p class="text-xs sm:text-sm font-semibold leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-700'">
+            Khusus warga lanjut usia. Formulir sangat ringkas, cukup tuliskan nama dan alamat untuk memanggil petugas jemput bola.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t flex items-center justify-between font-black text-sm" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40 text-[#FACC15]' : 'border-amber-200 text-amber-900'">
+          <span>Buka Pintu Lansia</span>
+          <span class="text-lg transition-transform group-hover:translate-x-1" aria-hidden="true">➔</span>
+        </div>
+      </a>
+
+      <!-- Pintu 2: Layanan Disabilitas (Aksen Indigo/Ungu, Ikon Kursi Roda) -->
+      <a
+        href="/disabilitas"
+        class="group relative rounded-3xl p-6 sm:p-8 border-2 transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 flex flex-col justify-between"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-neutral-900 focus:ring-white' : 'border-purple-300 bg-linear-to-b from-purple-50 to-indigo-50/60 hover:border-purple-400 hover:shadow-xl focus:ring-purple-400'"
+      >
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl shadow-sm border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-[#FACC15] text-black' : 'border-purple-200 bg-purple-100 text-purple-900'"
+              aria-hidden="true"
+            >
+              ♿
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-purple-300 bg-purple-100 text-purple-900'"
+            >
+              Akses Penuh
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]' : 'text-slate-900'">
+              Layanan Disabilitas
+            </h2>
+            <p class="text-sm font-extrabold mt-1 text-purple-900" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]!' : ''">
+              Pendamping Khusus & Jemput Bola
+            </p>
+          </div>
+
+          <p class="text-xs sm:text-sm font-semibold leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-700'">
+            Fasilitas perekaman KTP ramah difabel netra, rungu, fisik, dan intelektual dengan pendampingan khusus ke rumah.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t flex items-center justify-between font-black text-sm" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40 text-[#FACC15]' : 'border-purple-200 text-purple-900'">
+          <span>Buka Pintu Disabilitas</span>
+          <span class="text-lg transition-transform group-hover:translate-x-1" aria-hidden="true">➔</span>
+        </div>
+      </a>
+
+      <!-- Pintu 3: Layanan Umum (Aksen Biru, Ikon Gedung Kantor Kecamatan) -->
+      <a
+        href="/umum"
+        class="group relative rounded-3xl p-6 sm:p-8 border-2 transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 flex flex-col justify-between"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-neutral-900 focus:ring-white' : 'border-blue-300 bg-linear-to-b from-blue-50 to-sky-50/60 hover:border-blue-400 hover:shadow-xl focus:ring-blue-400'"
+      >
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div
+              class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-4xl sm:text-5xl shadow-sm border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-[#FACC15] text-black' : 'border-blue-200 bg-blue-100 text-blue-900'"
+              aria-hidden="true"
+            >
+              🏢
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border"
+              :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-300 bg-blue-100 text-blue-900'"
+            >
+              Masyarakat Umum
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-black tracking-tight" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]' : 'text-slate-900'">
+              Layanan Umum
+            </h2>
+            <p class="text-sm font-extrabold mt-1 text-blue-900" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]!' : ''">
+              Antrean Online Kantor Kecamatan
+            </p>
+          </div>
+
+          <p class="text-xs sm:text-sm font-semibold leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-700'">
+            Bagi warga yang ingin membuat KTP baru atau cetak ulang KTP hilang/rusak dengan nomor antrean mandiri.
+          </p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t flex items-center justify-between font-black text-sm" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40 text-[#FACC15]' : 'border-blue-200 text-blue-900'">
+          <span>Buka Pintu Umum</span>
+          <span class="text-lg transition-transform group-hover:translate-x-1" aria-hidden="true">➔</span>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- 1 Tombol Pintas di Bawah: "Cek Status / Lacak KTP" -->
+    <section class="text-center pt-4">
+      <div
+        class="inline-block w-full max-w-xl p-5 sm:p-6 rounded-3xl border transition-all"
+        :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-300 bg-white shadow-md'"
+      >
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="text-left space-y-1">
+            <h3 class="text-lg font-black">Sudah Pernah Mendaftar?</h3>
+            <p class="text-xs font-semibold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-500'">
+              Periksa tahapan verifikasi atau jadwal kunjungan petugas Anda.
+            </p>
+          </div>
+
+          <a
+            href="/lacak"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-2xl font-black text-sm border transition-all focus:ring-4 inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+            :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800 focus:ring-slate-400'"
+          >
+            <span>🔍 Cek Status / Lacak KTP</span>
+            <span aria-hidden="true">➔</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</MainLayout>

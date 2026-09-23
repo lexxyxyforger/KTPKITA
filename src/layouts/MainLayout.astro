@@ -1,0 +1,589 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'KITA-KTP - Kependudukan Inklusif, Tangkas & Aksesibel',
+  description = 'Portal Pelayanan KTP Inklusif Ramah Disabilitas, Lansia, dan Umum.'
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="id" class="overflow-x-hidden">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{title}</title>
+</head>
+
+<body
+  x-data="globalA11y()"
+  x-init="initApp()"
+  :class="[
+    colorFilter === 'high-contrast' ? 'bg-black text-[#FACC15] filter-high-contrast high-contrast' : 'bg-slate-50 text-slate-900',
+    colorFilter === 'monokrom' ? 'filter-monokrom' : ''
+  ]"
+  :style="'font-size: ' + fontSize + 'px;'"
+  class="min-h-screen flex flex-col antialiased transition-colors duration-200 overflow-x-hidden w-full selection:bg-yellow-400 selection:text-black"
+>
+  <!-- Skip to Content Link -->
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:font-black focus:rounded-xl focus:shadow-xl focus:outline-none focus:ring-4"
+    :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black focus:ring-white' : 'bg-blue-700 text-white focus:ring-blue-300'"
+  >
+    Lewati ke Konten Utama (Tekan Enter)
+  </a>
+
+  <!-- ARIA Live Announcer -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true" x-text="srAnnouncement"></div>
+
+  <!-- STICKY CLEAN MOBILE & DESKTOP NAVBAR -->
+  <header
+    role="banner"
+    class="sticky top-0 z-40 border-b backdrop-blur-md transition-colors w-full"
+    :class="colorFilter === 'high-contrast' ? 'bg-black/95 border-[#FACC15]' : 'bg-white/95 border-slate-200 shadow-xs'"
+  >
+    <!-- Top Mini Accessibility Toolbar -->
+    <div
+      class="border-b text-[11px] sm:text-xs py-1 px-3 sm:px-6 transition-colors w-full"
+      :class="colorFilter === 'high-contrast' ? 'bg-neutral-900 border-[#FACC15]/40 text-[#FACC15]' : 'bg-slate-900 text-slate-100 border-slate-800'"
+    >
+      <div class="max-w-6xl mx-auto flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5 font-extrabold truncate">
+          <span aria-hidden="true">♿</span>
+          <span class="truncate">Portal Inklusif Disdukcapil RI</span>
+        </div>
+
+        <!-- Toolbar Quick Controls -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0" role="toolbar" aria-label="Alat Aksesibilitas">
+          <!-- Text Sizing: A- & A+ -->
+          <div class="inline-flex items-center rounded-lg p-0.5 border" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black' : 'border-slate-700 bg-slate-800'">
+            <button
+              type="button"
+              @click="decreaseFont()"
+              :disabled="fontSize <= 14"
+              class="px-2 py-0.5 font-black text-xs rounded transition-colors disabled:opacity-30 focus:ring-2 cursor-pointer"
+              :class="colorFilter === 'high-contrast' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15]' : 'hover:bg-slate-700 text-white focus:ring-white'"
+              aria-label="Perkecil Ukuran Teks (A-)"
+              title="Perkecil Teks"
+            >
+              A-
+            </button>
+            <button
+              type="button"
+              @click="increaseFont()"
+              :disabled="fontSize >= 22"
+              class="px-2 py-0.5 font-black text-xs rounded transition-colors disabled:opacity-30 focus:ring-2 cursor-pointer"
+              :class="colorFilter === 'high-contrast' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15]' : 'hover:bg-slate-700 text-white focus:ring-white'"
+              aria-label="Perbesar Ukuran Teks (A+)"
+              title="Perbesar Teks"
+            >
+              A+
+            </button>
+          </div>
+
+          <!-- Color Blindness / High Contrast Dropdown -->
+          <div class="relative">
+            <label for="color-filter-select" class="sr-only">Filter Buta Warna</label>
+            <select
+              id="color-filter-select"
+              x-model="colorFilter"
+              @change="onFilterChange()"
+              class="text-[11px] sm:text-xs font-bold py-1 pl-2 pr-5 rounded-lg border appearance-none cursor-pointer focus:ring-2 focus:outline-none"
+              :class="colorFilter === 'high-contrast' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-slate-800 text-slate-100 border-slate-700'"
+            >
+              <option value="normal">Normal</option>
+              <option value="high-contrast">Kontras Tinggi (Kuning-Hitam)</option>
+              <option value="monokrom">Monokrom</option>
+            </select>
+            <span class="pointer-events-none absolute right-1.5 top-1.5 text-[8px]" aria-hidden="true">▼</span>
+          </div>
+
+          <!-- Mute/Audio Bip Button -->
+          <button
+            type="button"
+            @click="toggleMute()"
+            class="px-2 py-1 rounded-lg border text-xs font-bold transition-colors focus:ring-2 cursor-pointer"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-700 bg-slate-800 text-slate-200'"
+            :aria-label="isMuted ? 'Nyalakan audio klik' : 'Matikan audio klik'"
+            :title="isMuted ? 'Audio Bip: Mati' : 'Audio Bip: Nyala'"
+          >
+            <span x-text="isMuted ? '🔇' : '🔔'"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Clean Navbar Row -->
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-3 w-full">
+      <!-- Left: Logo & Brand Link (with Click Sound) -->
+      <a
+        href="/"
+        @click="playClick()"
+        class="flex items-center gap-2 focus:outline-none focus:ring-2 rounded-xl p-1 shrink-0"
+        :class="colorFilter === 'high-contrast' ? 'text-[#FACC15] focus:ring-[#FACC15]' : 'text-slate-900 focus:ring-blue-500'"
+        aria-label="KITA-KTP Beranda"
+      >
+        <span
+          class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-black text-lg sm:text-xl shadow-xs border"
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-600 text-white border-blue-500'"
+        >
+          K
+        </span>
+        <div class="text-left">
+          <span class="block text-base sm:text-lg font-black tracking-tight leading-none">KITA-KTP</span>
+          <span class="block text-[10px] font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-500'">
+            Pelayanan Inklusif
+          </span>
+        </div>
+      </a>
+
+      <!-- Right: Desktop Navigation Links (Hidden on small mobile screens to prevent crowding) -->
+      <nav aria-label="Navigasi Desktop" class="hidden md:flex items-center gap-2">
+        <a
+          href="/lansia"
+          @click="playClick()"
+          class={`px-3 py-1.5 rounded-xl text-sm font-bold border transition-colors ${
+            currentPath.startsWith('/lansia')
+              ? 'bg-amber-100 text-amber-900 border-amber-300 ring-2 ring-amber-400'
+              : 'border-transparent text-slate-700 hover:bg-slate-100'
+          }`}
+          :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/lansia') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+        >
+          🧓 Lansia
+        </a>
+        <a
+          href="/disabilitas"
+          @click="playClick()"
+          class={`px-3 py-1.5 rounded-xl text-sm font-bold border transition-colors ${
+            currentPath.startsWith('/disabilitas')
+              ? 'bg-purple-100 text-purple-900 border-purple-300 ring-2 ring-purple-400'
+              : 'border-transparent text-slate-700 hover:bg-slate-100'
+          }`}
+          :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/disabilitas') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+        >
+          ♿ Disabilitas
+        </a>
+        <a
+          href="/umum"
+          @click="playClick()"
+          class={`px-3 py-1.5 rounded-xl text-sm font-bold border transition-colors ${
+            currentPath.startsWith('/umum')
+              ? 'bg-blue-100 text-blue-900 border-blue-300 ring-2 ring-blue-400'
+              : 'border-transparent text-slate-700 hover:bg-slate-100'
+          }`}
+          :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/umum') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+        >
+          🏢 Umum
+        </a>
+        <a
+          href="/lacak"
+          @click="playClick()"
+          class={`px-3.5 py-1.5 rounded-xl text-sm font-black border transition-all ${
+            currentPath.startsWith('/lacak')
+              ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-400'
+              : 'bg-slate-100 text-slate-900 border-slate-300 hover:bg-slate-200'
+          }`}
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''"
+        >
+          🔍 Lacak
+        </a>
+      </nav>
+
+      <!-- Right: Mobile Hamburger Button (☰) with Web Audio Trigger -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button
+          type="button"
+          @click="toggleDrawer()"
+          class="p-2 sm:p-2.5 rounded-xl border-2 text-base font-black transition-all focus:outline-none focus:ring-4 inline-flex items-center justify-center cursor-pointer shadow-xs"
+          :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-[#FACC15] hover:text-black focus:ring-white' : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-100 focus:ring-blue-300'"
+          aria-label="Buka Menu Navigasi"
+          :aria-expanded="isDrawerOpen.toString()"
+        >
+          <span aria-hidden="true" class="text-xl leading-none">☰</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER / SIDE SHEET (Accessible Overlay & Sound Feedback) -->
+  <div
+    x-show="isDrawerOpen"
+    x-transition:enter="transition-opacity ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs md:hidden"
+    @keydown.escape.window="closeDrawer()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu Navigasi Mobile"
+  >
+    <!-- Drawer Panel -->
+    <div
+      x-show="isDrawerOpen"
+      x-transition:enter="transition transform ease-out duration-200"
+      x-transition:enter-start="translate-x-full"
+      x-transition:enter-end="translate-x-0"
+      x-transition:leave="transition transform ease-in duration-150"
+      x-transition:leave-start="translate-x-0"
+      x-transition:leave-end="translate-x-full"
+      @click.outside="closeDrawer()"
+      class="fixed inset-y-0 right-0 w-full max-w-xs border-l-2 p-5 flex flex-col justify-between shadow-2xl overflow-y-auto"
+      :class="colorFilter === 'high-contrast' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
+    >
+      <!-- Drawer Top Bar -->
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-3 border-b" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm" :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">K</span>
+            <span class="font-black text-base">Menu Portal</span>
+          </div>
+
+          <!-- Close Button -->
+          <button
+            type="button"
+            @click="closeDrawer()"
+            class="p-2 rounded-xl border text-sm font-black focus:outline-none focus:ring-4 cursor-pointer"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] text-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-200 text-slate-700 hover:bg-slate-100 focus:ring-blue-300'"
+            aria-label="Tutup Menu Navigasi"
+          >
+            ✕
+          </button>
+        </div>
+
+        <!-- Drawer Links (Large Touch Targets min 48px height) -->
+        <nav aria-label="Menu Mobile Lengkap" class="space-y-2">
+          <a
+            href="/"
+            @click="closeDrawer(); playClick();"
+            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
+              currentPath === '/'
+                ? 'bg-blue-50 text-blue-900 border-blue-300 ring-2 ring-blue-400'
+                : 'border-transparent hover:bg-slate-100 text-slate-800'
+            }`}
+            :class="colorFilter === 'high-contrast' ? (currentPath === '/' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            <span class="text-xl">🏠</span>
+            <span>Beranda Utama</span>
+          </a>
+
+          <a
+            href="/lansia"
+            @click="closeDrawer(); playClick();"
+            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
+              currentPath.startsWith('/lansia')
+                ? 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400'
+                : 'border-transparent hover:bg-slate-100 text-slate-800'
+            }`}
+            :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/lansia') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            <span class="text-xl">🧓</span>
+            <span>Layanan Lansia</span>
+          </a>
+
+          <a
+            href="/disabilitas"
+            @click="closeDrawer(); playClick();"
+            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
+              currentPath.startsWith('/disabilitas')
+                ? 'bg-purple-100 text-purple-950 border-purple-300 ring-2 ring-purple-400'
+                : 'border-transparent hover:bg-slate-100 text-slate-800'
+            }`}
+            :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/disabilitas') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            <span class="text-xl">♿</span>
+            <span>Layanan Disabilitas</span>
+          </a>
+
+          <a
+            href="/umum"
+            @click="closeDrawer(); playClick();"
+            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
+              currentPath.startsWith('/umum')
+                ? 'bg-blue-100 text-blue-950 border-blue-300 ring-2 ring-blue-400'
+                : 'border-transparent hover:bg-slate-100 text-slate-800'
+            }`}
+            :class="colorFilter === 'high-contrast' ? (currentPath.startsWith('/umum') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            <span class="text-xl">🏢</span>
+            <span>Layanan Umum</span>
+          </a>
+
+          <a
+            href="/lacak"
+            @click="closeDrawer(); playClick();"
+            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-extrabold border transition-colors ${
+              currentPath.startsWith('/lacak')
+                ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-400'
+                : 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-900'
+            }`}
+            :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''"
+          >
+            <span class="text-xl">🔍</span>
+            <span>Lacak Status KTP</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Drawer Bottom Info -->
+      <div class="pt-6 border-t text-xs font-semibold" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40 text-[#FACC15]/80' : 'border-slate-200 text-slate-500'">
+        <p>Disdukcapil RI Inklusif</p>
+        <p class="text-[11px] mt-0.5">Layanan KTP Setara untuk Setiap Warga.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT SLOT -->
+  <main id="main-content" class="flex-1 max-w-6xl w-full mx-auto px-3 sm:px-6 py-5 sm:py-8">
+    <slot />
+  </main>
+
+  <!-- FOOTER -->
+  <footer
+    role="contentinfo"
+    class="border-t py-6 px-3 sm:px-6 transition-colors mt-auto text-xs w-full"
+    :class="colorFilter === 'high-contrast' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-slate-900 text-slate-300 border-slate-800'"
+  >
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div>
+        <p class="font-extrabold text-sm">KITA-KTP: Layanan Kependudukan Inklusif</p>
+        <p class="mt-0.5 text-slate-400 text-xs" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : ''">
+          Hak identitas kependudukan yang setara dan mudah diakses untuk seluruh warga negara.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 font-semibold text-xs">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>Aksesibilitas WCAG 2.1 AAA</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GLOBAL A11Y & WEB AUDIO API SCRIPT -->
+  <script is:inline>
+    function globalA11yData() {
+      return {
+        fontSize: 16,
+        colorFilter: 'normal',
+        isMuted: false,
+        srAnnouncement: '',
+        isDrawerOpen: false,
+
+        initApp() {
+          const savedFilter = localStorage.getItem('kita_color_filter');
+          if (savedFilter) this.colorFilter = savedFilter;
+
+          const savedFont = localStorage.getItem('kita_font_size');
+          if (savedFont) {
+            const p = parseInt(savedFont, 10);
+            if (!isNaN(p) && p >= 14 && p <= 24) this.fontSize = p;
+          }
+
+          const savedMute = localStorage.getItem('kita_is_muted');
+          if (savedMute !== null) this.isMuted = savedMute === 'true';
+
+          this.seedInitialSubmissions();
+        },
+
+        // Web Audio API: Soft bip synthesizer sound
+        playClick() {
+          if (this.isMuted) return;
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(340, ctx.currentTime + 0.05);
+
+            gain.gain.setValueAtTime(0.09, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.05);
+          } catch (e) {}
+        },
+
+        // Web Audio API: Drawer Open Tone (650Hz)
+        playDrawerOpen() {
+          if (this.isMuted) return;
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(650, ctx.currentTime);
+
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.12);
+          } catch (e) {}
+        },
+
+        // Web Audio API: Drawer Close Tone (400Hz)
+        playDrawerClose() {
+          if (this.isMuted) return;
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, ctx.currentTime);
+
+            gain.gain.setValueAtTime(0.12, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 0.12);
+          } catch (e) {}
+        },
+
+        openDrawer() {
+          this.isDrawerOpen = true;
+          this.playDrawerOpen();
+          this.announce('Menu navigasi dibuka.');
+        },
+
+        closeDrawer() {
+          this.isDrawerOpen = false;
+          this.playDrawerClose();
+          this.announce('Menu navigasi ditutup.');
+        },
+
+        toggleDrawer() {
+          if (this.isDrawerOpen) {
+            this.closeDrawer();
+          } else {
+            this.openDrawer();
+          }
+        },
+
+        toggleMute() {
+          this.isMuted = !this.isMuted;
+          localStorage.setItem('kita_is_muted', this.isMuted.toString());
+          this.announce(this.isMuted ? 'Suara efek klik dinonaktifkan.' : 'Suara efek klik diaktifkan.');
+        },
+
+        increaseFont() {
+          this.playClick();
+          if (this.fontSize < 22) {
+            this.fontSize += 2;
+            localStorage.setItem('kita_font_size', this.fontSize);
+            this.announce('Ukuran teks diperbesar: ' + this.fontSize + ' pixel.');
+          }
+        },
+
+        decreaseFont() {
+          this.playClick();
+          if (this.fontSize > 14) {
+            this.fontSize -= 2;
+            localStorage.setItem('kita_font_size', this.fontSize);
+            this.announce('Ukuran teks diperkecil: ' + this.fontSize + ' pixel.');
+          }
+        },
+
+        onFilterChange() {
+          this.playClick();
+          localStorage.setItem('kita_color_filter', this.colorFilter);
+          this.announce('Mode tampilan warna ' + this.colorFilter + ' aktif.');
+        },
+
+        announce(msg) {
+          this.srAnnouncement = msg;
+          setTimeout(() => { this.srAnnouncement = ''; }, 3000);
+        },
+
+        seedInitialSubmissions() {
+          const KEY = 'kita_ktp_records';
+          if (!localStorage.getItem(KEY)) {
+            const initial = [
+              {
+                id: 'KITA-2026-8812',
+                regNumber: 'KITA-2026-8812',
+                nik: '3201015566770001',
+                nama: 'Opa Hendra Wijaya',
+                kategori: 'Lansia',
+                kebutuhan: 'Prioritas Lansia Usia 78 Tahun (Tirah Baring)',
+                alamat: 'Jl. Cemara No. 24, RT 03 / RW 07',
+                tanggal: '23 September 2026',
+                step: 3,
+                statusTitle: 'KTP Selesai Dicetak - Siap Diantar',
+                statusMessage: 'KTP fisik telah terbit dan telah diserahkan kepada kurir dinas untuk diantar ke alamat rumah.',
+                estimasi: 'Selesai (Diantar Hari Ini)'
+              },
+              {
+                id: 'KITA-2026-5419',
+                regNumber: 'KITA-2026-5419',
+                nik: '3201016677880002',
+                nama: 'Dewi Lestari',
+                kategori: 'Disabilitas',
+                kebutuhan: 'Disabilitas Sensorik Netra (Perlu Pendamping)',
+                alamat: 'Perum Gading Mas Blok B4',
+                tanggal: '24 September 2026',
+                step: 2,
+                statusTitle: 'Jadwal Petugas Rekam KTP Mobile Disetujui',
+                statusMessage: 'Tim unit jemput bola telah menjadwalkan kunjungan perekaman biometrik ke rumah Anda.',
+                estimasi: '1 Hari Kerja'
+              },
+              {
+                id: 'KITA-2026-3104',
+                regNumber: 'KITA-2026-3104',
+                nik: '3201017788990003',
+                nama: 'Bagus Pratama',
+                kategori: 'Umum',
+                kebutuhan: 'Antrean Mandiri Kantor Kecamatan',
+                alamat: 'Jl. Merdeka Barat No. 12',
+                tanggal: '25 September 2026',
+                step: 1,
+                statusTitle: 'Verifikasi Berkas Sedang Berjalan',
+                statusMessage: 'Nomor antrean telah tercatat di sistem antrean kantor kecamatan. Silakan datang sesuai jadwal.',
+                estimasi: 'Sesuai Tanggal Kunjungan'
+              }
+            ];
+            localStorage.setItem(KEY, JSON.stringify(initial));
+          }
+        }
+      };
+    }
+
+    window.globalA11y = globalA11yData;
+    document.addEventListener('alpine:init', () => {
+      if (window.Alpine) {
+        window.Alpine.data('globalA11y', globalA11yData);
+      }
+    });
+  </script>
+</body>
+</html>

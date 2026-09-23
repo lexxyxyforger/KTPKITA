@@ -1,0 +1,340 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Lacak Status KTP - KITA-KTP" description="Cek tahapan verifikasi dan status pencetakan e-KTP Anda menggunakan NIK atau Nomor Registrasi.">
+  <div x-data="lacakPage()" class="max-w-3xl mx-auto space-y-6">
+
+    <!-- Top Navigation -->
+    <div class="flex items-center justify-between">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 font-bold text-xs sm:text-sm transition-colors focus:ring-2 rounded-lg px-2 py-1"
+        :class="colorFilter === 'high-contrast' ? 'text-[#FACC15] hover:underline' : 'text-slate-600 hover:text-slate-900'"
+      >
+        <span aria-hidden="true">⬅</span>
+        <span>Kembali ke Beranda</span>
+      </a>
+
+      <button
+        type="button"
+        @click="playAudioGuide()"
+        class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black border transition-all inline-flex items-center gap-2 cursor-pointer shadow-xs focus:ring-4"
+        :class="[
+          isSpeaking
+            ? (colorFilter === 'high-contrast' ? 'bg-amber-400 text-black border-amber-300 animate-pulse' : 'bg-red-600 text-white border-red-500 animate-pulse')
+            : (colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-800 text-white border-slate-900 hover:bg-slate-700')
+        ]"
+      >
+        <span aria-hidden="true">🔊</span>
+        <span x-text="isSpeaking ? 'Hentikan Suara' : 'Panduan Pelacakan'"></span>
+      </button>
+    </div>
+
+    <!-- Tracking Header Card -->
+    <section
+      aria-labelledby="lacak-heading"
+      class="rounded-3xl p-6 sm:p-8 border-2 transition-all space-y-4"
+      :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-300 bg-white shadow-lg'"
+    >
+      <div class="flex items-center gap-4">
+        <div
+          class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl shadow-sm border shrink-0"
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-slate-100 text-slate-900 border-slate-200'"
+          aria-hidden="true"
+        >
+          🔍
+        </div>
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-wider border"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-300 bg-slate-100 text-slate-800'"
+          >
+            Layanan Terpadu
+          </span>
+          <h1 id="lacak-heading" class="text-2xl sm:text-3xl font-black tracking-tight mt-1">
+            Pelacakan Status Berkas KTP
+          </h1>
+        </div>
+      </div>
+
+      <p class="text-sm sm:text-base font-semibold leading-relaxed" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/90' : 'text-slate-600'">
+        Ketikkan Nomor Registrasi (contoh: <code class="font-mono font-bold">KITA-2026-XXXX</code>) atau 16 digit NIK Anda untuk memantau status terkini.
+      </p>
+
+      <!-- Quick Demo Seeds -->
+      <div class="pt-2 flex flex-wrap items-center gap-2 text-xs">
+        <span class="font-black" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]' : 'text-slate-600'">Coba Contoh Cepat:</span>
+        <button
+          type="button"
+          @click="fillDemo('KITA-2026-8812')"
+          class="px-2.5 py-1 rounded-lg border font-mono font-bold transition-colors cursor-pointer"
+          :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800'"
+        >
+          KITA-2026-8812 (KTP Selesai)
+        </button>
+        <button
+          type="button"
+          @click="fillDemo('KITA-2026-5419')"
+          class="px-2.5 py-1 rounded-lg border font-mono font-bold transition-colors cursor-pointer"
+          :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800'"
+        >
+          KITA-2026-5419 (Jadwal Mobile)
+        </button>
+        <button
+          type="button"
+          @click="fillDemo('KITA-2026-3104')"
+          class="px-2.5 py-1 rounded-lg border font-mono font-bold transition-colors cursor-pointer"
+          :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800'"
+        >
+          KITA-2026-3104 (Verifikasi)
+        </button>
+      </div>
+
+      <!-- Search Input & Button -->
+      <div class="pt-3 flex flex-col sm:flex-row gap-3">
+        <div class="flex-1">
+          <label for="lacak-input" class="sr-only">Nomor Registrasi atau NIK</label>
+          <input
+            id="lacak-input"
+            type="text"
+            x-model="searchQuery"
+            @keyup.enter="doSearch()"
+            placeholder="Ketik NIK atau Nomor Registrasi..."
+            class="w-full px-4 py-3.5 rounded-2xl border-2 font-mono font-bold text-base transition-colors focus:ring-4 focus:outline-none"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-[#FACC15]' : 'border-slate-300 bg-white focus:border-slate-700 focus:ring-slate-300'"
+          />
+        </div>
+        <button
+          type="button"
+          @click="doSearch()"
+          class="px-8 py-3.5 rounded-2xl font-black text-base border-2 transition-all focus:ring-4 inline-flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-98"
+          :class="colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800 focus:ring-slate-400'"
+        >
+          <span>Lacak Berkas</span>
+          <span aria-hidden="true">➔</span>
+        </button>
+      </div>
+
+      <!-- Error Alert -->
+      <div
+        x-show="searchError"
+        x-transition
+        role="alert"
+        class="p-4 rounded-xl border flex items-center gap-3 text-sm font-bold"
+        :class="colorFilter === 'high-contrast' ? 'bg-neutral-900 border-2 border-red-400 text-red-300' : 'bg-red-50 border-red-200 text-red-800'"
+      >
+        <span class="text-xl" aria-hidden="true">⚠️</span>
+        <span x-text="searchError"></span>
+      </div>
+    </section>
+
+    <!-- Tracking Result Display -->
+    <section
+      x-show="result"
+      x-transition
+      aria-label="Hasil Pelacakan Berkas"
+      class="rounded-3xl p-6 sm:p-8 border-2 transition-all space-y-6"
+      :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-neutral-950 text-[#FACC15]' : 'border-slate-300 bg-slate-50 shadow-md'"
+    >
+      <!-- Header of Result -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b" :class="colorFilter === 'high-contrast' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+        <div>
+          <span class="text-xs uppercase font-black" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-500'">Data Ditemukan:</span>
+          <h2 class="text-2xl font-black mt-0.5" x-text="result?.nama"></h2>
+          <span class="inline-block mt-1 font-mono text-xs font-black px-2.5 py-0.5 rounded-full border"
+            :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-100 text-blue-900'"
+            x-text="result?.regNumber"
+          ></span>
+        </div>
+
+        <button
+          type="button"
+          @click="readResultVoice()"
+          class="px-4 py-2 rounded-xl text-xs font-black border transition-colors inline-flex items-center gap-2 cursor-pointer shadow-xs"
+          :class="colorFilter === 'high-contrast' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-300 bg-white hover:bg-slate-100 text-slate-800'"
+        >
+          <span aria-hidden="true">🔊</span>
+          <span>Dengarkan Status Ini</span>
+        </button>
+      </div>
+
+      <!-- Attributes Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs sm:text-sm">
+        <div>
+          <span class="block font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/70' : 'text-slate-500'">Kategori:</span>
+          <span class="font-black" x-text="result?.kategori"></span>
+        </div>
+        <div>
+          <span class="block font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/70' : 'text-slate-500'">Layanan:</span>
+          <span class="font-black" x-text="result?.kebutuhan"></span>
+        </div>
+        <div>
+          <span class="block font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/70' : 'text-slate-500'">Alamat / Lokasi:</span>
+          <span class="font-black truncate block" x-text="result?.alamat"></span>
+        </div>
+        <div>
+          <span class="block font-bold" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/70' : 'text-slate-500'">Tanggal Masuk:</span>
+          <span class="font-black" x-text="result?.createdAt || result?.tanggal"></span>
+        </div>
+      </div>
+
+      <!-- Stepper Progresif (WCAG Compliant) -->
+      <div class="pt-2">
+        <h3 class="text-sm font-black mb-4">Tahapan Pelayanan KTP:</h3>
+        <ol class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <!-- Step 1 -->
+          <li
+            class="p-4 rounded-2xl border-2 flex flex-col justify-between space-y-2 transition-all"
+            :class="[
+              (result?.step || 1) >= 1
+                ? (colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black ring-1 ring-[#FACC15]' : 'border-emerald-500 bg-emerald-50')
+                : (colorFilter === 'high-contrast' ? 'border-neutral-800 opacity-40' : 'border-slate-200 bg-white opacity-50')
+            ]"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black px-2 py-0.5 rounded" :class="(result?.step || 1) >= 1 ? (colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black' : 'bg-emerald-600 text-white') : 'bg-slate-200 text-slate-700'">
+                Tahap 1
+              </span>
+              <span x-show="(result?.step || 1) > 1" class="text-xs font-black text-emerald-800">✓ Selesai</span>
+              <span x-show="(result?.step || 1) === 1" class="text-xs font-black text-amber-800">● Aktif</span>
+            </div>
+            <div>
+              <p class="font-black text-sm">Verifikasi Berkas</p>
+              <p class="text-xs mt-0.5" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-600'">Pencocokan data NIK dengan server SIAK nasional.</p>
+            </div>
+          </li>
+
+          <!-- Step 2 -->
+          <li
+            class="p-4 rounded-2xl border-2 flex flex-col justify-between space-y-2 transition-all"
+            :class="[
+              (result?.step || 1) >= 2
+                ? (colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black ring-1 ring-[#FACC15]' : 'border-emerald-500 bg-emerald-50')
+                : (colorFilter === 'high-contrast' ? 'border-neutral-800 opacity-40' : 'border-slate-200 bg-white opacity-50')
+            ]"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black px-2 py-0.5 rounded" :class="(result?.step || 1) >= 2 ? (colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black' : 'bg-emerald-600 text-white') : 'bg-slate-200 text-slate-700'">
+                Tahap 2
+              </span>
+              <span x-show="(result?.step || 1) > 2" class="text-xs font-black text-emerald-800">✓ Selesai</span>
+              <span x-show="(result?.step || 1) === 2" class="text-xs font-black text-amber-800">● Aktif</span>
+            </div>
+            <div>
+              <p class="font-black text-sm">Jadwal Kunjungan / Antrean</p>
+              <p class="text-xs mt-0.5" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-600'">Pelaksanaan rekam biometrik di rumah atau loket dinas.</p>
+            </div>
+          </li>
+
+          <!-- Step 3 -->
+          <li
+            class="p-4 rounded-2xl border-2 flex flex-col justify-between space-y-2 transition-all"
+            :class="[
+              (result?.step || 1) >= 3
+                ? (colorFilter === 'high-contrast' ? 'border-[#FACC15] bg-black ring-1 ring-[#FACC15]' : 'border-emerald-500 bg-emerald-50')
+                : (colorFilter === 'high-contrast' ? 'border-neutral-800 opacity-40' : 'border-slate-200 bg-white opacity-50')
+            ]"
+          >
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black px-2 py-0.5 rounded" :class="(result?.step || 1) >= 3 ? (colorFilter === 'high-contrast' ? 'bg-[#FACC15] text-black' : 'bg-emerald-600 text-white') : 'bg-slate-200 text-slate-700'">
+                Tahap 3
+              </span>
+              <span x-show="(result?.step || 1) === 3" class="text-xs font-black text-emerald-800">✓ Selesai</span>
+            </div>
+            <div>
+              <p class="font-black text-sm">KTP Selesai Dicetak</p>
+              <p class="text-xs mt-0.5" :class="colorFilter === 'high-contrast' ? 'text-[#FACC15]/80' : 'text-slate-600'">Fisik e-KTP telah terbit dan siap diserahkan/diantar.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Current Status Alert Box -->
+      <div
+        class="p-4 rounded-2xl border flex items-start gap-3"
+        :class="colorFilter === 'high-contrast' ? 'bg-black border-[#FACC15]' : 'bg-blue-50 border-blue-200 text-blue-950'"
+      >
+        <span class="text-xl" aria-hidden="true">📌</span>
+        <div class="space-y-1">
+          <h4 class="font-black text-sm" x-text="result?.statusTitle"></h4>
+          <p class="text-xs font-medium leading-relaxed" x-text="result?.statusMessage"></p>
+          <p class="text-xs font-bold pt-1">Estimasi: <span x-text="result?.estimasi"></span></p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script is:inline>
+    function lacakPage() {
+      return {
+        searchQuery: '',
+        result: null,
+        searchError: '',
+        isSpeaking: false,
+
+        playAudioGuide() {
+          if (!('speechSynthesis' in window)) return;
+          if (this.isSpeaking) {
+            window.speechSynthesis.cancel();
+            this.isSpeaking = false;
+            return;
+          }
+
+          window.speechSynthesis.cancel();
+          const text = 'Halaman Pelacakan KTP. Masukkan Nomor Registrasi Anda yang berawalan KITA atau 16 digit NIK pada kolom pencarian, lalu tekan tombol Lacak Berkas untuk mengetahui tahapan KTP Anda.';
+          const u = new SpeechSynthesisUtterance(text);
+          u.lang = 'id-ID';
+          u.rate = 0.95;
+
+          u.onstart = () => { this.isSpeaking = true; };
+          u.onend = () => { this.isSpeaking = false; };
+          u.onerror = () => { this.isSpeaking = false; };
+
+          window.speechSynthesis.speak(u);
+        },
+
+        doSearch() {
+          const q = this.searchQuery.trim().toUpperCase();
+          if (!q) {
+            this.searchError = 'Silakan masukkan Nomor Registrasi atau NIK Anda.';
+            this.result = null;
+            return;
+          }
+
+          const KEY = 'kita_ktp_records';
+          let records = [];
+          try { records = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { records = []; }
+
+          const found = records.find(item =>
+            (item.regNumber && item.regNumber.toUpperCase() === q) ||
+            (item.nik && item.nik === q)
+          );
+
+          if (found) {
+            this.result = found;
+            this.searchError = '';
+          } else {
+            this.result = null;
+            this.searchError = 'Data permohonan dengan kata kunci "' + this.searchQuery + '" tidak ditemukan.';
+          }
+        },
+
+        fillDemo(code) {
+          this.searchQuery = code;
+          this.doSearch();
+        },
+
+        readResultVoice() {
+          if (!this.result || !('speechSynthesis' in window)) return;
+          window.speechSynthesis.cancel();
+          const r = this.result;
+          const speech = `Status KTP pemohon ${r.nama}. Nomor registrasi ${r.regNumber.replace(/-/g, ' ')}. Status saat ini: ${r.statusTitle}. ${r.statusMessage}. Estimasi waktu ${r.estimasi}.`;
+          const u = new SpeechSynthesisUtterance(speech);
+          u.lang = 'id-ID';
+          window.speechSynthesis.speak(u);
+        }
+      };
+    }
+  </script>
+</MainLayout>
