@@ -3,12 +3,12 @@ import MainLayout from '../layouts/MainLayout.astro';
 ---
 
 <MainLayout
-  title="Pelacakan Status Dokumen & Audit Log — KITA-KTP"
+  title="Pelacakan Status Berkas Dokumen — KITA-TERPADU"
   description="Lacak tahapan proses permohonan KTP-el, KK, dan berkas kependudukan secara real-time dan transparan."
 >
-  <div x-data="lacakDashboard()" x-init="initDashboard()" class="max-w-5xl mx-auto space-y-10 pb-20">
+  <div x-data="lacakUniversal()" x-init="initDashboard()" class="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-8 w-full max-w-full overflow-x-hidden">
 
-    <!-- Top Breadcrumb & Audio Guide -->
+    <!-- Top Breadcrumb & Audio Button -->
     <div class="flex items-center justify-between gap-3">
       <a
         href="/"
@@ -21,55 +21,49 @@ import MainLayout from '../layouts/MainLayout.astro';
 
       <button
         type="button"
-        @click="bacaPanduanLacak()"
-        class="px-4 py-2 rounded-xl text-xs sm:text-sm font-black border transition-all inline-flex items-center gap-2 cursor-pointer shadow-xs active:scale-95"
+        @click="bacaAudioPanduan()"
+        class="px-3.5 py-1.5 rounded-xl text-xs font-black border transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
         :class="isSpeaking
           ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-amber-400 text-slate-950 border-amber-500 animate-pulse')
           : (temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800')"
       >
         <span aria-hidden="true" x-text="isSpeaking ? '⏹️' : '🔊'"></span>
-        <span x-text="isSpeaking ? 'Hentikan Panduan' : 'Panduan Audio Pelacakan'"></span>
+        <span x-text="isSpeaking ? 'Hentikan Suara' : 'Panduan Audio'"></span>
       </button>
     </div>
 
-    <!-- 1. TRACKING SEARCH HEADER & INPUT BOX -->
+    <!-- FORM PENCARIAN NIK ATAU NOMOR TIKET -->
     <section
-      aria-labelledby="lacak-heading"
-      class="rounded-3xl p-6 sm:p-9 border-2 transition-all space-y-6 shadow-sm"
+      aria-labelledby="lacak-title"
+      class="rounded-3xl p-5 sm:p-8 border-2 transition-all space-y-5 shadow-xs"
       :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-200 bg-white'"
     >
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <div
-            class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl border shadow-xs shrink-0"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-700 border-blue-200'"
-          >
-            🔍
-          </div>
-          <div>
-            <span
-              class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border"
-              :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-50 text-blue-800'"
-            >
-              Audit Permohonan Publik
-            </span>
-            <h1 id="lacak-heading" class="text-2xl sm:text-3xl font-black tracking-tight mt-1">
-              Pelacakan Status Berkas Kependudukan
-            </h1>
-          </div>
+      <div class="flex items-center gap-3">
+        <div
+          class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shadow-xs shrink-0"
+          :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-700 border-blue-200'"
+        >
+          🔍
         </div>
-
-        <span class="text-xs font-bold text-slate-500 self-start sm:self-auto" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-          Terintegrasi Database Nasional
-        </span>
+        <div>
+          <span
+            class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-50 text-blue-800'"
+          >
+            Sistem Audit Dokumen
+          </span>
+          <h1 id="lacak-title" class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight mt-0.5">
+            Pelacakan Berkas Terpadu KITA-TERPADU
+          </h1>
+        </div>
       </div>
 
       <p class="text-xs sm:text-sm font-semibold leading-relaxed" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-600'">
-        Masukkan <strong>Nomor Registrasi</strong> (contoh: <code class="font-mono font-bold">KITA-KTP-20260923-XXXX</code>) atau <strong>NIK 16 Digit</strong> untuk memeriksa progres verifikasi, penugasan armada jemput bola, dan penerbitan dokumen.
+        Ketik <strong>Nomor Registrasi</strong> (contoh: <code class="font-mono font-bold">KT-20260923-XXXX</code>) atau <strong>NIK 16 Digit</strong> Anda:
       </p>
 
       <!-- Input Bar -->
-      <div class="flex flex-col sm:flex-row gap-3">
+      <div class="flex flex-col sm:flex-row gap-2.5">
         <div class="flex-1 relative">
           <label for="search-input" class="sr-only">Nomor Registrasi atau NIK</label>
           <input
@@ -77,15 +71,15 @@ import MainLayout from '../layouts/MainLayout.astro';
             type="text"
             x-model="searchQuery"
             @keyup.enter="cariBerkas()"
-            placeholder="Ketik Nomor Registrasi KITA-KTP-... atau 16 Digit NIK"
-            class="w-full px-4 py-3.5 rounded-2xl border-2 font-mono text-sm sm:text-base font-bold focus:outline-none focus:ring-4 transition-all"
+            placeholder="Nomor Tiket KT-... atau 16 Digit NIK"
+            class="w-full px-4 py-3 rounded-2xl border-2 font-mono text-sm sm:text-base font-bold focus:outline-none focus:ring-4 transition-all"
             :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-slate-300 bg-white focus:border-blue-600 focus:ring-blue-200'"
           />
         </div>
         <button
           type="button"
           @click="cariBerkas()"
-          class="px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base border-2 transition-all cursor-pointer shadow-sm active:scale-95 flex items-center justify-center gap-2"
+          class="px-6 py-3 rounded-2xl font-black text-sm border-2 transition-all cursor-pointer shadow-xs active:scale-95 flex items-center justify-center gap-1.5"
           :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'"
         >
           <span>Lacak Berkas</span>
@@ -93,361 +87,238 @@ import MainLayout from '../layouts/MainLayout.astro';
         </button>
       </div>
 
-      <!-- Quick Seed Chips -->
+      <!-- Quick Demo Seeds -->
       <div class="flex flex-wrap items-center gap-2 text-xs">
-        <span class="font-black text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">Contoh Cepat Demo:</span>
+        <span class="font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">Coba Cepat:</span>
         <button
           type="button"
-          @click="quickFill('8812')"
-          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer transition-colors"
+          @click="quickSelect('8812')"
+          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer"
           :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-amber-300 bg-amber-50 text-amber-950 hover:bg-amber-100'"
         >
-          ...8812 (Lansia - Terbit)
+          ...8812 (Lansia)
         </button>
         <button
           type="button"
-          @click="quickFill('5419')"
-          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer transition-colors"
+          @click="quickSelect('5419')"
+          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer"
           :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-purple-300 bg-purple-50 text-purple-950 hover:bg-purple-100'"
         >
-          ...5419 (Disabilitas - Biometrik)
+          ...5419 (Disabilitas)
         </button>
         <button
           type="button"
-          @click="quickFill('3104')"
-          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer transition-colors"
+          @click="quickSelect('3104')"
+          class="px-2.5 py-1 rounded-xl border text-[11px] font-mono font-bold cursor-pointer"
           :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-blue-300 bg-blue-50 text-blue-950 hover:bg-blue-100'"
         >
-          ...3104 (Umum - Antrean)
+          ...3104 (Umum)
         </button>
       </div>
     </section>
 
-    <!-- 2. HASIL PELACAKAN: VISUAL STEPPER 4 TAHAP & DETAIL AUDIT -->
+    <!-- CARD HASIL PENCARIAN DENGAN VISUAL STATUS BERTAHAP -->
     <template x-if="selectedRecord">
       <section
-        aria-labelledby="audit-result-heading"
-        class="rounded-3xl p-6 sm:p-9 border-2 transition-all space-y-8 shadow-sm"
+        aria-labelledby="result-title"
+        class="rounded-3xl p-5 sm:p-8 border-2 transition-all space-y-6 shadow-xs"
         :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-200 bg-white'"
       >
-        <!-- Header Info Tiket -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
           <div>
-            <span class="block text-xs font-bold text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : ''">Nomor Registrasi Dokumen:</span>
-            <h2 id="audit-result-heading" class="text-xl sm:text-2xl font-black font-mono tracking-wider text-blue-700" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="selectedRecord.regNumber"></h2>
+            <span class="block text-xs font-bold text-slate-400">Nomor Registrasi:</span>
+            <h2 id="result-title" class="text-lg sm:text-xl font-black font-mono tracking-wider text-blue-700" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="selectedRecord.regNumber"></h2>
           </div>
-
-          <div class="flex items-center gap-2">
-            <span
-              class="px-3.5 py-1.5 rounded-full text-xs font-black border"
-              :class="selectedRecord.step === 4 ? 'bg-emerald-100 text-emerald-950 border-emerald-300' : 'bg-blue-50 text-blue-900 border-blue-300'"
-            >
-              Tahap <span x-text="selectedRecord.step"></span> dari 4 Selesai
-            </span>
-          </div>
+          <span
+            class="px-3 py-1 rounded-full text-xs font-black border self-start sm:self-auto"
+            :class="selectedRecord.step === 4 ? 'bg-emerald-100 text-emerald-950 border-emerald-300' : 'bg-blue-50 text-blue-900 border-blue-300'"
+          >
+            Tahap <span x-text="selectedRecord.step"></span> dari 4
+          </span>
         </div>
 
-        <!-- VISUAL STEPPER PELACAKAN 4 TAHAP -->
-        <div class="space-y-4">
-          <h3 class="text-xs font-black uppercase tracking-wider text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : ''">
-            Tahapan Verifikasi Administrasi:
-          </h3>
+        <!-- VISUAL STATUS BERTAHAP (Diterima -> Verifikasi -> Penjadwalan -> Selesai) -->
+        <div class="space-y-3">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-400">Tahapan Pemrosesan:</span>
 
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 relative">
-            <!-- Step 1 -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+            <!-- Tahap 1: Diterima -->
             <div
-              class="p-4 rounded-2xl border-2 transition-all space-y-2 relative"
-              :class="selectedRecord.step >= 1
-                ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950 text-[#FACC15]' : 'border-blue-500 bg-blue-50/70 text-blue-950')
-                : 'border-slate-200 opacity-40'"
+              class="p-3.5 rounded-2xl border-2 space-y-1.5"
+              :class="selectedRecord.step >= 1 ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950' : 'border-blue-500 bg-blue-50/70 text-blue-950') : 'border-slate-200 opacity-40'"
             >
-              <div class="flex items-center justify-between">
-                <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm" :class="selectedRecord.step >= 1 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white') : 'bg-slate-200 text-slate-600'">
-                  1
-                </span>
-                <span class="text-xs" x-show="selectedRecord.step > 1">✓ Selesai</span>
-                <span class="text-xs font-bold text-blue-600 animate-pulse" x-show="selectedRecord.step === 1">● Aktif</span>
+              <div class="flex items-center justify-between text-xs font-black">
+                <span>1. Diterima</span>
+                <span x-show="selectedRecord.step > 1">✓</span>
               </div>
-              <h4 class="font-black text-xs">Permohonan Diterima</h4>
-              <p class="text-[11px] leading-tight text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-                Berkas terverifikasi sistem nasional
-              </p>
+              <p class="text-[11px] text-slate-500 leading-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Berkas tercatat di sistem</p>
             </div>
 
-            <!-- Step 2 -->
+            <!-- Tahap 2: Verifikasi Berkas -->
             <div
-              class="p-4 rounded-2xl border-2 transition-all space-y-2 relative"
-              :class="selectedRecord.step >= 2
-                ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950 text-[#FACC15]' : 'border-blue-500 bg-blue-50/70 text-blue-950')
-                : 'border-slate-200 opacity-40'"
+              class="p-3.5 rounded-2xl border-2 space-y-1.5"
+              :class="selectedRecord.step >= 2 ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950' : 'border-blue-500 bg-blue-50/70 text-blue-950') : 'border-slate-200 opacity-40'"
             >
-              <div class="flex items-center justify-between">
-                <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm" :class="selectedRecord.step >= 2 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white') : 'bg-slate-200 text-slate-600'">
-                  2
-                </span>
-                <span class="text-xs" x-show="selectedRecord.step > 2">✓ Selesai</span>
-                <span class="text-xs font-bold text-blue-600 animate-pulse" x-show="selectedRecord.step === 2">● Aktif</span>
+              <div class="flex items-center justify-between text-xs font-black">
+                <span>2. Verifikasi</span>
+                <span x-show="selectedRecord.step > 2">✓</span>
               </div>
-              <h4 class="font-black text-xs">Penjadwalan Petugas</h4>
-              <p class="text-[11px] leading-tight text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-                Penugasan armada / tiket antrean
-              </p>
+              <p class="text-[11px] text-slate-500 leading-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Validasi data Dukcapil</p>
             </div>
 
-            <!-- Step 3 -->
+            <!-- Tahap 3: Penjadwalan -->
             <div
-              class="p-4 rounded-2xl border-2 transition-all space-y-2 relative"
-              :class="selectedRecord.step >= 3
-                ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950 text-[#FACC15]' : 'border-blue-500 bg-blue-50/70 text-blue-950')
-                : 'border-slate-200 opacity-40'"
+              class="p-3.5 rounded-2xl border-2 space-y-1.5"
+              :class="selectedRecord.step >= 3 ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950' : 'border-blue-500 bg-blue-50/70 text-blue-950') : 'border-slate-200 opacity-40'"
             >
-              <div class="flex items-center justify-between">
-                <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm" :class="selectedRecord.step >= 3 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white') : 'bg-slate-200 text-slate-600'">
-                  3
-                </span>
-                <span class="text-xs" x-show="selectedRecord.step > 3">✓ Selesai</span>
-                <span class="text-xs font-bold text-blue-600 animate-pulse" x-show="selectedRecord.step === 3">● Aktif</span>
+              <div class="flex items-center justify-between text-xs font-black">
+                <span>3. Penjadwalan</span>
+                <span x-show="selectedRecord.step > 3">✓</span>
               </div>
-              <h4 class="font-black text-xs">Rekam Biometrik</h4>
-              <p class="text-[11px] leading-tight text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-                Validasi iris mata & sidik jari pusat
-              </p>
+              <p class="text-[11px] text-slate-500 leading-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Jemput bola / sesi loket</p>
             </div>
 
-            <!-- Step 4 -->
+            <!-- Tahap 4: Selesai -->
             <div
-              class="p-4 rounded-2xl border-2 transition-all space-y-2 relative"
-              :class="selectedRecord.step === 4
-                ? (temaDisabilitas === 'netra-kontras' ? 'border-emerald-400 bg-neutral-950 text-[#FACC15]' : 'border-emerald-500 bg-emerald-50/70 text-emerald-950')
-                : 'border-slate-200 opacity-40'"
+              class="p-3.5 rounded-2xl border-2 space-y-1.5"
+              :class="selectedRecord.step === 4 ? (temaDisabilitas === 'netra-kontras' ? 'border-emerald-400 bg-neutral-950' : 'border-emerald-500 bg-emerald-50/70 text-emerald-950') : 'border-slate-200 opacity-40'"
             >
-              <div class="flex items-center justify-between">
-                <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm" :class="selectedRecord.step === 4 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'">
-                  4
-                </span>
-                <span class="text-xs font-black text-emerald-600" x-show="selectedRecord.step === 4">✓ Selesai</span>
+              <div class="flex items-center justify-between text-xs font-black">
+                <span>4. Selesai</span>
+                <span x-show="selectedRecord.step === 4">✓</span>
               </div>
-              <h4 class="font-black text-xs">Dokumen Terbit</h4>
-              <p class="text-[11px] leading-tight text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-                KTP-el fisik diserahkan / dikirim
-              </p>
+              <p class="text-[11px] text-slate-500 leading-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Dokumen diterbitkan</p>
             </div>
           </div>
         </div>
 
-        <!-- Detail Pemohon & Status Aktual -->
-        <div class="p-5 rounded-2xl border space-y-4" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/60'">
-          <div class="flex items-start justify-between gap-3">
+        <!-- Detail Data -->
+        <div class="p-4 rounded-2xl border space-y-3" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/60'">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Status Saat Ini:</span>
-              <h4 class="text-base font-black" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'" x-text="selectedRecord.statusTitle"></h4>
-              <p class="text-xs font-medium text-slate-600 mt-0.5" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : ''" x-text="selectedRecord.statusMessage"></p>
+              <h3 class="text-sm font-black" x-text="selectedRecord.statusTitle"></h3>
+              <p class="text-xs text-slate-600 mt-0.5" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : ''" x-text="selectedRecord.statusMessage"></p>
             </div>
-            <span class="text-xs font-black px-3 py-1 rounded-full border bg-white shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-black! text-[#FACC15]! border-[#FACC15]!' : 'border-slate-200 text-slate-800'" x-text="selectedRecord.estimasi"></span>
+            <span class="text-xs font-bold font-mono self-start sm:self-auto" x-text="selectedRecord.estimasi"></span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t text-xs" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/30' : 'border-slate-200'">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2.5 border-t text-xs">
             <div>
-              <span class="block font-bold text-slate-400">Nama Pemohon:</span>
+              <span class="block font-bold text-slate-400">Pemohon:</span>
               <span class="font-black" x-text="selectedRecord.nama"></span>
             </div>
             <div>
-              <span class="block font-bold text-slate-400">NIK Terdaftar:</span>
+              <span class="block font-bold text-slate-400">NIK:</span>
               <span class="font-black font-mono" x-text="selectedRecord.nik"></span>
             </div>
             <div>
-              <span class="block font-bold text-slate-400">Kategori / Layanan:</span>
+              <span class="block font-bold text-slate-400">Layanan:</span>
               <span class="font-black" x-text="selectedRecord.layanan"></span>
             </div>
           </div>
         </div>
 
-        <!-- TOMBOL AKSI: CETAK, HUBUNGI PETUGAS, BATALKAN (CRUD) -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-          <div class="flex flex-wrap items-center gap-2.5">
-            <!-- Cetak Bukti Resi -->
-            <button
-              type="button"
-              @click="window.print()"
-              class="px-4 py-2.5 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center gap-1.5"
-              :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-neutral-900' : 'border-slate-300 text-slate-700 hover:bg-slate-100'"
-            >
-              <span>🖨️</span>
-              <span>Cetak Bukti Resi</span>
-            </button>
-
-            <!-- Hubungi Petugas Wilayah -->
-            <button
-              type="button"
-              @click="openContactModal = true"
-              class="px-4 py-2.5 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center gap-1.5"
-              :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-neutral-900' : 'border-blue-300 bg-blue-50 text-blue-900 hover:bg-blue-100'"
-            >
-              <span>📞</span>
-              <span>Hubungi Petugas Wilayah</span>
-            </button>
-          </div>
-
-          <!-- Batalkan Permohonan (CRUD Delete) -->
+        <!-- Action Buttons (Print & Delete CRUD) -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
           <button
             type="button"
-            @click="batalkanPermohonan(selectedRecord.id)"
-            class="px-4 py-2.5 rounded-xl border text-xs font-black transition-all cursor-pointer flex items-center gap-1.5"
+            @click="window.print()"
+            class="w-full sm:w-auto px-4 py-2 rounded-xl border text-xs font-black cursor-pointer flex items-center justify-center gap-1.5"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15]' : 'border-slate-300 text-slate-700 hover:bg-slate-100'"
+          >
+            <span>🖨️ Cetak Bukti Resi</span>
+          </button>
+
+          <!-- Fitur Pembatalan Pengajuan untuk Simulasi CRUD Data Demo -->
+          <button
+            type="button"
+            @click="batalkanPengajuan(selectedRecord.id)"
+            class="w-full sm:w-auto px-4 py-2 rounded-xl border text-xs font-black cursor-pointer flex items-center justify-center gap-1.5"
             :class="temaDisabilitas === 'netra-kontras' ? 'border-red-500 text-red-400 hover:bg-red-950' : 'border-rose-200 bg-rose-50 text-rose-800 hover:bg-rose-100'"
           >
-            <span>🗑️</span>
-            <span>Batalkan Permohonan Ini</span>
+            <span>🗑️ Batalkan Pengajuan Ini</span>
           </button>
         </div>
       </section>
     </template>
 
-    <!-- State Kosong / Belum Ditemukan -->
+    <!-- State Not Found -->
     <template x-if="searchPerformed && !selectedRecord">
-      <div class="p-8 rounded-3xl border-2 text-center space-y-3" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-200 bg-white'">
-        <span class="text-4xl">⚠️</span>
-        <h3 class="text-lg font-black">Nomor Registrasi atau NIK Tidak Ditemukan</h3>
-        <p class="text-xs font-semibold text-slate-500 max-w-md mx-auto" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-          Mohon pastikan format nomor registrasi benar atau cek riwayat permohonan yang tercatat pada peramban Anda di bawah ini.
+      <div class="p-6 sm:p-8 rounded-3xl border-2 text-center space-y-2" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-slate-200 bg-white'">
+        <span class="text-3xl">⚠️</span>
+        <h3 class="text-base font-black">Dokumen Tidak Ditemukan</h3>
+        <p class="text-xs text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+          Silakan periksa kembali nomor registrasi Anda atau pilih dari riwayat di bawah ini.
         </p>
       </div>
     </template>
 
-    <!-- 3. RIWAYAT SELURUH PERMOHONAN ANDA DI PERAMBAN -->
-    <section aria-labelledby="history-heading" class="space-y-4">
+    <!-- RIWAYAT PERMOHONAN DI PERAMBAN -->
+    <section aria-labelledby="history-title" class="space-y-4">
       <div class="flex items-center justify-between pb-2 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-        <div>
-          <h2 id="history-heading" class="text-lg sm:text-xl font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-            Riwayat Permohonan Terkini
-          </h2>
-          <p class="text-xs font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-            Daftar seluruh berkas yang diajukan melalui perangkat ini
-          </p>
-        </div>
-
-        <span class="text-xs font-black font-mono" x-text="recordsList.length + ' Berkas'"></span>
+        <h2 id="history-title" class="text-base sm:text-lg font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+          Riwayat Pengajuan Peramban
+        </h2>
+        <span class="text-xs font-black font-mono text-slate-500" x-text="recordsList.length + ' Berkas'"></span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         <template x-for="item in recordsList" :key="item.id">
           <div
-            @click="selectAndFocus(item)"
-            class="p-4 sm:p-5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between gap-3 shadow-2xs hover:shadow-md focus:outline-none focus:ring-4"
+            @click="selectItem(item)"
+            class="p-4 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between gap-2.5 shadow-2xs hover:shadow-sm"
             :class="selectedRecord && selectedRecord.id === item.id
-              ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-900 ring-2 ring-[#FACC15]' : 'border-blue-600 bg-blue-50/80 ring-2 ring-blue-300')
-              : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-black text-[#FACC15] hover:bg-neutral-950' : 'border-slate-200 bg-white hover:border-slate-300')"
-            tabindex="0"
+              ? (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-900 ring-2 ring-[#FACC15]' : 'border-blue-600 bg-blue-50/70 ring-2 ring-blue-300')
+              : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-black text-[#FACC15]' : 'border-slate-200 bg-white hover:border-slate-300')"
           >
-            <div class="space-y-2">
+            <div class="space-y-1">
               <div class="flex items-center justify-between gap-2">
-                <span class="font-mono text-xs font-black tracking-wider text-blue-700" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="item.regNumber"></span>
-                <span
-                  class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border"
-                  :class="item.step === 4 ? 'bg-emerald-100 text-emerald-950 border-emerald-300' : 'bg-slate-100 text-slate-800 border-slate-200'"
-                  x-text="item.step === 4 ? 'Selesai' : 'Tahap ' + item.step + '/4'"
-                ></span>
+                <span class="font-mono text-xs font-black text-blue-700" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="item.regNumber"></span>
+                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full border" x-text="'Tahap ' + item.step + '/4'"></span>
               </div>
-
-              <div>
-                <h4 class="font-black text-sm text-slate-900" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="item.nama"></h4>
-                <p class="text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''" x-text="item.layanan"></p>
-              </div>
+              <h3 class="font-black text-xs sm:text-sm" x-text="item.nama"></h3>
+              <p class="text-xs font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''" x-text="item.layanan"></p>
             </div>
 
-            <div class="pt-2 border-t flex items-center justify-between gap-2 text-xs font-bold" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/30' : 'border-slate-100'">
+            <div class="pt-2 border-t flex items-center justify-between text-xs font-bold" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/30' : 'border-slate-100'">
               <span class="text-slate-400 text-[11px]" x-text="item.tanggal"></span>
-              <span class="text-blue-600 font-black inline-flex items-center gap-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">
-                Buka Rincian ➔
-              </span>
+              <span class="text-blue-600 font-black">Lacak ➔</span>
             </div>
           </div>
         </template>
       </div>
     </section>
 
-    <!-- MODAL HUBUNGI PETUGAS WILAYAH -->
-    <div
-      x-show="openContactModal"
-      x-cloak
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 scale-95"
-      x-transition:enter-end="opacity-100 scale-100"
-      class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div
-        @click.outside="openContactModal = false"
-        class="w-full max-w-md rounded-3xl p-6 shadow-2xl border-2 space-y-4"
-        :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
-      >
-        <div class="flex items-start justify-between pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-          <div>
-            <h3 class="text-base font-black">Kontak Satuan Tugas Dukcapil</h3>
-            <p class="text-xs text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Unit Pelayanan Administrasi Wilayah</p>
-          </div>
-          <button type="button" @click="openContactModal = false" class="p-1 rounded-lg border text-xs">✕</button>
-        </div>
-
-        <div class="space-y-3 text-xs">
-          <div class="p-3 rounded-xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200 bg-slate-50'">
-            <span class="block font-bold text-slate-400">Pusat Panggilan Siaga:</span>
-            <span class="font-black text-sm text-blue-600" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">1500-537 (Bebas Pulsa)</span>
-          </div>
-
-          <div class="p-3 rounded-xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200 bg-slate-50'">
-            <span class="block font-bold text-slate-400">WhatsApp Dispatch Armada:</span>
-            <span class="font-black text-sm text-emerald-600">0811-800-KITA (Dukcapil Call)</span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          @click="openContactModal = false"
-          class="w-full py-2.5 rounded-xl font-black text-xs border cursor-pointer"
-          :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-slate-900 text-white border-slate-900'"
-        >
-          Tutup Informasi Kontak
-        </button>
-      </div>
-    </div>
-
   </div>
 
   <script is:inline>
-    function lacakDashboard() {
+    function lacakUniversal() {
       return {
         searchQuery: '',
         searchPerformed: false,
         selectedRecord: null,
         recordsList: [],
-        openContactModal: false,
         isSpeaking: false,
 
         initDashboard() {
-          this.loadRecords();
-
-          // Auto-select first record if available
+          this.muatData();
           if (this.recordsList.length > 0) {
             this.selectedRecord = this.recordsList[0];
           }
 
-          // Check URL query param ?reg=...
           const params = new URLSearchParams(window.location.search);
-          const regParam = params.get('reg') || params.get('id');
-          if (regParam) {
-            this.searchQuery = regParam;
+          const q = params.get('reg') || params.get('id');
+          if (q) {
+            this.searchQuery = q;
             this.cariBerkas();
           }
         },
 
-        loadRecords() {
+        muatData() {
           const KEY = 'semua_pengajuan_layanan';
           try {
             const raw = localStorage.getItem(KEY);
-            if (raw) {
-              this.recordsList = JSON.parse(raw);
-            }
+            if (raw) this.recordsList = JSON.parse(raw);
           } catch (e) {}
         },
 
@@ -456,21 +327,17 @@ import MainLayout from '../layouts/MainLayout.astro';
           const q = this.searchQuery.trim().toLowerCase();
           if (!q) return;
 
-          const match = this.recordsList.find(r => 
+          const match = this.recordsList.find(r =>
             (r.regNumber && r.regNumber.toLowerCase().includes(q)) ||
             (r.id && r.id.toLowerCase().includes(q)) ||
             (r.nik && r.nik.includes(q))
           );
 
-          if (match) {
-            this.selectedRecord = match;
-          } else {
-            this.selectedRecord = null;
-          }
+          this.selectedRecord = match || null;
         },
 
-        quickFill(idSnippet) {
-          const match = this.recordsList.find(r => r.regNumber && r.regNumber.includes(idSnippet));
+        quickSelect(snippet) {
+          const match = this.recordsList.find(r => r.regNumber && r.regNumber.includes(snippet));
           if (match) {
             this.searchQuery = match.regNumber;
             this.selectedRecord = match;
@@ -478,32 +345,29 @@ import MainLayout from '../layouts/MainLayout.astro';
           }
         },
 
-        selectAndFocus(item) {
+        selectItem(item) {
           this.selectedRecord = item;
           this.searchQuery = item.regNumber;
           window.scrollTo({ top: 120, behavior: 'smooth' });
         },
 
-        batalkanPermohonan(id) {
-          if (!confirm('Apakah Anda yakin ingin membatalkan permohonan ini? Tindakan ini akan menghapus data registrasi Anda.')) {
+        batalkanPengajuan(id) {
+          if (!confirm('Apakah Anda yakin ingin membatalkan pengajuan ini? Data akan dihapus dari sistem demo.')) {
             return;
           }
 
           const KEY = 'semua_pengajuan_layanan';
-          const KEY_OLD = 'kita_ktp_records';
-
           this.recordsList = this.recordsList.filter(r => r.id !== id && r.regNumber !== id);
           localStorage.setItem(KEY, JSON.stringify(this.recordsList));
-          localStorage.setItem(KEY_OLD, JSON.stringify(this.recordsList));
 
           if (this.selectedRecord && (this.selectedRecord.id === id || this.selectedRecord.regNumber === id)) {
             this.selectedRecord = this.recordsList.length > 0 ? this.recordsList[0] : null;
           }
 
-          alert('Permohonan berhasil dibatalkan dan dihapus dari sistem audit peramban.');
+          alert('Pengajuan telah berhasil dibatalkan.');
         },
 
-        bacaPanduanLacak() {
+        bacaAudioPanduan() {
           if (!('speechSynthesis' in window)) return;
 
           if (this.isSpeaking) {
@@ -513,8 +377,8 @@ import MainLayout from '../layouts/MainLayout.astro';
           }
 
           this.isSpeaking = true;
-          const text = "Panduan Pelacakan Berkas KITA-KTP. Masukkan nomor registrasi atau NIK Anda di kolom pencarian. Sistem menampilkan empat tahapan pelacakan: permohonan diterima, penjadwalan petugas, perekaman biometrik, dan penerbitan dokumen selesai.";
-          const utterance = new SpeechSynthesisUtterance(text);
+          const teks = "Halaman pelacakan status berkas KITA-TERPADU. Masukkan nomor registrasi atau NIK Anda di kolom pencarian. Status ditampilkan dalam empat tahap: diterima, verifikasi berkas, penjadwalan, dan selesai.";
+          const utterance = new SpeechSynthesisUtterance(teks);
           utterance.lang = 'id-ID';
           utterance.onend = () => { this.isSpeaking = false; };
           utterance.onerror = () => { this.isSpeaking = false; };

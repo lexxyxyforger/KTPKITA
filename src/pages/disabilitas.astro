@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<MainLayout title="Layanan Disabilitas - KITA-KTP" description="Perekaman KTP Ramah Disabilitas: Pendampingan sensorik dan layanan jemput bola gratis dengan fitur Audio First.">
+<MainLayout title="Layanan Disabilitas - KITA-TERPADU" description="Perekaman KTP Ramah Disabilitas: Pendampingan sensorik dan layanan jemput bola gratis dengan fitur Audio First.">
   <div x-data="disabilitasAudioFirstPage()" class="w-full max-w-xl mx-auto space-y-6 px-1 sm:px-2">
 
     <!-- Top Navigation Bar & Master Audio Reader -->
@@ -407,7 +407,7 @@ import MainLayout from '../layouts/MainLayout.astro';
           }
 
           window.speechSynthesis.cancel();
-          const text = 'Panduan lengkap Formulir Disabilitas KITA-KTP. Pertama, masukkan 16 digit NIK Anda. Kedua, ketik nama lengkap Anda. Ketiga, pilih ragam disabilitas apakah fisik kursi roda, sensorik netra, rungu wicara, atau intelektual. Keempat, tentukan metode apakah petugas datang ke rumah atau Anda datang ke kantor. Kelima, tuliskan alamat rumah penjemputan dan nomor WhatsApp aktif. Terakhir, tekan tombol Kirim Pendaftaran di bagian bawah.';
+          const text = 'Panduan lengkap Formulir Disabilitas KITA-TERPADU. Pertama, masukkan 16 digit NIK Anda. Kedua, ketik nama lengkap Anda. Ketiga, pilih ragam disabilitas apakah fisik kursi roda, sensorik netra, rungu wicara, atau intelektual. Keempat, tentukan metode apakah petugas datang ke rumah atau Anda datang ke kantor. Kelima, tuliskan alamat rumah penjemputan dan nomor WhatsApp aktif. Terakhir, tekan tombol Kirim Pendaftaran di bagian bawah.';
           const u = new SpeechSynthesisUtterance(text);
           u.lang = 'id-ID';
           u.rate = 0.95;

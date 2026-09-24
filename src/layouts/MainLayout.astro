@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = 'KITA-KTP — Portal Administrasi Kependudukan Inklusif Nasional',
-  description = 'Portal Pelayanan Kependudukan & KTP Inklusif Ramah Disabilitas, Lansia, dan Seluruh Warga Republik Indonesia.'
+  title = 'KITA-TERPADU — Portal Administrasi Kependudukan & Layanan Publik Inklusif',
+  description = 'Portal Pelayanan Kependudukan dan Layanan Publik Inklusif Ramah Disabilitas, Lansia, dan Seluruh Warga Republik Indonesia.'
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -18,600 +18,18 @@ const currentPath = Astro.url.pathname;
 <html lang="id" class="overflow-x-hidden scroll-smooth">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="theme-color" content="#020617" />
   <meta name="description" content={description} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <title>{title}</title>
-</head>
 
-<body
-  x-data="enterpriseA11y()"
-  x-init="initApp()"
-  :class="{
-    'bg-black text-[#FACC15] font-bold netra-kontras high-contrast shadow-none': temaDisabilitas === 'netra-kontras',
-    'tema-protanopia grayscale contrast-150': temaDisabilitas === 'protanopia',
-    'tema-tritanopia sepia hue-rotate-90': temaDisabilitas === 'tritanopia',
-    'tema-motorik scale-target': temaDisabilitas === 'motorik-ramah',
-    'bg-slate-50 text-slate-900': temaDisabilitas === 'standar'
-  }"
-  :style="'font-size: ' + fontSize + 'px;'"
-  class="min-h-screen flex flex-col antialiased transition-colors duration-200 overflow-x-hidden w-full selection:bg-amber-400 selection:text-black font-sans"
->
-  <!-- WCAG AAA Skip to Content -->
-  <a
-    href="#main-content"
-    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:font-black focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-4"
-    :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black focus:ring-white' : 'bg-blue-700 text-white focus:ring-blue-300'"
-  >
-    Lewati ke Konten Utama (Tekan Enter)
-  </a>
-
-  <!-- ARIA Live Region for Screen Readers -->
-  <div class="sr-only" aria-live="polite" aria-atomic="true" x-text="srAnnouncement"></div>
-
-  <!-- FLOATING ENTERPRISE HEADER CONTAINER -->
-  <header role="banner" class="sticky top-0 z-40 w-full shadow-xs">
-    <!-- 1. TOP ACCESSIBILITY BAR: Deep Navy (bg-slate-950/90 backdrop-blur-md border-b border-white/10) -->
-    <div
-      class="text-xs py-1.5 px-3 sm:px-6 transition-colors w-full border-b backdrop-blur-md"
-      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15]/40 text-[#FACC15]' : 'bg-slate-950/95 text-slate-100 border-white/10'"
-    >
-      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2.5">
-        <!-- Sisi Kiri: Badge Resmi Bercahaya Halus (Judul Proporsional & Truncate) -->
-        <a
-          href="/"
-          @click="bunyiKlik(800)"
-          class="flex items-center gap-2 group focus:outline-none focus:ring-2 rounded-lg px-1.5 py-0.5 transition-all w-full sm:w-auto min-w-0"
-          :class="temaDisabilitas === 'netra-kontras' ? 'focus:ring-[#FACC15] text-[#FACC15]' : 'focus:ring-amber-400 text-slate-200 hover:text-white'"
-          aria-label="Kembali ke Beranda Portal Kependudukan Nasional"
-        >
-          <span class="relative flex h-2.5 w-2.5 shrink-0">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-          </span>
-          <span class="text-sm shrink-0">🇮🇩</span>
-          <span class="font-extrabold tracking-tight text-[11px] sm:text-xs truncate">
-            <span class="sm:hidden">Portal Inklusif Disdukcapil RI</span>
-            <span class="hidden sm:inline">Portal Layanan Administrasi Kependudukan Nasional Terpadu & Inklusif</span>
-          </span>
-        </a>
-
-        <!-- Sisi Kanan: Kontrol Aksesibilitas Terpadu (Anti-Overflow & Touch Target Optimal) -->
-        <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2 sm:gap-3 shrink-0" role="toolbar" aria-label="Alat Aksesibilitas dan Preferensi">
-          <!-- a. Stepper Ukuran Huruf: A-, 100% (Reset), A+ -->
-          <div
-            class="inline-flex items-center rounded-xl p-0.5 border shadow-2xs shrink-0"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-white/15 bg-slate-900/90'"
-            role="group"
-            aria-label="Kontrol Ukuran Teks"
-          >
-            <button
-              type="button"
-              @click="decreaseFont()"
-              :disabled="fontSize <= 14"
-              class="px-2 py-1 sm:py-0.5 font-black text-xs rounded-lg transition-colors disabled:opacity-30 cursor-pointer focus:outline-none focus:ring-2"
-              :class="temaDisabilitas === 'netra-kontras' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15] text-[#FACC15]' : 'hover:bg-slate-800 text-slate-200 hover:text-white focus:ring-white'"
-              aria-label="Perkecil Ukuran Teks (A-)"
-              title="Perkecil Huruf (A-)"
-            >
-              A-
-            </button>
-            <button
-              type="button"
-              @click="resetFont()"
-              class="px-2 py-1 sm:py-0.5 font-bold text-[10px] rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2"
-              :class="fontSize === 16 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-slate-800 text-white font-extrabold') : (temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-400 hover:text-slate-200')"
-              aria-label="Reset Ukuran Teks ke Standar (100%)"
-              title="Reset ke Ukuran Standar (100%)"
-            >
-              <span x-text="Math.round((fontSize / 16) * 100) + '%'">100%</span>
-            </button>
-            <button
-              type="button"
-              @click="increaseFont()"
-              :disabled="fontSize >= 24"
-              class="px-2 py-1 sm:py-0.5 font-black text-xs rounded-lg transition-colors disabled:opacity-30 cursor-pointer focus:outline-none focus:ring-2"
-              :class="temaDisabilitas === 'netra-kontras' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15] text-[#FACC15]' : 'hover:bg-slate-800 text-slate-200 hover:text-white focus:ring-white'"
-              aria-label="Perbesar Ukuran Teks (A+)"
-              title="Perbesar Huruf (A+)"
-            >
-              A+
-            </button>
-          </div>
-
-          <!-- b. Adaptive Accessibility Theme Switcher (Select bergaya custom pill) -->
-          <div class="relative flex-1 sm:flex-none">
-            <label for="pilih-tema-disabilitas" class="sr-only">Mode Tampilan Disabilitas</label>
-            <select
-              id="pilih-tema-disabilitas"
-              x-model="temaDisabilitas"
-              @change="onTemaChange()"
-              class="w-full sm:w-auto text-[11px] sm:text-xs font-bold py-1.5 sm:py-1 pl-2.5 pr-6 sm:pr-7 rounded-xl border appearance-none cursor-pointer focus:ring-2 focus:outline-none transition-all shadow-2xs truncate"
-              :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15] focus:ring-[#FACC15]' : 'bg-slate-900/90 text-slate-100 border-white/15 focus:ring-amber-400'"
-            >
-              <option value="standar">🌟 Standar GovTech</option>
-              <option value="netra-kontras">👁️ Netra (Kontras Tinggi)</option>
-              <option value="protanopia">🔴 Protanopia / Deuteranopia</option>
-              <option value="tritanopia">🔵 Tritanopia</option>
-              <option value="motorik-ramah">🖐️ Ramah Motorik</option>
-            </select>
-            <span class="pointer-events-none absolute right-2.5 top-2.5 sm:top-2 text-[9px] opacity-70" aria-hidden="true">▼</span>
-          </div>
-
-          <!-- c. Touch Target Optimal: Tombol lonceng dikunci dengan ukuran tetap w-8 h-8 dengan indikator aktif yang mudah ditekan jari -->
-          <button
-            type="button"
-            @click="bukaPanduan()"
-            class="w-8 h-8 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black flex items-center justify-center text-sm transition-all cursor-pointer shadow-md hover:shadow-amber-400/20 focus:outline-none focus:ring-2 focus:ring-white active:scale-95 shrink-0 relative"
-            :class="!hasOpenedPanduan ? 'ring-2 ring-amber-400/50 animate-pulse' : ''"
-            aria-label="Buka Panduan Aksesibilitas dan Suara Narasi"
-            title="Panduan Aksesibilitas Portal"
-          >
-            <span aria-hidden="true">🔔</span>
-            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-slate-950" x-show="!hasOpenedPanduan"></span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 2. MAIN NAVBAR: Floating Header Bernuansa Glassmorphism Putih Bersih -->
-    <div
-      class="border-b backdrop-blur-md transition-colors w-full"
-      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white/95 border-slate-200/90 text-slate-900'"
-    >
-      <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-3 w-full">
-        <!-- Logo KITA-KTP dengan emblem Sipil Modern dan Badge -->
-        <a
-          href="/"
-          @click="bunyiKlik(800)"
-          class="flex items-center gap-3 focus:outline-none focus:ring-2 rounded-2xl p-1 shrink-0 group"
-          :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] focus:ring-[#FACC15]' : 'text-slate-900 focus:ring-blue-600'"
-          aria-label="KITA-KTP Beranda Utama"
-        >
-          <!-- Emblem Logo Modern -->
-          <div
-            class="w-10 h-10 rounded-2xl flex items-center justify-center font-black text-xl shadow-sm border transition-transform group-hover:scale-105"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white border-blue-500 shadow-blue-500/20'"
-          >
-            🪪
-          </div>
-          <div class="text-left">
-            <div class="flex items-center gap-1.5">
-              <span class="block text-lg sm:text-xl font-black tracking-tight leading-none">KITA-KTP</span>
-              <span
-                class="hidden sm:inline-block text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border"
-                :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-800 border-blue-200'"
-              >
-                Disdukcapil Ramah Difabel
-              </span>
-            </div>
-            <span class="block text-[11px] font-semibold tracking-wide" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-slate-500'">
-              Kependudukan Inklusif, Tangkas & Aksesibel
-            </span>
-          </div>
-        </a>
-
-        <!-- Navigasi Cepat (Pill menu aktif bergaya modern) -->
-        <nav aria-label="Navigasi Utama Desktop" class="hidden lg:flex items-center gap-1.5">
-          <!-- Beranda -->
-          <a
-            href="/"
-            @click="bunyiKlik(800)"
-            class={`px-3.5 py-2 rounded-xl text-xs font-black transition-all ${
-              currentPath === '/'
-                ? 'bg-slate-900 text-white shadow-sm ring-2 ring-slate-400'
-                : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath === '/' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            🏠 Beranda
-          </a>
-
-          <!-- Layanan Lansia -->
-          <a
-            href="/lansia"
-            @click="bunyiKlik(800)"
-            class={`px-3.5 py-2 rounded-xl text-xs font-black border transition-all ${
-              currentPath.startsWith('/lansia')
-                ? 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400 shadow-sm'
-                : 'border-transparent text-slate-700 hover:bg-amber-50 hover:text-amber-950'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/lansia') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            🧓 Layanan Lansia
-          </a>
-
-          <!-- Layanan Disabilitas -->
-          <a
-            href="/disabilitas"
-            @click="bunyiKlik(800)"
-            class={`px-3.5 py-2 rounded-xl text-xs font-black border transition-all ${
-              currentPath.startsWith('/disabilitas')
-                ? 'bg-purple-100 text-purple-950 border-purple-300 ring-2 ring-purple-400 shadow-sm'
-                : 'border-transparent text-slate-700 hover:bg-purple-50 hover:text-purple-950'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/disabilitas') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            ♿ Layanan Disabilitas
-          </a>
-
-          <!-- Layanan Umum -->
-          <a
-            href="/umum"
-            @click="bunyiKlik(800)"
-            class={`px-3.5 py-2 rounded-xl text-xs font-black border transition-all ${
-              currentPath.startsWith('/umum')
-                ? 'bg-blue-100 text-blue-950 border-blue-300 ring-2 ring-blue-400 shadow-sm'
-                : 'border-transparent text-slate-700 hover:bg-blue-50 hover:text-blue-950'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/umum') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            🏢 Layanan Umum
-          </a>
-
-          <!-- Lacak Dokumen -->
-          <a
-            href="/lacak"
-            @click="bunyiKlik(800)"
-            class={`ml-2 px-4 py-2 rounded-xl text-xs font-black border transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 ${
-              currentPath.startsWith('/lacak')
-                ? 'bg-blue-700 text-white border-blue-700 ring-2 ring-blue-400 shadow-blue-500/20'
-                : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:shadow-md'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''"
-          >
-            <span>🔍</span>
-            <span>Lacak Dokumen</span>
-          </a>
-        </nav>
-
-        <!-- Hamburger Menu Button Mobile -->
-        <div class="flex items-center gap-2 lg:hidden">
-          <button
-            type="button"
-            @click="toggleMobileMenu()"
-            class="p-2 sm:p-2.5 rounded-2xl border text-sm font-black transition-all focus:outline-none focus:ring-4 inline-flex items-center justify-center cursor-pointer shadow-xs"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-[#FACC15] hover:text-black focus:ring-white' : 'border-slate-200 bg-white text-slate-900 hover:bg-slate-100 focus:ring-blue-300'"
-            aria-label="Buka Menu Navigasi"
-            :aria-expanded="menuMobile.toString()"
-          >
-            <span aria-hidden="true" class="text-xl leading-none">☰</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- MOBILE DRAWER (Glassmorphism & Smooth Animation) -->
-  <div
-    x-show="menuMobile"
-    x-cloak
-    x-transition:enter="transition-opacity ease-out duration-200"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-100"
-    x-transition:leave="transition-opacity ease-in duration-150"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
-    class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm lg:hidden"
-    @keydown.escape.window="closeMobileMenu()"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Menu Navigasi Mobile"
-  >
-    <div
-      x-show="menuMobile"
-      x-transition:enter="transition transform ease-out duration-250"
-      x-transition:enter-start="translate-x-full"
-      x-transition:enter-end="translate-x-0"
-      x-transition:leave="transition transform ease-in duration-200"
-      x-transition:leave-start="translate-x-0"
-      x-transition:leave-end="translate-x-full"
-      @click.outside="closeMobileMenu()"
-      class="fixed inset-y-0 right-0 w-full max-w-xs border-l-2 p-6 flex flex-col justify-between shadow-2xl overflow-y-auto"
-      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
-    >
-      <div class="space-y-6">
-        <div class="flex items-center justify-between pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-          <div class="flex items-center gap-2.5">
-            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">🪪</span>
-            <span class="font-black text-base">Menu Portal</span>
-          </div>
-
-          <button
-            type="button"
-            @click="closeMobileMenu()"
-            class="p-2 rounded-xl border text-sm font-black focus:outline-none focus:ring-4 cursor-pointer"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-200 text-slate-700 hover:bg-slate-100 focus:ring-blue-300'"
-            aria-label="Tutup Menu"
-          >
-            ✕
-          </button>
-        </div>
-
-        <nav aria-label="Menu Mobile" class="space-y-2">
-          <a
-            href="/"
-            @click="closeMobileMenu();"
-            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
-              currentPath === '/'
-                ? 'bg-blue-50 text-blue-900 border-blue-300 ring-2 ring-blue-400'
-                : 'border-transparent hover:bg-slate-100 text-slate-800'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath === '/' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            <span class="text-xl">🏠</span>
-            <span>Beranda Utama</span>
-          </a>
-
-          <a
-            href="/lansia"
-            @click="closeMobileMenu();"
-            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
-              currentPath.startsWith('/lansia')
-                ? 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400'
-                : 'border-transparent hover:bg-slate-100 text-slate-800'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/lansia') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            <span class="text-xl">🧓</span>
-            <span>Layanan Lansia</span>
-          </a>
-
-          <a
-            href="/disabilitas"
-            @click="closeMobileMenu();"
-            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
-              currentPath.startsWith('/disabilitas')
-                ? 'bg-purple-100 text-purple-950 border-purple-300 ring-2 ring-purple-400'
-                : 'border-transparent hover:bg-slate-100 text-slate-800'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/disabilitas') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            <span class="text-xl">♿</span>
-            <span>Layanan Disabilitas</span>
-          </a>
-
-          <a
-            href="/umum"
-            @click="closeMobileMenu();"
-            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-bold border transition-colors ${
-              currentPath.startsWith('/umum')
-                ? 'bg-blue-100 text-blue-950 border-blue-300 ring-2 ring-blue-400'
-                : 'border-transparent hover:bg-slate-100 text-slate-800'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? (currentPath.startsWith('/umum') ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
-          >
-            <span class="text-xl">🏢</span>
-            <span>Layanan Umum</span>
-          </a>
-
-          <a
-            href="/lacak"
-            @click="closeMobileMenu();"
-            class={`flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-extrabold border transition-colors ${
-              currentPath.startsWith('/lacak')
-                ? 'bg-blue-700 text-white border-blue-700 ring-2 ring-blue-400 shadow-xs'
-                : 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-900'
-            }`}
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''"
-          >
-            <span class="text-xl">🔍</span>
-            <span>Lacak Dokumen</span>
-          </a>
-
-          <button
-            type="button"
-            @click="closeMobileMenu(); bukaPanduan();"
-            class="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-base font-extrabold border transition-colors cursor-pointer text-left"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'bg-amber-50 text-amber-950 border-amber-300 hover:bg-amber-100'"
-          >
-            <span class="text-xl">🔔</span>
-            <span>Panduan & Suara Narasi</span>
-          </button>
-        </nav>
-      </div>
-
-      <div class="pt-6 border-t text-xs font-semibold" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 text-[#FACC15]/80' : 'border-slate-200 text-slate-500'">
-        <p class="font-bold">Disdukcapil RI Inklusif</p>
-        <p class="text-[11px] mt-0.5">Kesetaraan Hak Kependudukan Tanpa Batas Ruang & Kondisi Fisik.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL PANDUAN TERPADU (Dialog Elegan + TTS Otomatis + Keyboard Shortcut Guide) -->
-  <div
-    x-show="modalPanduan"
-    x-cloak
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0"
-    x-transition:enter-end="opacity-100"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0"
-    class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
-    @keydown.escape.window="tutupPanduan()"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modal-panduan-header"
-  >
-    <div
-      @click.outside="tutupPanduan()"
-      class="w-full max-w-lg mx-auto rounded-3xl p-5 sm:p-7 shadow-2xl border-2 max-h-[90vh] flex flex-col justify-between overflow-hidden my-auto"
-      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
-    >
-      <!-- Header Dialog -->
-      <div class="flex items-start justify-between gap-3 pb-3.5 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-xl shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black font-black' : 'bg-amber-100 text-amber-800'">
-            🔔
-          </div>
-          <div>
-            <h2 id="modal-panduan-header" class="text-base sm:text-lg font-black leading-tight">
-              Panduan Aksesibilitas Portal KITA-KTP
-            </h2>
-            <p class="text-xs font-semibold" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-slate-500'">
-              Standar WCAG 2.1 AAA & Layanan Inklusif Ramah Disabilitas
-            </p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          @click="tutupPanduan()"
-          class="p-2 rounded-xl border text-sm font-black focus:outline-none focus:ring-4 cursor-pointer shrink-0"
-          :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-[#FACC15] hover:text-black focus:ring-white' : 'border-slate-200 text-slate-700 hover:bg-slate-100 focus:ring-blue-300'"
-          aria-label="Tutup Dialog Panduan"
-        >
-          ✕
-        </button>
-      </div>
-
-      <!-- Tombol Audio Narasi (Web Speech API) -->
-      <div
-        class="mt-4 p-3.5 rounded-2xl border flex flex-col sm:flex-row items-center justify-between gap-3 transition-colors"
-        :class="temaDisabilitas === 'netra-kontras' ? 'bg-neutral-900 border-[#FACC15]' : 'bg-amber-50 border-amber-200'"
-      >
-        <div class="flex items-center gap-2.5 w-full sm:w-auto">
-          <span class="text-2xl shrink-0" :class="isPlayingSpeech ? 'animate-pulse' : ''">🔊</span>
-          <div class="text-left">
-            <span class="block text-xs font-black" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-amber-950'">
-              Pemandu Suara Otomatis (TTS Bahasa Indonesia)
-            </span>
-            <span class="block text-[11px] font-medium" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-amber-800'">
-              <span x-show="!isPlayingSpeech">Dengarkan panduan ini dibacakan secara runtut.</span>
-              <span x-show="isPlayingSpeech" class="font-bold text-emerald-600">Sedang membacakan panduan suara...</span>
-            </span>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-          <button
-            type="button"
-            x-show="!isPlayingSpeech"
-            @click="mulaiBacaPanduan()"
-            class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-black shadow-xs border transition-all cursor-pointer flex items-center justify-center gap-1.5"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-amber-500 text-slate-950 border-amber-500 hover:bg-amber-600'"
-          >
-            ▶️ Putar Panduan Suara
-          </button>
-
-          <button
-            type="button"
-            x-show="isPlayingSpeech"
-            @click="hentikanSuara()"
-            class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-black shadow-xs border transition-all cursor-pointer flex items-center justify-center gap-1.5"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-red-500 text-white border-red-500 hover:bg-red-600' : 'bg-rose-600 text-white border-rose-600 hover:bg-rose-700'"
-          >
-            ⏹️ Hentikan Suara
-          </button>
-        </div>
-      </div>
-
-      <!-- Ringkasan Hak Akses Warga & Panduan Rinci -->
-      <div
-        id="isi-panduan-dialog"
-        class="my-4 space-y-3 overflow-y-auto pr-1 text-xs font-medium leading-relaxed max-h-[46vh]"
-      >
-        <!-- 1. Stepper Ukuran Huruf -->
-        <div class="p-3.5 rounded-2xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
-          <h3 class="font-black text-xs flex items-center gap-2 mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center font-black text-[10px]" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">1</span>
-            Pengaturan Ukuran Huruf Fleksibel
-          </h3>
-          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
-            Tekan <strong>A-</strong> untuk mengecilkan, <strong>100%</strong> untuk mereset, atau <strong>A+</strong> untuk memperbesar ukuran huruf dari 14px hingga 24px agar nyaman dibaca.
-          </p>
-        </div>
-
-        <!-- 2. Adaptasi Tema Disabilitas -->
-        <div class="p-3.5 rounded-2xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
-          <h3 class="font-black text-xs flex items-center gap-2 mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center font-black text-[10px]" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">2</span>
-            Pemilih Tema Kebutuhan Khusus
-          </h3>
-          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
-            Sedia pilihan: <strong>Netra / Low Vision</strong> (hitam pekat & kuning kontras tinggi), <strong>Buta Warna Protanopia / Tritanopia</strong> (matriks warna adaptif), dan <strong>Disabilitas Motorik</strong> (target sentuh minimum 56px).
-          </p>
-        </div>
-
-        <!-- 3. Alur Jemput Bola -->
-        <div class="p-3.5 rounded-2xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
-          <h3 class="font-black text-xs flex items-center gap-2 mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center font-black text-[10px]" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">3</span>
-            Hak Akses Jemput Bola ke Rumah
-          </h3>
-          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
-            Seluruh layanan pada menu <strong>Lansia</strong> dan <strong>Disabilitas</strong> gratis dan berhak memperoleh kedatangan petugas jemput bola ke rumah untuk perekaman biometrik tanpa perlu antre di kantor dinas.
-          </p>
-        </div>
-
-        <!-- 4. Lacak Dokumen -->
-        <div class="p-3.5 rounded-2xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
-          <h3 class="font-black text-xs flex items-center gap-2 mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-            <span class="w-5 h-5 rounded-full flex items-center justify-center font-black text-[10px]" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-blue-600 text-white'">4</span>
-            Pelacakan Status Real-time
-          </h3>
-          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
-            Gunakan Nomor Registrasi resmi atau NIK Anda di menu <strong>Lacak Dokumen</strong> untuk memantau 4 tahapan verifikasi, cetak bukti tanda terima, dan jadwal kunjungan petugas.
-          </p>
-        </div>
-      </div>
-
-      <!-- Footer Dialog -->
-      <div class="pt-3 border-t flex items-center justify-between gap-2 text-xs" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-        <span class="text-[11px] text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : ''">Tekan tombol Esc untuk menutup</span>
-        <button
-          type="button"
-          @click="tutupPanduan()"
-          class="px-5 py-2.5 rounded-xl font-black text-xs border transition-colors cursor-pointer"
-          :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-950 text-white border-slate-950 hover:bg-slate-800'"
-        >
-          Tutup Panduan (Esc)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT SLOT -->
-  <main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-6 sm:py-10">
-    <slot />
-  </main>
-
-  <!-- ENTERPRISE FOOTER -->
-  <footer
-    role="contentinfo"
-    class="border-t py-10 px-3 sm:px-6 transition-colors mt-auto text-xs w-full"
-    :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-slate-950 text-slate-400 border-white/10'"
-  >
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-      <div class="space-y-1.5">
-        <div class="flex items-center gap-2">
-          <span class="text-base">🇮🇩</span>
-          <span class="font-black text-sm text-white" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">
-            KITA-KTP — Kependudukan Inklusif, Tangkas & Aksesibel
-          </span>
-        </div>
-        <p class="text-xs leading-relaxed max-w-2xl" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-slate-400'">
-          Inisiatif pelayanan publik nasional Direktorat Jenderal Kependudukan dan Pencatatan Sipil RI. Menjamin kepastian identitas hukum bagi lansia, penyandang disabilitas fisik, sensorik, intelektual, dan mental.
-        </p>
-      </div>
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 shrink-0 font-bold text-xs">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-emerald-500/30 bg-emerald-950/40 text-emerald-400'">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>Standar WCAG 2.1 Level AAA</span>
-        </div>
-        <span :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : 'text-slate-500'">© 2026 Disdukcapil RI</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- SCRIPT ENGINE: ENTERPRISE A11Y, WEB AUDIO API & WEB SPEECH API -->
+  <!-- Script Engine Universal A11y & State Management Alpine.js -->
   <script is:inline>
-    function enterpriseA11yData() {
+    function universalA11yData() {
       return {
         temaDisabilitas: 'standar',
-        fontSize: 16,
+        fontSizeRem: 1,
         modalPanduan: false,
         menuMobile: false,
         isPlayingSpeech: false,
@@ -622,10 +40,13 @@ const currentPath = Astro.url.pathname;
           const savedTema = localStorage.getItem('kita_disability_theme');
           if (savedTema) this.temaDisabilitas = savedTema;
 
-          const savedFont = localStorage.getItem('kita_font_size');
-          if (savedFont) {
-            const p = parseInt(savedFont, 10);
-            if (!isNaN(p) && p >= 14 && p <= 24) this.fontSize = p;
+          const savedFontRem = localStorage.getItem('kita_font_rem');
+          if (savedFontRem) {
+            const f = parseFloat(savedFontRem);
+            if (!isNaN(f) && f >= 0.85 && f <= 1.4) {
+              this.fontSizeRem = f;
+              document.documentElement.style.fontSize = f + 'rem';
+            }
           }
 
           this.seedInitialSubmissions();
@@ -635,8 +56,8 @@ const currentPath = Astro.url.pathname;
           });
         },
 
-        // Web Audio API: Synthesized Soft Chime 800Hz / 400Hz pada setiap navigasi
-        bunyiKlik(freq = 800) {
+        // Web Audio API tone synthesizer (450Hz - 750Hz)
+        bunyiKlik(freq = 650) {
           try {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             if (!AudioCtx) return;
@@ -644,11 +65,12 @@ const currentPath = Astro.url.pathname;
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
 
+            const clampedFreq = Math.min(750, Math.max(450, freq));
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(Math.max(250, freq * 0.5), ctx.currentTime + 0.05);
+            osc.frequency.setValueAtTime(clampedFreq, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(Math.max(250, clampedFreq * 0.55), ctx.currentTime + 0.05);
 
-            gain.gain.setValueAtTime(0.07, ctx.currentTime);
+            gain.gain.setValueAtTime(0.08, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
 
             osc.connect(gain);
@@ -659,8 +81,8 @@ const currentPath = Astro.url.pathname;
           } catch (e) {}
         },
 
-        // Web Speech API: Pembaca Suara Bahasa Indonesia ('id-ID')
-        bacaTeks(kalimat) {
+        // Web Speech API ('id-ID')
+        bacaSuara(teks) {
           if (!('speechSynthesis' in window)) {
             alert('Browser Anda belum mendukung Web Speech API pembaca suara.');
             return;
@@ -668,7 +90,7 @@ const currentPath = Astro.url.pathname;
 
           window.speechSynthesis.cancel();
 
-          const utterance = new SpeechSynthesisUtterance(kalimat);
+          const utterance = new SpeechSynthesisUtterance(teks);
           utterance.lang = 'id-ID';
           utterance.rate = 0.95;
           utterance.pitch = 1.0;
@@ -684,14 +106,17 @@ const currentPath = Astro.url.pathname;
           window.speechSynthesis.speak(utterance);
         },
 
+        bacaPanduan(teks) {
+          this.bacaSuara(teks);
+        },
+
         mulaiBacaPanduan() {
-          this.bunyiKlik(800);
-          const teksLengkap = "Panduan Aksesibilitas Portal KITA-KTP. " +
-            "Poin satu: Pengaturan ukuran huruf fleksibel. Gunakan tombol A minus, seratus persen, atau A plus di bilah atas untuk mengatur kenyamanan membaca. " +
-            "Poin dua: Pemilih tema kebutuhan khusus, mencakup Netra Low Vision dengan kontras tinggi kuning hitam, Buta Warna Protanopia, Tritanopia, dan Disabilitas Motorik dengan target tombol minimal 56 piksel. " +
-            "Poin tiga: Hak akses jemput bola ke rumah bagi warga lansia dan disabilitas gratis tanpa perlu antre di kantor dinas. " +
-            "Poin empat: Pelacakan dokumen status real time menggunakan nomor registrasi atau NIK Anda.";
-          this.bacaTeks(teksLengkap);
+          this.bunyiKlik(650);
+          const teksLengkap = "Panduan Aksesibilitas Portal KITA-TERPADU. " +
+            "Satu: Atur ukuran teks menggunakan tombol A minus dan A plus di bar atas. " +
+            "Dua: Pilih tema kebutuhan khusus pada menu tema seperti kontras tinggi kuning hitam, buta warna, atau disabilitas motorik. " +
+            "Tiga: Warga lansia dan disabilitas berhak mendapatkan layanan jemput bola ke rumah gratis tanpa dipungut biaya.";
+          this.bacaSuara(teksLengkap);
         },
 
         hentikanSuara() {
@@ -700,66 +125,63 @@ const currentPath = Astro.url.pathname;
         },
 
         bukaPanduan() {
-          this.bunyiKlik(800);
+          this.bunyiKlik(650);
           this.modalPanduan = true;
           this.hasOpenedPanduan = true;
-          this.announce('Dialog panduan aksesibilitas portal dibuka.');
+          this.announce('Dialog panduan aksesibilitas KITA-TERPADU dibuka.');
         },
 
         tutupPanduan() {
-          this.bunyiKlik(400);
+          this.bunyiKlik(450);
           this.modalPanduan = false;
           this.hentikanSuara();
           this.announce('Dialog panduan ditutup.');
         },
 
         increaseFont() {
-          this.bunyiKlik(880);
-          if (this.fontSize < 24) {
-            this.fontSize += 2;
-            localStorage.setItem('kita_font_size', this.fontSize);
-            this.announce('Ukuran teks dinaikkan: ' + Math.round((this.fontSize / 16) * 100) + ' persen.');
-          }
+          this.bunyiKlik(700);
+          this.fontSizeRem = Math.min(1.4, Math.round((this.fontSizeRem + 0.1) * 100) / 100);
+          document.documentElement.style.fontSize = this.fontSizeRem + 'rem';
+          localStorage.setItem('kita_font_rem', this.fontSizeRem);
+          this.announce('Ukuran teks dinaikkan: ' + Math.round(this.fontSizeRem * 100) + ' persen.');
         },
 
         decreaseFont() {
-          this.bunyiKlik(600);
-          if (this.fontSize > 14) {
-            this.fontSize -= 2;
-            localStorage.setItem('kita_font_size', this.fontSize);
-            this.announce('Ukuran teks diturunkan: ' + Math.round((this.fontSize / 16) * 100) + ' persen.');
-          }
+          this.bunyiKlik(500);
+          this.fontSizeRem = Math.max(0.85, Math.round((this.fontSizeRem - 0.1) * 100) / 100);
+          document.documentElement.style.fontSize = this.fontSizeRem + 'rem';
+          localStorage.setItem('kita_font_rem', this.fontSizeRem);
+          this.announce('Ukuran teks diturunkan: ' + Math.round(this.fontSizeRem * 100) + ' persen.');
         },
 
         resetFont() {
-          this.bunyiKlik(750);
-          this.fontSize = 16;
-          localStorage.setItem('kita_font_size', 16);
+          this.bunyiKlik(600);
+          this.fontSizeRem = 1;
+          document.documentElement.style.fontSize = '1rem';
+          localStorage.setItem('kita_font_rem', 1);
           this.announce('Ukuran teks direset ke 100 persen.');
         },
 
         onTemaChange() {
-          this.bunyiKlik(800);
+          this.bunyiKlik(650);
           localStorage.setItem('kita_disability_theme', this.temaDisabilitas);
-
           const labels = {
-            'standar': 'Tema Standar GovTech',
-            'netra-kontras': 'Tema Disabilitas Netra Kontras Tinggi Kuning dan Hitam',
-            'protanopia': 'Tema Buta Warna Protanopia dan Deuteranopia',
-            'tritanopia': 'Tema Buta Warna Tritanopia',
-            'motorik-ramah': 'Tema Disabilitas Motorik dengan Target Sentuh Ekstra Lebar'
+            'standar': 'Tema Standar',
+            'netra-kontras': 'Tema Kontras Tinggi Kuning Hitam',
+            'protanopia': 'Tema Buta Warna Protanopia',
+            'motorik-ramah': 'Tema Disabilitas Motorik'
           };
           this.announce((labels[this.temaDisabilitas] || this.temaDisabilitas) + ' aktif.');
         },
 
         toggleMobileMenu() {
           this.menuMobile = !this.menuMobile;
-          this.bunyiKlik(this.menuMobile ? 800 : 400);
+          this.bunyiKlik(this.menuMobile ? 600 : 450);
         },
 
         closeMobileMenu() {
           this.menuMobile = false;
-          this.bunyiKlik(400);
+          this.bunyiKlik(450);
         },
 
         announce(msg) {
@@ -771,8 +193,8 @@ const currentPath = Astro.url.pathname;
           const KEY = 'semua_pengajuan_layanan';
           const initial = [
             {
-              id: 'KITA-KTP-20260923-8812',
-              regNumber: 'KITA-KTP-20260923-8812',
+              id: 'KT-20260923-8812',
+              regNumber: 'KT-20260923-8812',
               nik: '3201015566770001',
               nama: 'Opa Hendra Wijaya',
               wa: '081234567890',
@@ -787,8 +209,8 @@ const currentPath = Astro.url.pathname;
               estimasi: 'Selesai (Diantar Hari Ini)'
             },
             {
-              id: 'KITA-KTP-20260923-5419',
-              regNumber: 'KITA-KTP-20260923-5419',
+              id: 'KT-20260923-5419',
+              regNumber: 'KT-20260923-5419',
               nik: '3201016677880002',
               nama: 'Dewi Lestari',
               wa: '085678901234',
@@ -803,12 +225,12 @@ const currentPath = Astro.url.pathname;
               estimasi: '1 Hari Kerja'
             },
             {
-              id: 'KITA-KTP-20260923-3104',
-              regNumber: 'KITA-KTP-20260923-3104',
+              id: 'KT-20260923-3104',
+              regNumber: 'KT-20260923-3104',
               nik: '3201017788990003',
               nama: 'Bagus Pratama',
               wa: '087712345678',
-              layanan: 'KTP / Identitas Kependudukan',
+              layanan: 'KTP-el / Identitas Kependudukan',
               kategori: 'Umum',
               alamat: 'Jl. Merdeka Barat No. 12',
               catatan: 'Antrean Mandiri Loket Kecamatan - Rekam KTP Pemula 17 Tahun.',
@@ -827,15 +249,560 @@ const currentPath = Astro.url.pathname;
       };
     }
 
-    window.enterpriseA11y = enterpriseA11yData;
-    // Backward compatibility aliases
-    window.globalA11y = enterpriseA11yData;
+    window.universalA11y = universalA11yData;
+    window.universalA11yData = universalA11yData;
     document.addEventListener('alpine:init', () => {
       if (window.Alpine) {
-        window.Alpine.data('enterpriseA11y', enterpriseA11yData);
-        window.Alpine.data('globalA11y', enterpriseA11yData);
+        window.Alpine.data('universalA11y', universalA11yData);
       }
     });
   </script>
+</head>
+
+<body
+  x-data="universalA11y()"
+  x-init="initApp()"
+  :class="{
+    'bg-black text-[#FACC15] font-bold netra-kontras high-contrast shadow-none': temaDisabilitas === 'netra-kontras',
+    'tema-protanopia grayscale contrast-150': temaDisabilitas === 'protanopia',
+    'tema-motorik scale-target': temaDisabilitas === 'motorik-ramah',
+    'bg-slate-50 text-slate-900': temaDisabilitas === 'standar'
+  }"
+  class="min-h-screen flex flex-col antialiased transition-colors duration-200 overflow-x-hidden w-full max-w-full selection:bg-amber-400 selection:text-black font-sans"
+>
+  <!-- WCAG AAA Skip to Content -->
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:font-black focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-4"
+    :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black focus:ring-white' : 'bg-blue-700 text-white focus:ring-blue-300'"
+  >
+    Lewati ke Konten Utama (Tekan Enter)
+  </a>
+
+  <!-- ARIA Live Region for Screen Readers -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true" x-text="srAnnouncement"></div>
+
+  <!-- FLOATING UNIVERSAL HEADER (ANTI-OVERFLOW & SAFE NOTCH) -->
+  <header role="banner" class="sticky top-0 z-40 w-full max-w-full shadow-xs">
+    <!-- 1. TOP ACCESSIBILITY BAR: Universal Layout -->
+    <div
+      class="text-xs transition-colors w-full border-b backdrop-blur-md"
+      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15]/40 text-[#FACC15]' : 'bg-slate-950/95 text-slate-100 border-white/10'"
+    >
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <!-- Sisi Kiri: Badge Resmi Bendera RI & Nama Brand & Quick Mobile Menu -->
+        <div class="flex items-center justify-between w-full sm:w-auto min-w-0">
+          <a
+            href="/"
+            @click="bunyiKlik(650)"
+            class="flex items-center gap-2 group focus:outline-none focus:ring-2 rounded-lg px-1 py-0.5 transition-all min-w-0"
+            :class="temaDisabilitas === 'netra-kontras' ? 'focus:ring-[#FACC15] text-[#FACC15]' : 'focus:ring-amber-400 text-slate-200 hover:text-white'"
+            aria-label="Kembali ke Beranda Portal KITA-TERPADU"
+          >
+            <span class="text-base shrink-0">🇮🇩</span>
+            <span class="font-extrabold tracking-tight text-[11px] sm:text-xs truncate">
+              <span class="sm:hidden">KITA-TERPADU</span>
+              <span class="hidden sm:inline">Portal Administrasi Kependudukan & Layanan Publik Inklusif | Resmi RI</span>
+            </span>
+          </a>
+
+          <!-- Quick Mobile Hamburger di Bar Atas (Mencegah pengguna luput melihat menu) -->
+          <button
+            type="button"
+            @click="toggleMobileMenu()"
+            class="sm:hidden inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-black cursor-pointer shadow-xs active:scale-95 shrink-0"
+            :class="temaDisabilitas === 'netra-kontras'
+              ? 'border-[#FACC15] bg-[#FACC15] text-black font-black'
+              : 'border-white/20 bg-white/10 text-white hover:bg-white/20'"
+            aria-label="Buka Menu Mobile"
+          >
+            <span class="text-sm font-bold" x-text="menuMobile ? '✕' : '☰'">☰</span>
+            <span class="text-[10px] font-bold">Menu</span>
+          </button>
+        </div>
+
+        <!-- Sisi Kanan: Kontrol Aksesibilitas Universal (Stepper, Dropdown, Lonceng) -->
+        <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2 shrink-0" role="toolbar" aria-label="Alat Aksesibilitas">
+          <!-- Stepper Skala Ukuran Teks (A- / % / A+) Reaktif ke document.documentElement -->
+          <div
+            class="inline-flex items-center rounded-xl p-0.5 border shadow-2xs shrink-0"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-white/15 bg-slate-900/90'"
+            role="group"
+            aria-label="Kontrol Ukuran Teks"
+          >
+            <button
+              type="button"
+              @click="decreaseFont()"
+              :disabled="fontSizeRem <= 0.85"
+              class="px-2 py-1 font-black text-xs rounded-lg transition-colors disabled:opacity-30 cursor-pointer focus:outline-none focus:ring-2"
+              :class="temaDisabilitas === 'netra-kontras' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15] text-[#FACC15]' : 'hover:bg-slate-800 text-slate-200 hover:text-white focus:ring-white'"
+              aria-label="Perkecil Ukuran Teks (A-)"
+              title="Perkecil Huruf (A-)"
+            >
+              A-
+            </button>
+            <button
+              type="button"
+              @click="resetFont()"
+              class="px-2 py-1 font-bold text-[10px] rounded-lg transition-colors cursor-pointer focus:outline-none focus:ring-2"
+              :class="fontSizeRem === 1 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black font-black' : 'bg-slate-800 text-white font-extrabold') : (temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-400 hover:text-slate-200')"
+              aria-label="Reset Ukuran Teks ke Standar (100%)"
+              title="Reset ke Ukuran Standar (100%)"
+            >
+              <span x-text="Math.round(fontSizeRem * 100) + '%'">100%</span>
+            </button>
+            <button
+              type="button"
+              @click="increaseFont()"
+              :disabled="fontSizeRem >= 1.4"
+              class="px-2 py-1 font-black text-xs rounded-lg transition-colors disabled:opacity-30 cursor-pointer focus:outline-none focus:ring-2"
+              :class="temaDisabilitas === 'netra-kontras' ? 'hover:bg-[#FACC15] hover:text-black focus:ring-[#FACC15] text-[#FACC15]' : 'hover:bg-slate-800 text-slate-200 hover:text-white focus:ring-white'"
+              aria-label="Perbesar Ukuran Teks (A+)"
+              title="Perbesar Huruf (A+)"
+            >
+              A+
+            </button>
+          </div>
+
+          <!-- Dropdown Tema Disabilitas -->
+          <div class="relative flex-1 sm:flex-none min-w-0">
+            <label for="pilih-tema-disabilitas" class="sr-only">Tema Aksesibilitas</label>
+            <select
+              id="pilih-tema-disabilitas"
+              x-model="temaDisabilitas"
+              @change="onTemaChange()"
+              class="w-full sm:w-auto text-[11px] sm:text-xs font-bold py-1.5 pl-2 pr-6 rounded-xl border appearance-none cursor-pointer focus:ring-2 focus:outline-none transition-all shadow-2xs truncate"
+              :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15] focus:ring-[#FACC15]' : 'bg-slate-900/90 text-slate-100 border-white/15 focus:ring-amber-400'"
+            >
+              <option value="standar">🌟 GovTech Standar</option>
+              <option value="netra-kontras">👁️ Kontras Tinggi (Kuning-Hitam)</option>
+              <option value="protanopia">🔴 Buta Warna (Protanopia)</option>
+              <option value="motorik-ramah">🖐️ Disabilitas Motorik (56px)</option>
+            </select>
+            <span class="pointer-events-none absolute right-2 top-2 text-[9px] opacity-70" aria-hidden="true">▼</span>
+          </div>
+
+          <!-- Tombol Lonceng Panduan (🔔) -->
+          <button
+            type="button"
+            @click="bukaPanduan()"
+            class="h-8 w-8 sm:w-auto sm:px-3 sm:py-1 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black flex items-center justify-center gap-1.5 text-xs transition-all cursor-pointer shadow-md hover:shadow-amber-400/20 focus:outline-none focus:ring-2 focus:ring-white active:scale-95 shrink-0 relative"
+            :class="!hasOpenedPanduan ? 'ring-2 ring-amber-400/50 animate-pulse' : ''"
+            aria-label="Buka Panduan Aksesibilitas dan Suara Narasi KITA-TERPADU"
+            title="Panduan Aksesibilitas Portal"
+          >
+            <span aria-hidden="true" class="text-sm">🔔</span>
+            <span class="font-extrabold hidden md:inline">Panduan</span>
+            <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-slate-950" x-show="!hasOpenedPanduan"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN NAVBAR: Glassmorphism Putih Bersih (Anti-Overflow & 100% Responsif HP) -->
+    <div
+      class="border-b backdrop-blur-md transition-colors w-full"
+      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white/95 border-slate-200/90 text-slate-900'"
+    >
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-2.5 w-full">
+        <!-- Logo & Title: KITA-TERPADU dengan Badge KT & Resmi RI (Fluid & Fleksibel di Layar HP) -->
+        <a
+          href="/"
+          @click="bunyiKlik(650)"
+          class="flex items-center gap-2 sm:gap-2.5 focus:outline-none focus:ring-2 rounded-2xl p-1 min-w-0 group"
+          :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] focus:ring-[#FACC15]' : 'text-slate-900 focus:ring-blue-600'"
+          aria-label="KITA-TERPADU Beranda Utama"
+        >
+          <!-- Badge Emblem KT -->
+          <div
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl flex items-center justify-center font-black text-sm sm:text-base shadow-xs border transition-transform group-hover:scale-105 shrink-0 tracking-tighter"
+            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-600 text-white border-blue-500 shadow-blue-500/20'"
+          >
+            KT
+          </div>
+          <div class="text-left min-w-0">
+            <div class="flex items-center gap-1.5 flex-nowrap">
+              <span class="block text-sm sm:text-base md:text-lg font-black tracking-tight leading-none truncate">KITA-TERPADU</span>
+              <span
+                class="text-[9px] font-black uppercase tracking-wider px-1.5 sm:px-2 py-0.5 rounded-full border shrink-0"
+                :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-800 border-blue-200'"
+              >
+                Resmi RI
+              </span>
+            </div>
+            <!-- Subtitle hanya ditampilkan di layar tablet & desktop agar tidak mendorong hamburger di layar HP -->
+            <span class="hidden sm:block text-[10px] sm:text-[11px] font-semibold tracking-wide text-slate-500 truncate" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+              Portal Administrasi Kependudukan & Layanan Publik Inklusif
+            </span>
+          </div>
+        </a>
+
+        <!-- Menu Navigasi Desktop (Hadir di Layar md:flex ke Atas) -->
+        <nav aria-label="Navigasi Utama Desktop" class="hidden md:flex items-center gap-1.5 shrink-0">
+          <a
+            href="/"
+            @click="bunyiKlik(650)"
+            class={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
+              currentPath === '/'
+                ? 'bg-slate-900 text-white shadow-sm'
+                : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+            }`}
+            :class="temaDisabilitas === 'netra-kontras' ? (currentPath === '/' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            🏠 Beranda
+          </a>
+
+          <a
+            href="/layanan/lansia"
+            @click="bunyiKlik(650)"
+            class={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${
+              currentPath.startsWith('/layanan/lansia') || currentPath.startsWith('/lansia')
+                ? 'bg-amber-100 text-amber-950 border-amber-300 ring-2 ring-amber-400'
+                : 'border-transparent text-slate-700 hover:bg-amber-50 hover:text-amber-950'
+            }`}
+            :class="temaDisabilitas === 'netra-kontras' ? ((currentPath.startsWith('/layanan/lansia') || currentPath.startsWith('/lansia')) ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            🧓 Layanan Lansia
+          </a>
+
+          <a
+            href="/layanan/disabilitas"
+            @click="bunyiKlik(650)"
+            class={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${
+              currentPath.startsWith('/layanan/disabilitas') || currentPath.startsWith('/disabilitas')
+                ? 'bg-purple-100 text-purple-950 border-purple-300 ring-2 ring-purple-400'
+                : 'border-transparent text-slate-700 hover:bg-purple-50 hover:text-purple-950'
+            }`}
+            :class="temaDisabilitas === 'netra-kontras' ? ((currentPath.startsWith('/layanan/disabilitas') || currentPath.startsWith('/disabilitas')) ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            ♿ Layanan Disabilitas
+          </a>
+
+          <a
+            href="/layanan/ktp"
+            @click="bunyiKlik(650)"
+            class={`px-3 py-1.5 rounded-xl text-xs font-black border transition-all ${
+              currentPath.startsWith('/layanan/ktp') || currentPath.startsWith('/umum')
+                ? 'bg-blue-100 text-blue-950 border-blue-300 ring-2 ring-blue-400'
+                : 'border-transparent text-slate-700 hover:bg-blue-50 hover:text-blue-950'
+            }`}
+            :class="temaDisabilitas === 'netra-kontras' ? ((currentPath.startsWith('/layanan/ktp') || currentPath.startsWith('/umum')) ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : 'text-[#FACC15]! hover:bg-neutral-900!') : ''"
+          >
+            🏢 Layanan Umum
+          </a>
+
+          <a
+            href="/lacak"
+            @click="bunyiKlik(700)"
+            class={`ml-2 px-3.5 py-1.5 rounded-xl text-xs font-black border transition-all inline-flex items-center gap-1.5 shadow-sm active:scale-95 ${
+              currentPath.startsWith('/lacak')
+                ? 'bg-blue-700 text-white border-blue-700 ring-2 ring-blue-400'
+                : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
+            }`}
+            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''"
+          >
+            <span>🔍</span>
+            <span>Lacak Dokumen</span>
+          </a>
+        </nav>
+
+        <!-- Tombol Hamburger Mobile (PASTI MUNCUL di Layar HP: inline-flex md:hidden shrink-0) -->
+        <button
+          type="button"
+          @click="toggleMobileMenu()"
+          class="inline-flex md:hidden w-10 h-10 rounded-xl border-2 text-base font-black transition-all focus:outline-none focus:ring-4 items-center justify-center cursor-pointer shadow-sm z-50 shrink-0 select-none"
+          :class="temaDisabilitas === 'netra-kontras'
+            ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-[#FACC15] hover:text-black focus:ring-white'
+            : 'border-slate-300 bg-slate-100 text-slate-900 hover:bg-slate-200 focus:ring-blue-300'"
+          aria-label="Buka Menu Navigasi Mobile"
+          :aria-expanded="menuMobile ? 'true' : 'false'"
+        >
+          <span aria-hidden="true" class="text-xl leading-none font-bold" x-text="menuMobile ? '✕' : '☰'">☰</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- DRAWER NAVIGASI MOBILE (Dropdown / Slide-over dengan Z-Index Tinggi z-50) -->
+  <div
+    x-show="menuMobile"
+    x-cloak
+    x-transition:enter="transition-opacity ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 bg-black/75 backdrop-blur-xs md:hidden"
+    @keydown.escape.window="closeMobileMenu()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu Navigasi Mobile"
+  >
+    <div
+      x-show="menuMobile"
+      x-transition:enter="transition transform ease-out duration-250"
+      x-transition:enter-start="translate-x-full"
+      x-transition:enter-end="translate-x-0"
+      x-transition:leave="transition transform ease-in duration-200"
+      x-transition:leave-start="translate-x-0"
+      x-transition:leave-end="translate-x-full"
+      @click.outside="closeMobileMenu()"
+      class="fixed inset-y-0 right-0 w-full max-w-xs border-l-2 p-5 flex flex-col justify-between shadow-2xl overflow-y-auto z-50"
+      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
+    >
+      <div class="space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-sm bg-blue-600 text-white" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black!' : ''">KT</span>
+            <div>
+              <span class="font-black text-base block leading-none">KITA-TERPADU</span>
+              <span class="text-[10px] text-slate-500 font-semibold" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Menu Layanan Inklusif</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            @click="closeMobileMenu()"
+            class="p-2 rounded-xl border text-sm font-black focus:outline-none focus:ring-4 cursor-pointer"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-[#FACC15] hover:text-black' : 'border-slate-200 text-slate-700 hover:bg-slate-100 focus:ring-blue-300'"
+            aria-label="Tutup Menu"
+          >
+            ✕
+          </button>
+        </div>
+
+        <nav aria-label="Menu Navigasi Mobile" class="space-y-2">
+          <a
+            href="/"
+            @click="closeMobileMenu();"
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold border transition-colors"
+            :class="currentPath === '/' ? 'bg-blue-50 text-blue-900 border-blue-300' : 'border-transparent hover:bg-slate-100 text-slate-800'"
+          >
+            <span class="text-lg">🏠</span>
+            <span>Beranda Utama</span>
+          </a>
+
+          <a
+            href="/layanan/lansia"
+            @click="closeMobileMenu();"
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold border transition-colors"
+            :class="(currentPath.startsWith('/layanan/lansia') || currentPath.startsWith('/lansia')) ? 'bg-amber-100 text-amber-950 border-amber-300' : 'border-transparent hover:bg-slate-100 text-slate-800'"
+          >
+            <span class="text-lg">🧓</span>
+            <span>Layanan Lansia</span>
+          </a>
+
+          <a
+            href="/layanan/disabilitas"
+            @click="closeMobileMenu();"
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold border transition-colors"
+            :class="(currentPath.startsWith('/layanan/disabilitas') || currentPath.startsWith('/disabilitas')) ? 'bg-purple-100 text-purple-950 border-purple-300' : 'border-transparent hover:bg-slate-100 text-slate-800'"
+          >
+            <span class="text-lg">♿</span>
+            <span>Layanan Disabilitas</span>
+          </a>
+
+          <a
+            href="/layanan/ktp"
+            @click="closeMobileMenu();"
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold border transition-colors"
+            :class="(currentPath.startsWith('/layanan/ktp') || currentPath.startsWith('/umum')) ? 'bg-blue-100 text-blue-950 border-blue-300' : 'border-transparent hover:bg-slate-100 text-slate-800'"
+          >
+            <span class="text-lg">🏢</span>
+            <span>Layanan Umum</span>
+          </a>
+
+          <a
+            href="/lacak"
+            @click="closeMobileMenu();"
+            class="flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-extrabold border transition-colors"
+            :class="currentPath.startsWith('/lacak') ? 'bg-blue-700 text-white border-blue-700' : 'border-slate-300 bg-slate-100 text-slate-900'"
+          >
+            <span class="text-lg">🔍</span>
+            <span>Lacak Dokumen</span>
+          </a>
+
+          <button
+            type="button"
+            @click="closeMobileMenu(); bukaPanduan();"
+            class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-extrabold border transition-colors cursor-pointer text-left"
+            :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-amber-50 text-amber-950 border-amber-300 hover:bg-amber-100'"
+          >
+            <span class="text-lg">🔔</span>
+            <span>Panduan & Suara Narasi</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t text-xs font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 text-[#FACC15]/80' : ''">
+        <p class="font-bold">KITA-TERPADU Inklusif</p>
+        <p class="text-[11px] mt-0.5">Kesetaraan Hak Kependudukan Tanpa Batas Ruang & Kondisi Fisik.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PANDUAN UNIVERSAL (KITA-TERPADU) -->
+  <div
+    x-show="modalPanduan"
+    x-cloak
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
+    @keydown.escape.window="tutupPanduan()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-panduan-header"
+  >
+    <div
+      @click.outside="tutupPanduan()"
+      class="w-full max-w-lg mx-auto rounded-3xl p-5 sm:p-6 shadow-2xl border-2 max-h-[90vh] flex flex-col justify-between overflow-hidden my-auto"
+      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
+    >
+      <div class="flex items-start justify-between gap-3 pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black font-black' : 'bg-amber-100 text-amber-800'">
+            🔔
+          </span>
+          <div>
+            <h2 id="modal-panduan-header" class="text-base sm:text-lg font-black leading-tight">
+              Panduan Aksesibilitas KITA-TERPADU
+            </h2>
+            <p class="text-xs font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+              Standar WCAG 2.1 AAA Ramah Disabilitas & Lansia
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          @click="tutupPanduan()"
+          class="p-2 rounded-xl border text-sm font-black focus:outline-none focus:ring-4 cursor-pointer shrink-0"
+          :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-[#FACC15] hover:text-black focus:ring-white' : 'border-slate-200 text-slate-700 hover:bg-slate-100'"
+          aria-label="Tutup Panduan"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Tombol Narasi Suara -->
+      <div
+        class="mt-3.5 p-3 rounded-2xl border flex flex-col sm:flex-row items-center justify-between gap-2.5 transition-colors"
+        :class="temaDisabilitas === 'netra-kontras' ? 'bg-neutral-900 border-[#FACC15]' : 'bg-amber-50/80 border-amber-200'"
+      >
+        <div class="flex items-center gap-2.5 w-full sm:w-auto">
+          <span class="text-xl shrink-0" :class="isPlayingSpeech ? 'animate-pulse' : ''">🔊</span>
+          <div class="text-left">
+            <span class="block text-xs font-black" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-amber-950'">
+              Pemandu Suara Otomatis (TTS id-ID)
+            </span>
+            <span class="block text-[11px] font-medium" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-amber-800'">
+              <span x-show="!isPlayingSpeech">Dengarkan panduan KITA-TERPADU dibacakan langsung.</span>
+              <span x-show="isPlayingSpeech" class="font-bold text-emerald-600">Sedang membacakan penjelasan...</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button
+            type="button"
+            x-show="!isPlayingSpeech"
+            @click="mulaiBacaPanduan()"
+            class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-black shadow-xs border transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-amber-500 text-slate-950 border-amber-500 hover:bg-amber-600'"
+          >
+            ▶️ Putar Panduan Suara
+          </button>
+
+          <button
+            type="button"
+            x-show="isPlayingSpeech"
+            @click="hentikanSuara()"
+            class="w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-black shadow-xs border transition-all cursor-pointer flex items-center justify-center gap-1.5"
+            :class="temaDisabilitas === 'netra-kontras' ? 'bg-red-500 text-white border-red-500 hover:bg-red-600' : 'bg-rose-600 text-white border-rose-600 hover:bg-rose-700'"
+          >
+            ⏹️ Hentikan Suara
+          </button>
+        </div>
+      </div>
+
+      <!-- Rangkuman Panduan -->
+      <div class="my-3.5 space-y-2.5 overflow-y-auto pr-1 text-xs font-medium leading-relaxed max-h-[46vh]">
+        <div class="p-3 rounded-xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
+          <h3 class="font-black text-xs mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+            1. Pengaturan Ukuran Teks (A- & A+)
+          </h3>
+          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
+            Gunakan tombol <strong>A-</strong>, <strong>100%</strong>, atau <strong>A+</strong> di bilah atas untuk menyesuaikan ukuran teks agar nyaman dibaca.
+          </p>
+        </div>
+
+        <div class="p-3 rounded-xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
+          <h3 class="font-black text-xs mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+            2. Pilihan Tema Kebutuhan Khusus
+          </h3>
+          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
+            Gunakan dropdown tema: <strong>Kontras Tinggi Kuning-Hitam</strong> untuk tunanetra/low vision, <strong>Buta Warna</strong>, atau <strong>Disabilitas Motorik</strong> (target sentuh 56px).
+          </p>
+        </div>
+
+        <div class="p-3 rounded-xl border" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40 bg-neutral-950' : 'border-slate-200 bg-slate-50/80'">
+          <h3 class="font-black text-xs mb-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+            3. Layanan Jemput Bola Gratis
+          </h3>
+          <p :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-700'">
+            Warga lansia usia 60 tahun ke atas dan penyandang disabilitas berhak mendapatkan layanan jemput bola ke rumah oleh petugas Dukcapil tanpa biaya apapun.
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t flex items-center justify-end" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+        <button
+          type="button"
+          @click="tutupPanduan()"
+          class="w-full sm:w-auto px-4 py-2 rounded-xl font-black text-xs border transition-colors cursor-pointer"
+          :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800'"
+        >
+          Tutup Panduan (Esc)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT SLOT: Lebar Elastis Universal max-w-7xl mx-auto -->
+  <main id="main-content" class="flex-1 w-full max-w-full overflow-x-hidden">
+    <slot />
+  </main>
+
+  <!-- ENTERPRISE FOOTER -->
+  <footer
+    role="contentinfo"
+    class="border-t py-8 px-4 sm:px-6 lg:px-8 transition-colors mt-auto text-xs w-full max-w-full"
+    :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-slate-950 text-slate-400 border-white/10'"
+  >
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span>🇮🇩</span>
+          <span class="font-black text-sm text-white" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">
+            KITA-TERPADU — Portal Administrasi Kependudukan & Layanan Publik Inklusif
+          </span>
+        </div>
+        <p class="text-xs text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+          Direktorat Jenderal Kependudukan dan Pencatatan Sipil RI. Menjamin kepastian identitas hukum yang setara bagi seluruh warga.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0 font-bold text-xs">
+        <span class="px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-emerald-400">
+          ● WCAG 2.1 AAA
+        </span>
+        <span :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : 'text-slate-500'">© 2026 Disdukcapil RI</span>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

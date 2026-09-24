@@ -24,9 +24,9 @@ export async function getStaticPaths() {
     {
       slug: 'kia',
       nama: 'KIA / Identitas Anak',
-      kategori: 'Identitas Anak',
+      kategori: 'Hak Sipil Anak',
       ikon: '👶',
-      deskripsi: 'Penerbitan kartu identitas usia 0-17 tahun terintegrasi kutipan akta kelahiran',
+      deskripsi: 'Penerbitan kartu identitas anak usia 0-17 tahun terintegrasi kutipan akta kelahiran',
       foto: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
       contohKeperluan: 'Penerbitan KIA anak usia 5 tahun dan pencetakan kutipan akta kelahiran'
     },
@@ -86,7 +86,7 @@ export async function getStaticPaths() {
     },
     {
       slug: 'pendatang',
-      nama: 'Panduan Warga Baru Pindah',
+      nama: 'Panduan Warga Pindah',
       kategori: 'Integrasi Warga',
       ikon: '🗺️',
       deskripsi: 'Ceklist administrasi lapor RT/RW 1x24 jam dan pendaftaran domisili tempat tinggal',
@@ -95,7 +95,7 @@ export async function getStaticPaths() {
     },
     {
       slug: 'laporan',
-      nama: 'Pengaduan & Laporan Warga',
+      nama: 'Pengaduan & Laporan',
       kategori: 'Transparansi Publik',
       ikon: '📢',
       deskripsi: 'Saluran pengaduan pungli, kendala sidik jari biometrik, dan keluhan administrasi',
@@ -114,7 +114,7 @@ export async function getStaticPaths() {
     },
     {
       slug: 'panduan',
-      nama: 'Panduan Warga Baru Pindah',
+      nama: 'Panduan Warga Pindah',
       kategori: 'Integrasi Warga',
       ikon: '🗺️',
       deskripsi: 'Ceklist administrasi lapor RT/RW 1x24 jam',
@@ -123,7 +123,7 @@ export async function getStaticPaths() {
     },
     {
       slug: 'aduan',
-      nama: 'Pengaduan & Laporan Warga',
+      nama: 'Pengaduan & Laporan',
       kategori: 'Transparansi Publik',
       ikon: '📢',
       deskripsi: 'Saluran pengaduan pungli dan kendala layanan',
@@ -142,33 +142,30 @@ const { service } = Astro.props;
 ---
 
 <MainLayout
-  title={`${service.nama} — Portal KITA-KTP`}
+  title={`${service.nama} — KITA-TERPADU`}
   description={`Pengajuan formulir adaptif ${service.nama} dengan opsi umum, lansia jemput bola, dan disabilitas.`}
 >
   <div
-    class="max-w-4xl mx-auto space-y-8 pb-16"
-    x-data={`formAdaptiveEngine('${service.nama}', '${service.slug}')`}
+    class="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-6 sm:space-y-8 w-full max-w-full overflow-x-hidden"
+    x-data={`formAdaptive3in1('${service.nama}', '${service.slug}')`}
   >
     <!-- BREADCRUMB & HEADER -->
     <div class="space-y-3">
-      <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-        <a href="/" class="hover:underline flex items-center gap-1">
-          <span>🏠</span>
-          <span>Beranda</span>
-        </a>
+      <nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs font-bold text-slate-500 truncate" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+        <a href="/" class="hover:underline">Beranda</a>
         <span>/</span>
-        <span class="text-blue-600 font-extrabold" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">{service.kategori}</span>
+        <span class="text-blue-600 font-extrabold truncate" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">{service.kategori}</span>
         <span>/</span>
         <span class="text-slate-800 truncate" :class="temaDisabilitas === 'netra-kontras' ? 'text-white' : ''">{service.nama}</span>
       </nav>
 
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
         <div class="flex items-center gap-3">
-          <span class="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl border shadow-sm shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-900 border-blue-200'">
+          <span class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shadow-xs shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-50 text-blue-900 border-blue-200'">
             {service.ikon}
           </span>
           <div>
-            <h1 class="text-2xl sm:text-3xl font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
               {service.nama}
             </h1>
             <p class="text-xs sm:text-sm font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
@@ -177,28 +174,25 @@ const { service } = Astro.props;
           </div>
         </div>
 
-        <div class="shrink-0">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black border" :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-emerald-50 text-emerald-800 border-emerald-200'">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>100% Bebas Biaya (Gratis)</span>
-          </span>
-        </div>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border self-start sm:self-auto" :class="temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-emerald-50 text-emerald-800 border-emerald-200'">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>100% Bebas Biaya</span>
+        </span>
       </div>
     </div>
 
-    <!-- FLOATING SEGMENTED CONTROLLER (SWITCHER 3 MODE) -->
-    <div class="sticky top-20 z-30 pt-1">
+    <!-- SWITCHER 3 MODE RESPONSIF (Grid 1 kolom di HP, 3 kolom di desktop) -->
+    <div class="w-full">
       <div
-        class="p-1.5 rounded-2xl border-2 backdrop-blur-md shadow-lg flex items-center justify-between gap-1.5 max-w-xl mx-auto"
-        :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15]' : 'bg-white/95 border-slate-200 shadow-slate-200/50'"
+        class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full max-w-xl mx-auto p-1.5 rounded-2xl border-2 backdrop-blur-md shadow-sm"
+        :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15]' : 'bg-white border-slate-200'"
         role="tablist"
-        aria-label="Pilihan Mode Formulir"
+        aria-label="Pilihan 3 Mode Pelayanan"
       >
-        <!-- Mode Umum -->
         <button
           type="button"
-          @click="pilihMode('umum')"
-          class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+          @click="gantiMode('umum')"
+          class="w-full py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-2"
           :class="activeMode === 'umum'
             ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black shadow-sm font-black' : 'bg-slate-900 text-white shadow-md')
             : (temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] hover:bg-neutral-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100')"
@@ -209,11 +203,10 @@ const { service } = Astro.props;
           <span>Mode Umum</span>
         </button>
 
-        <!-- Mode Lansia -->
         <button
           type="button"
-          @click="pilihMode('lansia')"
-          class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+          @click="gantiMode('lansia')"
+          class="w-full py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-2"
           :class="activeMode === 'lansia'
             ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black shadow-sm font-black' : 'bg-amber-500 text-slate-950 shadow-md ring-2 ring-amber-300')
             : (temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] hover:bg-neutral-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100')"
@@ -224,11 +217,10 @@ const { service } = Astro.props;
           <span>Mode Lansia</span>
         </button>
 
-        <!-- Mode Disabilitas -->
         <button
           type="button"
-          @click="pilihMode('disabilitas')"
-          class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-1.5"
+          @click="gantiMode('disabilitas')"
+          class="w-full py-2.5 px-3 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center justify-center gap-2"
           :class="activeMode === 'disabilitas'
             ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black shadow-sm font-black' : 'bg-purple-600 text-white shadow-md ring-2 ring-purple-300')
             : (temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] hover:bg-neutral-900' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100')"
@@ -241,70 +233,66 @@ const { service } = Astro.props;
       </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PENGALAMAN 1: TAMPILAN MODE UMUM -->
-    <!-- ========================================== -->
+    <!-- ============================================== -->
+    <!-- AREA A: MODE UMUM (Form Mandiri Antrean Loket) -->
+    <!-- ============================================== -->
     <div
       x-show="activeMode === 'umum'"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 translate-y-2"
+      x-transition:enter="transition ease-out duration-150"
+      x-transition:enter-start="opacity-0 translate-y-1"
       x-transition:enter-end="opacity-100 translate-y-0"
-      class="space-y-6"
+      class="space-y-5"
     >
-      <div class="p-4 rounded-2xl border flex items-center justify-between gap-3 text-xs" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-50 text-blue-900'">
+      <div class="p-3.5 rounded-2xl border flex items-center justify-between gap-2 text-xs" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-50 text-blue-900'">
         <div class="flex items-center gap-2">
-          <span class="text-lg">🏢</span>
-          <span class="font-bold">Pendaftaran Mandiri Loket Kecamatan & Pengantaran Berkas</span>
+          <span class="text-base">🏢</span>
+          <span class="font-bold">Formulir Mandiri Loket Kecamatan & Pengantaran Dokumen</span>
         </div>
-        <span class="font-extrabold px-2.5 py-1 rounded-full bg-blue-600 text-white text-[10px]">Antrean Digital</span>
+        <span class="font-black px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px]">Antrean Mandiri</span>
       </div>
 
-      <form @submit.prevent="submitPermohonan('Umum')" class="space-y-5 rounded-3xl p-6 sm:p-8 border-2 shadow-sm" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-slate-200 bg-white'">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <!-- NIK 16 Digit dengan Validasi -->
+      <form @submit.prevent="submitPermohonan('Umum')" class="space-y-4 rounded-3xl p-5 sm:p-7 border-2 shadow-sm" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-slate-200 bg-white'">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="space-y-1.5 sm:col-span-2">
-            <label for="umum-nik" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Nomor Induk Kependudukan (NIK 16 Digit) *
+            <label for="u-nik" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              NIK Pemohon (16 Digit) *
             </label>
             <div class="relative">
               <input
-                id="umum-nik"
+                id="u-nik"
                 type="text"
                 x-model="formUmum.nik"
                 maxlength="16"
                 required
-                placeholder="Contoh: 320101XXXXXXXXXX"
+                placeholder="320101XXXXXXXXXX"
                 class="w-full px-4 py-3 rounded-2xl border-2 text-sm font-mono tracking-wider focus:outline-none focus:ring-4 transition-all"
                 :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'"
               />
               <span class="absolute right-3.5 top-3.5 text-xs font-bold font-mono text-slate-400" x-text="formUmum.nik.length + '/16'"></span>
             </div>
-            <p class="text-[11px] text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : ''">Pastikan 16 digit sesuai e-KTP atau Kartu Keluarga resmi.</p>
           </div>
 
-          <!-- Nama Lengkap -->
           <div class="space-y-1.5">
-            <label for="umum-nama" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Nama Lengkap Pemohon *
+            <label for="u-nama" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              Nama Lengkap *
             </label>
             <input
-              id="umum-nama"
+              id="u-nama"
               type="text"
               x-model="formUmum.nama"
               required
-              placeholder="Sesuai dokumen resmi"
+              placeholder="Nama sesuai KTP/KK"
               class="w-full px-4 py-3 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'"
             />
           </div>
 
-          <!-- No WhatsApp -->
           <div class="space-y-1.5">
-            <label for="umum-wa" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Nomor WhatsApp / HP Aktif *
+            <label for="u-wa" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              Nomor WhatsApp / HP *
             </label>
             <input
-              id="umum-wa"
+              id="u-wa"
               type="tel"
               x-model="formUmum.wa"
               required
@@ -314,48 +302,43 @@ const { service } = Astro.props;
             />
           </div>
 
-          <!-- Picker Sesi Loket Kecamatan -->
           <div class="space-y-1.5">
-            <label for="umum-sesi" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Pilihan Sesi Loket Kedatangan *
+            <label for="u-sesi" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              Pilihan Sesi Loket *
             </label>
             <select
-              id="umum-sesi"
+              id="u-sesi"
               x-model="formUmum.sesi"
-              required
               class="w-full px-4 py-3 rounded-2xl border-2 text-sm font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'"
             >
-              <option value="pagi">Sesi Pagi (08.00 - 11.30 WIB) - Kuota Tersedia</option>
-              <option value="siang">Sesi Siang (13.00 - 15.30 WIB) - Kuota Tersedia</option>
+              <option value="pagi">Sesi Pagi (08.00 - 11.30 WIB)</option>
+              <option value="siang">Sesi Siang (13.00 - 15.30 WIB)</option>
             </select>
           </div>
 
-          <!-- Pilihan Lokasi Kantor -->
           <div class="space-y-1.5">
-            <label for="umum-kantor" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+            <label for="u-kantor" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
               Lokasi Pengambilan Dokumen *
             </label>
             <select
-              id="umum-kantor"
+              id="u-kantor"
               x-model="formUmum.kantor"
-              required
               class="w-full px-4 py-3 rounded-2xl border-2 text-sm font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-slate-300 focus:border-blue-600 focus:ring-blue-200'"
             >
-              <option value="kecamatan">Loket Pelayanan Kantor Kecamatan Setempat</option>
-              <option value="disdukcapil">Kantor Dinas Kependudukan & Pencatatan Sipil</option>
-              <option value="kurir">Diantar ke Alamat Rumah via Pos Dinas</option>
+              <option value="kecamatan">Loket Kantor Kecamatan</option>
+              <option value="disdukcapil">Kantor Dinas Dukcapil</option>
+              <option value="kurir">Diantar ke Rumah via Pos Dinas</option>
             </select>
           </div>
 
-          <!-- Alamat Lengkap -->
           <div class="space-y-1.5 sm:col-span-2">
-            <label for="umum-alamat" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+            <label for="u-alamat" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
               Alamat Domisili Lengkap *
             </label>
             <textarea
-              id="umum-alamat"
+              id="u-alamat"
               x-model="formUmum.alamat"
               rows="2"
               required
@@ -366,13 +349,13 @@ const { service } = Astro.props;
           </div>
         </div>
 
-        <div class="pt-4 flex items-center justify-between gap-3 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-          <div class="text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-            ⏱️ Estimasi Waktu Antrean: ~10 Menit di Loket
-          </div>
+        <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+          <span class="text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
+            ⏱️ Estimasi Waktu Antrean: ~10 Menit
+          </span>
           <button
             type="submit"
-            class="px-6 py-3.5 rounded-2xl font-black text-sm border-2 transition-all cursor-pointer shadow-md active:scale-95 flex items-center gap-2"
+            class="w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-sm border-2 transition-all cursor-pointer shadow-sm active:scale-95 flex items-center justify-center gap-2"
             :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'"
           >
             <span>Kirim Pendaftaran Loket</span>
@@ -382,126 +365,119 @@ const { service } = Astro.props;
       </form>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PENGALAMAN 2: TAMPILAN MODE LANSIA -->
-    <!-- ========================================== -->
+    <!-- ============================================== -->
+    <!-- AREA B: MODE LANSIA (Teks Besar & Jemput Bola) -->
+    <!-- ============================================== -->
     <div
       x-show="activeMode === 'lansia'"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 translate-y-2"
+      x-transition:enter="transition ease-out duration-150"
+      x-transition:enter-start="opacity-0 translate-y-1"
       x-transition:enter-end="opacity-100 translate-y-0"
-      class="space-y-6"
+      class="space-y-5"
     >
-      <!-- Banner Penjelasan Ramah Lansia -->
       <div
-        class="p-5 rounded-3xl border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+        class="p-4 sm:p-5 rounded-3xl border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
         :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-amber-300 bg-amber-50 text-amber-950'"
       >
         <div class="flex items-center gap-3">
-          <span class="text-3xl">🚐</span>
+          <span class="text-3xl shrink-0">🚐</span>
           <div>
-            <h2 class="text-lg font-black leading-tight">Layanan Prioritas Lansia — Petugas Datang ke Rumah</h2>
+            <h2 class="text-base sm:text-lg font-black leading-tight">Layanan Prioritas Lansia — Petugas Datang ke Rumah</h2>
             <p class="text-xs font-bold mt-0.5" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-amber-800'">
-              Bapak/Ibu usia 60 tahun ke atas tidak perlu datang ke kantor dinas. Tim armada kami yang akan berkunjung.
+              Warga usia 60 tahun ke atas tidak perlu antre. Tim petugas akan datang membawa alat perekaman biometrik.
             </p>
           </div>
         </div>
+
         <button
           type="button"
-          @click="bacaTeks('Mode Layanan Prioritas Lansia aktif. Petugas Dukcapil siap hadir langsung ke kediaman Bapak Ibu. Silakan isi nama, nomor kontak, dan alamat rumah.')"
-          class="px-4 py-2 rounded-xl text-xs font-black border transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
+          @click="bacaPanduan('Mode Lansia aktif. Petugas Dukcapil siap datang ke rumah Bapak Ibu untuk perekaman data. Silakan isi nama, kontak keluarga, dan alamat rumah.')"
+          class="px-4 py-2 rounded-xl text-xs font-black border transition-all cursor-pointer shrink-0 flex items-center gap-1.5 self-start sm:self-auto"
           :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-amber-400 text-slate-950 border-amber-500 hover:bg-amber-300'"
         >
-          <span>🔊 Dengarkan Panduan</span>
+          <span>🔊 Dengar Suara</span>
         </button>
       </div>
 
-      <!-- Formulir Teks Besar (Min 19px Font) & Layout Sederhana -->
-      <form @submit.prevent="submitPermohonan('Lansia')" class="space-y-6 rounded-3xl p-6 sm:p-9 border-2 shadow-md text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-amber-200 bg-white'">
-        <div class="space-y-5">
-          <!-- Nama Lansia -->
-          <div class="space-y-2">
-            <label for="lansia-nama" class="block font-black text-base sm:text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+      <form @submit.prevent="submitPermohonan('Lansia')" class="space-y-5 rounded-3xl p-5 sm:p-8 border-2 shadow-sm text-base sm:text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-amber-200 bg-white'">
+        <div class="space-y-4">
+          <div class="space-y-1.5">
+            <label for="l-nama" class="block font-black text-sm sm:text-base" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
               1. Nama Lengkap Bapak / Ibu:
             </label>
             <input
-              id="lansia-nama"
+              id="l-nama"
               type="text"
               x-model="formLansia.nama"
               required
-              placeholder="Contoh: Opa Soetrisno"
-              class="w-full px-5 py-4 rounded-2xl border-2 text-lg sm:text-xl font-bold focus:outline-none focus:ring-4 transition-all"
+              placeholder="Contoh: Bapak H. Soepardi"
+              class="w-full px-4 py-3.5 rounded-2xl border-2 text-base sm:text-lg font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-amber-300 focus:border-amber-600 focus:ring-amber-200'"
             />
           </div>
 
-          <!-- NIK atau Tanggal Lahir -->
-          <div class="space-y-2">
-            <label for="lansia-nik" class="block font-black text-base sm:text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+          <div class="space-y-1.5">
+            <label for="l-nik" class="block font-black text-sm sm:text-base" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
               2. NIK KTP atau Tahun Kelahiran:
             </label>
             <input
-              id="lansia-nik"
+              id="l-nik"
               type="text"
               x-model="formLansia.nik"
               required
-              placeholder="Contoh: 1952 atau NIK jika ingat"
-              class="w-full px-5 py-4 rounded-2xl border-2 text-lg sm:text-xl font-bold focus:outline-none focus:ring-4 transition-all"
+              placeholder="Contoh: 1954 atau 16 digit NIK"
+              class="w-full px-4 py-3.5 rounded-2xl border-2 text-base sm:text-lg font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-amber-300 focus:border-amber-600 focus:ring-amber-200'"
             />
           </div>
 
-          <!-- Nomor WhatsApp Anak / Keluarga Pendamping -->
-          <div class="space-y-2">
-            <label for="lansia-wa" class="block font-black text-base sm:text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-              3. Nomor HP / WhatsApp Anak atau Keluarga Pendamping:
+          <div class="space-y-1.5">
+            <label for="l-wa" class="block font-black text-sm sm:text-base" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+              3. Nomor WhatsApp Anak / Keluarga Pendamping:
             </label>
             <input
-              id="lansia-wa"
+              id="l-wa"
               type="tel"
               x-model="formLansia.wa"
               required
-              placeholder="Contoh: 08123456789"
-              class="w-full px-5 py-4 rounded-2xl border-2 text-lg sm:text-xl font-bold focus:outline-none focus:ring-4 transition-all"
+              placeholder="0812xxxxxxxx"
+              class="w-full px-4 py-3.5 rounded-2xl border-2 text-base sm:text-lg font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-amber-300 focus:border-amber-600 focus:ring-amber-200'"
             />
           </div>
 
-          <!-- Alamat Lengkap Kediaman -->
-          <div class="space-y-2">
-            <label for="lansia-alamat" class="block font-black text-base sm:text-lg" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
-              4. Alamat Lengkap Kediaman untuk Dikunjungi Petugas:
+          <div class="space-y-1.5">
+            <label for="l-alamat" class="block font-black text-sm sm:text-base" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+              4. Alamat Rumah untuk Dikunjungi Petugas:
             </label>
             <textarea
-              id="lansia-alamat"
+              id="l-alamat"
               x-model="formLansia.alamat"
               rows="3"
               required
-              placeholder="Tuliskan nama jalan, nomor rumah, RT RW, patokan dekat masjid atau pos satpam"
-              class="w-full px-5 py-4 rounded-2xl border-2 text-base sm:text-lg font-bold focus:outline-none focus:ring-4 transition-all"
+              placeholder="Nama jalan, nomor rumah, RT/RW, dan patokan rumah"
+              class="w-full px-4 py-3.5 rounded-2xl border-2 text-base font-bold focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-amber-300 focus:border-amber-600 focus:ring-amber-200'"
             ></textarea>
           </div>
 
-          <!-- Pilihan Kondisi Tirah Baring -->
-          <div class="p-4 rounded-2xl border flex items-center gap-3 cursor-pointer" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/60' : 'border-amber-200 bg-amber-50/60'">
+          <div class="p-3.5 rounded-2xl border flex items-center gap-3 cursor-pointer" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/60' : 'border-amber-200 bg-amber-50/60'">
             <input
-              id="lansia-bedridden"
+              id="l-bedridden"
               type="checkbox"
               x-model="formLansia.tirahBaring"
-              class="w-6 h-6 rounded text-amber-600 focus:ring-amber-400 cursor-pointer"
+              class="w-5 h-5 rounded text-amber-600 focus:ring-amber-400 cursor-pointer"
             />
-            <label for="lansia-bedridden" class="font-bold text-sm sm:text-base cursor-pointer select-none">
-              Warga Lansia dalam kondisi sakit / tirah baring (alat rekam portabel disiapkan).
+            <label for="l-bedridden" class="font-bold text-xs sm:text-sm cursor-pointer select-none">
+              Warga Lansia dalam kondisi sakit / tirah baring (alat portabel disiapkan).
             </label>
           </div>
         </div>
 
-        <!-- Tombol Besar Panggilan Armada -->
-        <div class="pt-4">
+        <div class="pt-2">
           <button
             type="submit"
-            class="w-full py-5 px-6 rounded-2xl font-black text-base sm:text-lg border-2 transition-all cursor-pointer shadow-lg active:scale-95 flex items-center justify-center gap-3"
+            class="w-full py-4 px-6 rounded-2xl font-black text-sm sm:text-base border-2 transition-all cursor-pointer shadow-md active:scale-95 flex items-center justify-center gap-2"
             :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-amber-500 text-slate-950 border-amber-600 hover:bg-amber-400'"
           >
             <span>🚐</span>
@@ -511,25 +487,24 @@ const { service } = Astro.props;
       </form>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PENGALAMAN 3: TAMPILAN MODE DISABILITAS -->
-    <!-- ========================================== -->
+    <!-- ============================================== -->
+    <!-- AREA C: MODE DISABILITAS (Audio Focus & Inklusi) -->
+    <!-- ============================================== -->
     <div
       x-show="activeMode === 'disabilitas'"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0 translate-y-2"
+      x-transition:enter="transition ease-out duration-150"
+      x-transition:enter-start="opacity-0 translate-y-1"
       x-transition:enter-end="opacity-100 translate-y-0"
-      class="space-y-6"
+      class="space-y-5"
     >
-      <!-- Speech Assistant Status Banner -->
       <div
-        class="p-4 sm:p-5 rounded-3xl border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+        class="p-4 sm:p-5 rounded-3xl border-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
         :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-purple-300 bg-purple-50 text-purple-950'"
       >
         <div class="flex items-center gap-3">
-          <span class="text-3xl animate-bounce">♿</span>
+          <span class="text-3xl shrink-0">♿</span>
           <div>
-            <h2 class="text-lg font-black leading-tight">Formulir Interaktif dengan Asisten Audio & Juru Bahasa Isyarat</h2>
+            <h2 class="text-base sm:text-lg font-black leading-tight">Formulir Interaktif Pendampingan Khusus</h2>
             <p class="text-xs font-bold mt-0.5" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : 'text-purple-800'">
               Setiap kolom yang difokuskan akan membacakan panduan suara secara otomatis.
             </p>
@@ -538,121 +513,113 @@ const { service } = Astro.props;
 
         <button
           type="button"
-          @click="bacaTeks('Mode Layanan Khusus Disabilitas aktif. Formulir ini ramah pembaca layar dan menyediakan pendampingan juru bahasa isyarat serta jemput bola perekaman biometrik.')"
-          class="px-4 py-2 rounded-xl text-xs font-black border transition-all cursor-pointer shrink-0 flex items-center gap-1.5"
+          @click="bacaPanduan('Mode Disabilitas aktif. Formulir ini ramah pembaca layar dan menyediakan pendampingan juru bahasa isyarat serta jemput bola perekaman biometrik.')"
+          class="px-4 py-2 rounded-xl text-xs font-black border transition-all cursor-pointer shrink-0 flex items-center gap-1.5 self-start sm:self-auto"
           :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-600 text-white border-purple-700 hover:bg-purple-700'"
         >
-          <span>🔊 Putar Instruksi Audio</span>
+          <span>🔊 Putar Panduan</span>
         </button>
       </div>
 
-      <form @submit.prevent="submitPermohonan('Disabilitas')" class="space-y-6 rounded-3xl p-6 sm:p-8 border-2 shadow-md" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-purple-200 bg-white'">
-        <!-- Pilihan Ragam Disabilitas & Fasilitas -->
-        <div class="space-y-3">
+      <form @submit.prevent="submitPermohonan('Disabilitas')" class="space-y-5 rounded-3xl p-5 sm:p-7 border-2 shadow-sm" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-purple-200 bg-white'">
+        <div class="space-y-2">
           <label class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-purple-950'">
-            Pilih Ragam Kebutuhan Fasilitas Aksesibel:
+            Pilih Fasilitas Pendampingan Petugas:
           </label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
-            <label class="p-3.5 rounded-2xl border flex items-center gap-2.5 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('kursi-roda') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200')">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-bold">
+            <label class="p-3 rounded-xl border flex items-center gap-2 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('kursi-roda') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : 'border-slate-200'">
               <input type="checkbox" value="kursi-roda" x-model="formDisabilitas.fasilitas" class="w-4 h-4 rounded text-purple-600">
               <span>♿ Akses Kursi Roda & Ramp Landai</span>
             </label>
-
-            <label class="p-3.5 rounded-2xl border flex items-center gap-2.5 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('isyarat') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200')">
+            <label class="p-3 rounded-xl border flex items-center gap-2 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('isyarat') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : 'border-slate-200'">
               <input type="checkbox" value="isyarat" x-model="formDisabilitas.fasilitas" class="w-4 h-4 rounded text-purple-600">
-              <span>🧏 Juru Bahasa Isyarat (Tuli / Hard of Hearing)</span>
+              <span>🧏 Juru Bahasa Isyarat (Tuli)</span>
             </label>
-
-            <label class="p-3.5 rounded-2xl border flex items-center gap-2.5 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('netra') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200')">
+            <label class="p-3 rounded-xl border flex items-center gap-2 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('netra') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : 'border-slate-200'">
               <input type="checkbox" value="netra" x-model="formDisabilitas.fasilitas" class="w-4 h-4 rounded text-purple-600">
-              <span>👁️ Pendampingan Tunanetra / Audio Braille</span>
+              <span>👁️ Pendampingan Tunanetra / Audio</span>
             </label>
-
-            <label class="p-3.5 rounded-2xl border flex items-center gap-2.5 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('jemput') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : (temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200')">
+            <label class="p-3 rounded-xl border flex items-center gap-2 cursor-pointer transition-colors" :class="formDisabilitas.fasilitas.includes('jemput') ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-purple-100 text-purple-950 border-purple-400') : 'border-slate-200'">
               <input type="checkbox" value="jemput" x-model="formDisabilitas.fasilitas" class="w-4 h-4 rounded text-purple-600">
-              <span>🚐 Armada Jemput Bola ke Rumah / Panti</span>
+              <span>🚐 Armada Jemput Bola ke Rumah/Panti</span>
             </label>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <!-- Nama Pemohon -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="space-y-1.5">
-            <label for="dis-nama" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+            <label for="d-nama" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
               Nama Lengkap Pemohon *
             </label>
             <input
-              id="dis-nama"
+              id="d-nama"
               type="text"
               x-model="formDisabilitas.nama"
-              @focus="bacaTeks('Kolom nama pemohon disabilitas. Silakan masukkan nama lengkap sesuai dokumen.')"
+              @focus="bacaPanduan('Kolom nama pemohon disabilitas.')"
               required
               placeholder="Nama lengkap"
-              class="w-full px-4 py-3.5 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
+              class="w-full px-4 py-3 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-purple-300 focus:border-purple-600 focus:ring-purple-200'"
             />
           </div>
 
-          <!-- NIK -->
           <div class="space-y-1.5">
-            <label for="dis-nik" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              NIK (16 Digit) *
+            <label for="d-nik" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              NIK Pemohon *
             </label>
             <input
-              id="dis-nik"
+              id="d-nik"
               type="text"
               maxlength="16"
               x-model="formDisabilitas.nik"
-              @focus="bacaTeks('Kolom NIK 16 digit. Masukkan nomor induk kependudukan Anda.')"
+              @focus="bacaPanduan('Kolom NIK 16 digit.')"
               required
               placeholder="320101XXXXXXXXXX"
-              class="w-full px-4 py-3.5 rounded-2xl border-2 text-sm font-mono focus:outline-none focus:ring-4 transition-all"
+              class="w-full px-4 py-3 rounded-2xl border-2 text-sm font-mono focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-purple-300 focus:border-purple-600 focus:ring-purple-200'"
             />
           </div>
 
-          <!-- Nomor Kontak Pendamping -->
           <div class="space-y-1.5 sm:col-span-2">
-            <label for="dis-wa" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Nomor WhatsApp / HP Pendamping atau Panti Sosial *
+            <label for="d-wa" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              Nomor WhatsApp Pendamping / Panti *
             </label>
             <input
-              id="dis-wa"
+              id="d-wa"
               type="tel"
               x-model="formDisabilitas.wa"
-              @focus="bacaTeks('Kolom nomor WhatsApp pendamping atau pengurus panti sosial.')"
+              @focus="bacaPanduan('Kolom nomor WhatsApp pendamping atau pengurus panti.')"
               required
               placeholder="08xxxxxxxxxx"
-              class="w-full px-4 py-3.5 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
+              class="w-full px-4 py-3 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-purple-300 focus:border-purple-600 focus:ring-purple-200'"
             />
           </div>
 
-          <!-- Alamat Lengkap -->
           <div class="space-y-1.5 sm:col-span-2">
-            <label for="dis-alamat" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
-              Alamat Rumah atau Lokasi Panti Asuhan/Jompo *
+            <label for="d-alamat" class="block text-xs font-black uppercase tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-700'">
+              Alamat Rumah atau Lembaga Panti Asuhan/Jompo *
             </label>
             <textarea
-              id="dis-alamat"
+              id="d-alamat"
               x-model="formDisabilitas.alamat"
-              @focus="bacaTeks('Kolom alamat lengkap penjemputan armada dokumen.')"
+              @focus="bacaPanduan('Kolom alamat lengkap penjemputan armada.')"
               rows="2"
               required
               placeholder="Alamat lengkap, patokan jalan, atau nama lembaga panti"
-              class="w-full px-4 py-3.5 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
+              class="w-full px-4 py-3 rounded-2xl border-2 text-sm focus:outline-none focus:ring-4 transition-all"
               :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15] focus:ring-white' : 'border-purple-300 focus:border-purple-600 focus:ring-purple-200'"
             ></textarea>
           </div>
         </div>
 
-        <div class="pt-4 flex items-center justify-between gap-3 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+        <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
           <span class="text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-            ♿ Fasilitas Aksesibel Disediakan Tim Resmi
+            ♿ Fasilitas Aksesibel Disediakan Petugas
           </span>
           <button
             type="submit"
-            class="px-6 py-3.5 rounded-2xl font-black text-sm border-2 transition-all cursor-pointer shadow-md active:scale-95 flex items-center gap-2"
+            class="w-full sm:w-auto px-6 py-3 rounded-2xl font-black text-sm border-2 transition-all cursor-pointer shadow-sm active:scale-95 flex items-center justify-center gap-2"
             :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-purple-600 text-white border-purple-700 hover:bg-purple-700'"
           >
             <span>Kirim Permohonan Aksesibel</span>
@@ -662,92 +629,83 @@ const { service } = Astro.props;
       </form>
     </div>
 
-    <!-- ========================================== -->
-    <!-- MODAL KONFIRMASI TIKET RESMI RESI DIGITAL -->
-    <!-- ========================================== -->
+    <!-- MODAL KONFIRMASI SUKSES & TIKET RESMI -->
     <div
       x-show="showSuccessModal"
       x-cloak
-      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter="transition ease-out duration-150"
       x-transition:enter-start="opacity-0 scale-95"
       x-transition:enter-end="opacity-100 scale-100"
-      class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
       role="dialog"
       aria-modal="true"
     >
       <div
-        class="w-full max-w-lg rounded-3xl p-6 sm:p-7 shadow-2xl border-2 my-auto text-left space-y-5"
+        class="w-full max-w-lg rounded-3xl p-5 sm:p-7 shadow-2xl border-2 my-auto text-left space-y-4"
         :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-white border-slate-200 text-slate-900'"
       >
-        <!-- Header Resi -->
         <div class="flex items-start justify-between gap-3 pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
-          <div class="flex items-center gap-3">
-            <span class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black bg-emerald-100 text-emerald-800">
+          <div class="flex items-center gap-2.5">
+            <span class="w-10 h-10 rounded-2xl flex items-center justify-center text-xl font-black bg-emerald-100 text-emerald-800">
               ✓
             </span>
             <div>
-              <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-600">Permohonan Berhasil Tercatat</span>
-              <h3 class="text-lg font-black tracking-tight leading-tight">Bukti Tanda Terima Resmi</h3>
+              <span class="block text-[10px] font-black uppercase tracking-wider text-emerald-600">Berhasil Diajukan</span>
+              <h3 class="text-base sm:text-lg font-black tracking-tight">Tanda Terima Permohonan Resmi</h3>
             </div>
           </div>
           <button
             type="button"
             @click="showSuccessModal = false"
-            class="p-2 rounded-xl border text-sm font-black cursor-pointer"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15]' : 'border-slate-200 text-slate-500 hover:bg-slate-100'"
+            class="p-1.5 rounded-xl border text-sm font-black cursor-pointer"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15]' : 'border-slate-200 text-slate-500'"
           >
             ✕
           </button>
         </div>
 
-        <!-- Tiket Digital Card -->
         <div
-          class="p-5 rounded-2xl border-2 space-y-4"
+          class="p-4 rounded-2xl border-2 space-y-3"
           :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950' : 'border-blue-200 bg-blue-50/60'"
         >
-          <div class="flex items-center justify-between pb-3 border-b border-dashed" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-blue-200'">
-            <span class="text-xs font-bold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Nomor Registrasi:</span>
-            <span class="font-mono text-base font-black text-blue-700 tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="submittedRecord.regNumber"></span>
+          <div class="flex items-center justify-between pb-2 border-b border-dashed" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-blue-200'">
+            <span class="text-xs font-bold text-slate-500">Nomor Registrasi Tiket:</span>
+            <span class="font-mono text-sm sm:text-base font-black text-blue-700 tracking-wider" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="submittedRecord.regNumber"></span>
           </div>
 
           <div class="grid grid-cols-2 gap-2 text-xs">
             <div>
-              <span class="block font-bold text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/60' : ''">Nama Pemohon:</span>
-              <span class="font-black text-slate-800" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="submittedRecord.nama"></span>
+              <span class="block font-bold text-slate-400">Nama Pemohon:</span>
+              <span class="font-black" x-text="submittedRecord.nama"></span>
             </div>
             <div>
-              <span class="block font-bold text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/60' : ''">Kategori Layanan:</span>
-              <span class="font-black text-slate-800" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="submittedRecord.kategori"></span>
+              <span class="block font-bold text-slate-400">Kategori:</span>
+              <span class="font-black" x-text="submittedRecord.kategori"></span>
             </div>
             <div>
-              <span class="block font-bold text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/60' : ''">Tanggal Pengajuan:</span>
-              <span class="font-black text-slate-800" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''" x-text="submittedRecord.tanggal"></span>
+              <span class="block font-bold text-slate-400">Tanggal:</span>
+              <span class="font-black" x-text="submittedRecord.tanggal"></span>
             </div>
             <div>
-              <span class="block font-bold text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/60' : ''">Estimasi Selesai:</span>
+              <span class="block font-bold text-slate-400">Estimasi:</span>
               <span class="font-black text-emerald-600" x-text="submittedRecord.estimasi"></span>
             </div>
           </div>
-
-          <div class="pt-2 text-[11px] font-medium" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-600'">
-            Simpan atau tangkap layar (screenshot) bukti tiket ini. Nomor registrasi dapat digunakan kapan saja pada menu <strong>Lacak Dokumen</strong>.
-          </div>
         </div>
 
-        <!-- Tombol Aksi Tiket -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-2">
           <button
             type="button"
             @click="window.print()"
-            class="px-4 py-2.5 rounded-xl border text-xs font-black transition-all cursor-pointer"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-neutral-900' : 'border-slate-300 text-slate-700 hover:bg-slate-100'"
+            class="w-full sm:w-auto px-4 py-2.5 rounded-xl border text-xs font-black cursor-pointer"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15]' : 'border-slate-300 text-slate-700 hover:bg-slate-100'"
           >
-            🖨️ Cetak / Simpan Resi
+            🖨️ Cetak Resi
           </button>
 
           <a
             href="/lacak"
-            class="px-5 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer shadow-sm active:scale-95 flex items-center gap-1.5"
+            class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs font-black border transition-all cursor-pointer shadow-xs active:scale-95 flex items-center justify-center gap-1.5"
             :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'"
           >
             <span>Buka Halaman Lacak</span>
@@ -758,9 +716,8 @@ const { service } = Astro.props;
     </div>
   </div>
 
-  <!-- SCRIPT ALPINE CONTROLLER UNTUK 3 MODE LAYANAN -->
   <script is:inline>
-    function formAdaptiveEngine(namaLayanan, slugLayanan) {
+    function formAdaptive3in1(namaLayanan, slugLayanan) {
       return {
         namaLayanan: namaLayanan,
         slugLayanan: slugLayanan,
@@ -794,7 +751,6 @@ const { service } = Astro.props;
         },
 
         init() {
-          // Pre-select mode if slug is lansia or disabilitas
           if (this.slugLayanan === 'lansia') {
             this.activeMode = 'lansia';
           } else if (this.slugLayanan === 'disabilitas') {
@@ -802,16 +758,14 @@ const { service } = Astro.props;
           }
         },
 
-        pilihMode(mode) {
+        gantiMode(mode) {
           this.activeMode = mode;
-          if (window.enterpriseA11yData) {
-            // trigger click sound
-          }
           try {
             const ctx = new (window.AudioContext || window.webkitAudioContext)();
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            osc.frequency.setValueAtTime(mode === 'lansia' ? 700 : (mode === 'disabilitas' ? 850 : 600), ctx.currentTime);
+            const freq = mode === 'lansia' ? 550 : (mode === 'disabilitas' ? 700 : 600);
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
             gain.gain.setValueAtTime(0.08, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
             osc.connect(gain);
@@ -827,7 +781,7 @@ const { service } = Astro.props;
           const mm = String(now.getMonth() + 1).padStart(2, '0');
           const dd = String(now.getDate()).padStart(2, '0');
           const random4 = Math.floor(1000 + Math.random() * 9000);
-          const regNumber = `KITA-KTP-${yyyy}${mm}${dd}-${random4}`;
+          const regNumber = `KT-${yyyy}${mm}${dd}-${random4}`;
 
           let dataPayload = {
             id: regNumber,
@@ -836,8 +790,8 @@ const { service } = Astro.props;
             kategori: kategori,
             tanggal: `${dd} September ${yyyy}`,
             step: 1,
-            statusTitle: 'Permohonan Diterima & Terverifikasi Sistem',
-            statusMessage: 'Nomor registrasi telah diterbitkan. Berkas sedang dalam tahap pra-verifikasi kelengkapan dokumen.',
+            statusTitle: 'Permohonan Diterima & Terverifikasi',
+            statusMessage: 'Nomor registrasi telah diterbitkan. Berkas sedang dalam tahap pra-verifikasi.',
             estimasi: kategori === 'Lansia' || kategori === 'Disabilitas' ? '1-2 Hari Kerja (Jemput Bola)' : '1 Hari Kerja'
           };
 
@@ -861,9 +815,7 @@ const { service } = Astro.props;
             dataPayload.catatan = `Fasilitas: ${this.formDisabilitas.fasilitas.join(', ')}`;
           }
 
-          // Save to localStorage
           const KEY = 'semua_pengajuan_layanan';
-          const KEY_OLD = 'kita_ktp_records';
           let records = [];
           try {
             const raw = localStorage.getItem(KEY);
@@ -872,28 +824,10 @@ const { service } = Astro.props;
 
           records.unshift(dataPayload);
           localStorage.setItem(KEY, JSON.stringify(records));
-          localStorage.setItem(KEY_OLD, JSON.stringify(records));
 
           this.submittedRecord = dataPayload;
           this.showSuccessModal = true;
 
-          // Sound effect
-          try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
-              gain.gain.setValueAtTime(0.1, ctx.currentTime + idx * 0.08);
-              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.08 + 0.25);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(ctx.currentTime + idx * 0.08);
-              osc.stop(ctx.currentTime + idx * 0.08 + 0.25);
-            });
-          } catch (e) {}
-
-          // Speech Announcement
           if ('speechSynthesis' in window) {
             const utterance = new SpeechSynthesisUtterance(`Permohonan ${this.namaLayanan} berhasil diajukan dengan nomor registrasi ${regNumber}.`);
             utterance.lang = 'id-ID';

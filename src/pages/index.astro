@@ -4,11 +4,11 @@ import MainLayout from '../layouts/MainLayout.astro';
 const priorityGates = [
   {
     id: 'lansia',
-    badge: 'Jemput Bola Armada',
+    badge: 'Armada Keliling Gratis',
     badgeClass: 'bg-amber-100 text-amber-950 border-amber-300',
     title: 'Gerbang Prioritas Lansia',
     subtitle: 'Warga Usia 60 Tahun ke Atas',
-    desc: 'Fasilitas jemput bola ke kediaman tanpa perlu antre di loket. Petugas Dukcapil hadir membawa perangkat rekam biometrik portabel khusus warga tirah baring.',
+    desc: 'Fasilitas jemput bola ke kediaman tanpa perlu antre di kantor dinas. Tim Dukcapil hadir membawa alat perekaman biometrik khusus warga tirah baring.',
     icon: '🧓',
     link: '/layanan/lansia',
     cta: 'Panggil Petugas Lansia ➔',
@@ -16,7 +16,7 @@ const priorityGates = [
   },
   {
     id: 'disabilitas',
-    badge: 'Fasilitas Aksesibel',
+    badge: 'Aksesibel & Sensorik',
     badgeClass: 'bg-purple-100 text-purple-950 border-purple-300',
     title: 'Gerbang Khusus Disabilitas',
     subtitle: 'Sensorik, Fisik, Intelektual & Mental',
@@ -28,11 +28,11 @@ const priorityGates = [
   },
   {
     id: 'umum',
-    badge: 'Antrean Cerdas Digital',
+    badge: 'Tiket Antrean Mandiri',
     badgeClass: 'bg-blue-100 text-blue-950 border-blue-300',
     title: 'Gerbang Mandiri & Umum',
-    subtitle: 'Seluruh Penduduk Indonesia',
-    desc: 'Registrasi online mandiri, pemesanan nomor antrean loket kecamatan tanpa calo, penelusuran berkas instan, dan estimasi waktu tunggu transparan.',
+    subtitle: 'Seluruh Warga Negara Indonesia',
+    desc: 'Registrasi online mandiri, pemesanan tiket antrean loket kecamatan tanpa calo, penelusuran berkas instan, dan estimasi waktu tunggu transparan.',
     icon: '🏢',
     link: '/layanan/ktp',
     cta: 'Buka Loket Mandiri ➔',
@@ -48,17 +48,17 @@ const directoryServices = [
     category: 'Identitas Pokok',
     badge: 'Jemput Bola & Loket',
     badgeColor: 'bg-blue-50 text-blue-800 border-blue-200',
-    desc: 'Perekaman pemula 17 tahun, penggantian KTP rusak/hilang, dan pembaruan foto/biometrik.',
+    desc: 'Perekaman pemula 17 tahun, penggantian fisik rusak/hilang, dan pembaruan biometrik.',
     sla: '1-2 Hari Kerja'
   },
   {
     slug: 'kk',
     icon: '👨‍👩‍👧',
     title: 'Kartu Keluarga (KK)',
-    category: 'Dokumen Keluarga',
+    category: 'Data Keluarga',
     badge: 'Online & Cetak Mandiri',
     badgeColor: 'bg-indigo-50 text-indigo-800 border-indigo-200',
-    desc: 'Pecah KK baru, penambahan anggota keluarga lahir/pindah, dan pemutakhiran biodata kepala keluarga.',
+    desc: 'Pecah KK baru, penambahan anggota keluarga, dan pemutakhiran biodata sipil.',
     sla: '1 Hari Kerja'
   },
   {
@@ -68,7 +68,7 @@ const directoryServices = [
     category: 'Hak Sipil Anak',
     badge: 'Online & Kurir Dinas',
     badgeColor: 'bg-pink-50 text-pink-800 border-pink-200',
-    desc: 'Penerbitan kartu identitas resmi anak usia 0-17 tahun terintegrasi kutipan akta kelahiran.',
+    desc: 'Penerbitan kartu identitas anak usia 0-17 tahun terintegrasi kutipan akta kelahiran.',
     sla: '2 Hari Kerja'
   },
   {
@@ -78,7 +78,7 @@ const directoryServices = [
     category: 'Jaminan Sosial',
     badge: 'Sinkronisasi NIK PBI',
     badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-    desc: 'Verifikasi kepesertaan PBI bantuan pemerintah, pembaharuan faskes tingkat 1, dan validasi data terpadu.',
+    desc: 'Sinkronisasi NIK kepesertaan PBI bantuan pemerintah dan pindah faskes tingkat 1.',
     sla: 'Instan / 24 Jam'
   },
   {
@@ -88,7 +88,7 @@ const directoryServices = [
     category: 'Bansos & DTKS',
     badge: 'Cek Desil & Usulan',
     badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
-    desc: 'Pengecekan desil kemiskinan DTKS, usulan program sembako tunai, PKH, dan validasi lapangan dinas sosial.',
+    desc: 'Pengecekan desil kemiskinan DTKS, usulan sembako PKH, dan validasi lapangan dinas sosial.',
     sla: '3 Hari Kerja'
   },
   {
@@ -98,7 +98,7 @@ const directoryServices = [
     category: 'Inklusi Prioritas',
     badge: 'Jemput Bola Prioritas',
     badgeColor: 'bg-purple-50 text-purple-800 border-purple-200',
-    desc: 'Pendampingan sensorik netra/rungu, juru bahasa isyarat, dan perekaman dokumen ke rumah.',
+    desc: 'Pendampingan sensorik netra/rungu, juru bahasa isyarat, dan jemput bola ke rumah.',
     sla: 'Prioritas Utama'
   },
   {
@@ -108,7 +108,7 @@ const directoryServices = [
     category: 'Prioritas Usia 60+',
     badge: 'Armada Khusus Rumah',
     badgeColor: 'bg-orange-50 text-orange-800 border-orange-200',
-    desc: 'Percepatan cetak KTP seumur hidup dan kunjungan tim administrasi keliling ke kediaman pemohon.',
+    desc: 'Percepatan cetak KTP seumur hidup dan armada keliling jemput bola ke kediaman.',
     sla: 'Prioritas Utama'
   },
   {
@@ -118,7 +118,7 @@ const directoryServices = [
     category: 'Mobilitas Warga',
     badge: 'SKPWNI Digital',
     badgeColor: 'bg-teal-50 text-teal-800 border-teal-200',
-    desc: 'Penerbitan Surat Keterangan Pindah Warga Negara Indonesia (SKPWNI) antar RT, kelurahan, dan provinsi.',
+    desc: 'Penerbitan Surat Keterangan Pindah Warga Negara Indonesia (SKPWNI) antar daerah.',
     sla: '1-2 Hari Kerja'
   },
   {
@@ -128,17 +128,17 @@ const directoryServices = [
     category: 'Catatan Sipil',
     badge: 'QR Code Resmi',
     badgeColor: 'bg-cyan-50 text-cyan-800 border-cyan-200',
-    desc: 'Penerbitan kutipan akta kelahiran baru, akta kematian, serta pembaharuan silsilah hukum keluarga.',
+    desc: 'Pencatatan dan penerbitan kutipan akta kelahiran baru serta akta kematian keluarga.',
     sla: '2 Hari Kerja'
   },
   {
     slug: 'pendatang',
     icon: '🗺️',
-    title: 'Panduan Warga Baru',
-    category: 'Integrasi Wilayah',
+    title: 'Panduan Warga Pindah',
+    category: 'Integrasi Warga',
     badge: 'Integrasi RT/RW',
     badgeColor: 'bg-sky-50 text-sky-800 border-sky-200',
-    desc: 'Pelaporan kedatangan warga baru, pendaftaran domisili sementara, dan integrasi data lingkungan tinggal.',
+    desc: 'Ceklist administrasi lapor RT/RW 1x24 jam dan pendaftaran domisili tempat tinggal.',
     sla: '1 Hari Kerja'
   },
   {
@@ -148,177 +148,149 @@ const directoryServices = [
     category: 'Transparansi Publik',
     badge: 'Respons 1x24 Jam',
     badgeColor: 'bg-rose-50 text-rose-800 border-rose-200',
-    desc: 'Saluran aduan pungli, kendala biometrik, ketidaksesuaian data NIK, serta monitoring berkas terkendala.',
+    desc: 'Saluran pengaduan pungli, kendala sidik jari biometrik, dan keluhan administrasi.',
     sla: 'Maks. 24 Jam'
   }
 ];
 ---
 
 <MainLayout
-  title="KITA-KTP — Portal Administrasi Kependudukan Inklusif Nasional"
-  description="Layanan Administrasi Kependudukan Terpadu, Bebas Biaya, Ramah Lansia dan Difabel Republik Indonesia."
+  title="KITA-TERPADU — Direktori Layanan Administrasi Kependudukan Inklusif"
+  description="Layanan Kependudukan dan Catatan Sipil Terpadu Ramah Disabilitas, Lansia, dan Warga Umum."
 >
-  <div class="space-y-16 sm:space-y-24" x-data="{ isHeroSpeaking: false }">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-14 sm:space-y-20 w-full max-w-full overflow-x-hidden" x-data="{ isSpeakingHero: false }">
 
-    <!-- 1. HERO BANNER BERKELAS NASIONAL (Split Grid Editorial Modern) -->
-    <section aria-labelledby="hero-title" class="pt-2 sm:pt-4">
+    <!-- 1. HERO SECTION UNIVERSAL (1 Kolom di HP, 2 Kolom di Desktop) -->
+    <section aria-labelledby="hero-main-title" class="w-full max-w-full">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        <!-- Sisi Kiri: Headline Tajam & Transparansi Publik -->
-        <div class="lg:col-span-7 space-y-6 text-left">
-          <!-- Official Tagline Badge -->
+        <!-- Kolom Kiri: Teks & Aksi -->
+        <div class="lg:col-span-7 space-y-5 text-left">
           <div
-            class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs font-black border transition-all"
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black border transition-all"
             :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black text-[#FACC15]' : 'border-blue-200 bg-blue-50 text-blue-950 shadow-2xs'"
           >
-            <span class="text-sm">🇮🇩</span>
-            <span class="tracking-wide uppercase text-[10px] sm:text-xs">Sistem Administrasi Kependudukan Digital Terpadu RI</span>
+            <span>🇮🇩</span>
+            <span class="tracking-wide uppercase text-[10px] sm:text-xs">KITA-TERPADU — Sistem Administrasi Kependudukan & Layanan Publik Inklusif</span>
           </div>
 
-          <!-- Headline Utama Berwibawa -->
           <h1
-            id="hero-title"
-            class="text-3xl sm:text-5xl lg:text-5xl font-black tracking-tight leading-[1.15]"
+            id="hero-main-title"
+            class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.2]"
             :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'"
           >
             Kesetaraan Hak Kependudukan Tanpa Batas Ruang dan Kondisi Fisik
           </h1>
 
-          <!-- Deskripsi Transparansi Publik -->
           <p
-            class="text-sm sm:text-base lg:text-lg font-medium leading-relaxed max-w-2xl"
-            :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-600'"
+            class="text-xs sm:text-sm lg:text-base font-medium leading-relaxed max-w-2xl text-slate-600"
+            :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : ''"
           >
-            Komitmen negara menghadirkan administrasi kependudukan yang <strong>100% bebas biaya</strong>, tanpa diskriminasi, dan tanpa perantara pungli. Setiap warga negara berhak atas kemudahan memperoleh KTP-el, Kartu Keluarga, dan Akta Sipil melalui layanan mandiri maupun <strong>armada jemput bola</strong> langsung ke rumah.
+            Pelayanan administrasi kependudukan yang <strong>100% bebas biaya</strong>, transparan, dan berkeadilan. Warga berhak atas penerbitan dokumen hukum secara mandiri maupun melalui <strong>armada jemput bola</strong> langsung ke rumah khusus lansia dan penyandang disabilitas.
           </p>
 
-          <!-- Audio Reader & CTA Buttons -->
-          <div class="pt-2 flex flex-wrap items-center gap-3">
-            <!-- Tombol Narasi Ringkasan Beranda -->
+          <!-- Action Buttons & Audio Guide -->
+          <div class="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
             <button
               type="button"
               @click="
-                bunyiKlik(800);
-                if (isHeroSpeaking) {
+                bunyiKlik(650);
+                if (isSpeakingHero) {
                   hentikanSuara();
-                  isHeroSpeaking = false;
+                  isSpeakingHero = false;
                 } else {
-                  isHeroSpeaking = true;
-                  bacaTeks('Selamat datang di Portal Kependudukan KITA-KTP Republik Indonesia. Portal ini menjamin hak identitas kependudukan yang setara bagi seluruh warga, termasuk lansia dan penyandang disabilitas dengan layanan jemput bola ke rumah tanpa biaya.');
+                  isSpeakingHero = true;
+                  bacaPanduan('Selamat datang di Portal KITA-TERPADU Republik Indonesia. Portal ini menjamin kemudahan akses administrasi kependudukan bebas biaya bagi seluruh warga negara, didukung layanan jemput bola ke rumah bagi lansia dan difabel.');
                 }
               "
-              class="px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm font-black border-2 transition-all flex items-center gap-2 cursor-pointer shadow-sm active:scale-95"
-              :class="isHeroSpeaking
+              class="px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-black border-2 transition-all flex items-center gap-2 cursor-pointer shadow-xs active:scale-95"
+              :class="isSpeakingHero
                 ? (temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-amber-400 text-slate-950 border-amber-500 animate-pulse')
-                : (temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15] hover:bg-neutral-900' : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100')"
+                : (temaDisabilitas === 'netra-kontras' ? 'bg-black text-[#FACC15] border-[#FACC15]' : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100')"
             >
-              <span class="text-base" x-text="isHeroSpeaking ? '⏹️' : '🔊'"></span>
-              <span x-text="isHeroSpeaking ? 'Hentikan Audio' : 'Dengarkan Ringkasan Beranda'"></span>
+              <span class="text-base" x-text="isSpeakingHero ? '⏹️' : '🔊'"></span>
+              <span x-text="isSpeakingHero ? 'Hentikan Suara' : 'Dengar Ringkasan Audio'"></span>
             </button>
 
-            <!-- CTA: Jelajahi Layanan -->
             <a
-              href="#direktori-layanan"
-              @click="bunyiKlik(800)"
-              class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-black border transition-all flex items-center gap-2 shadow-sm active:scale-95"
-              :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'"
+              href="#modul-layanan"
+              @click="bunyiKlik(650)"
+              class="px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black border transition-all flex items-center gap-1.5 shadow-xs active:scale-95"
+              :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'"
             >
-              <span>Jelajahi 11 Layanan</span>
+              <span>11 Layanan</span>
               <span aria-hidden="true">↓</span>
             </a>
 
-            <!-- CTA: Lacak Tiket -->
             <a
               href="/lacak"
-              @click="bunyiKlik(800)"
-              class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-black border transition-all flex items-center gap-2 shadow-sm active:scale-95"
-              :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-neutral-900' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800'"
+              @click="bunyiKlik(700)"
+              class="px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-black border transition-all flex items-center gap-1.5 shadow-xs active:scale-95"
+              :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15]' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800'"
             >
-              <span>🔍 Lacak Permohonan</span>
+              <span>🔍 Lacak Tiket</span>
             </a>
           </div>
         </div>
 
-        <!-- Sisi Kanan: Foto Editorial Resolusi Tinggi dengan Badge Metrik -->
-        <div class="lg:col-span-5 relative">
-          <!-- Bingkai Foto Editorial Berkelas -->
+        <!-- Kolom Kanan: Foto Hero Editorial Berkualitas Tinggi -->
+        <div class="lg:col-span-5 relative w-full">
           <div
-            class="relative rounded-3xl overflow-hidden border-2 shadow-2xl transition-transform duration-300 hover:scale-[1.01]"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-neutral-950' : 'border-slate-200 bg-white'"
+            class="relative rounded-3xl overflow-hidden border-2 shadow-xl"
+            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] bg-black' : 'border-slate-200 bg-white'"
           >
             <img
               src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop"
-              alt="Petugas pelayanan kependudukan berdedikasi melayani warga lansia dan masyarakat dengan ramah dan inklusif"
-              class="w-full h-80 sm:h-96 object-cover object-center filter contrast-105"
+              alt="Petugas pelayanan kependudukan melayani warga lansia dengan ramah dan inklusif"
+              class="w-full h-64 sm:h-80 lg:h-96 object-cover object-center"
               loading="eager"
             />
-
-            <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
-
-            <!-- Keterangan Foto Editorial -->
-            <div class="absolute bottom-4 left-4 right-4 text-white">
-              <span class="inline-block text-[10px] font-black uppercase tracking-wider bg-blue-600 px-2.5 py-0.5 rounded-full mb-1">
+            <div class="absolute bottom-3 left-3 right-3 text-white">
+              <span class="inline-block text-[9px] font-black uppercase tracking-wider bg-blue-600 px-2.5 py-0.5 rounded-full mb-1">
                 Layanan Jemput Bola Terpadu
               </span>
               <p class="text-xs font-bold leading-snug drop-shadow-sm">
-                Petugas Dukcapil hadir ke rumah warga lansia dan difabel untuk perekaman data kependudukan.
+                Petugas Dukcapil hadir ke rumah warga lansia dan difabel untuk perekaman data biometrik.
               </p>
-            </div>
-          </div>
-
-          <!-- Floating Badges Metrik Modern -->
-          <div class="absolute -top-3 -right-3 hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white shadow-xl border border-slate-200 text-slate-900" :class="temaDisabilitas === 'netra-kontras' ? 'bg-black! text-[#FACC15]! border-[#FACC15]!' : ''">
-            <span class="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-sm">✓</span>
-            <div>
-              <span class="block text-[11px] font-black leading-tight">100% Bebas Biaya</span>
-              <span class="block text-[9px] font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Sesuai UU Adminduk</span>
-            </div>
-          </div>
-
-          <div class="absolute -bottom-4 -left-3 hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white shadow-xl border border-slate-200 text-slate-900" :class="temaDisabilitas === 'netra-kontras' ? 'bg-black! text-[#FACC15]! border-[#FACC15]!' : ''">
-            <span class="w-7 h-7 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-black text-sm">🚐</span>
-            <div>
-              <span class="block text-[11px] font-black leading-tight">Jemput Bola Terverifikasi</span>
-              <span class="block text-[9px] font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">Khusus Difabel & Lansia</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. TIGA KARTU GERBANG PRIORITAS KHUSUS -->
-    <section aria-labelledby="gerbang-prioritas-title" class="space-y-6">
+    <!-- 2. TIGA GERBANG PRIORITAS KHUSUS -->
+    <section aria-labelledby="gerbang-title" class="space-y-5 w-full max-w-full">
       <div class="text-left space-y-1">
         <h2
-          id="gerbang-prioritas-title"
-          class="text-2xl sm:text-3xl font-black tracking-tight"
+          id="gerbang-title"
+          class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight"
           :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'"
         >
-          Tiga Gerbang Akses Pelayanan Publik
+          Tiga Gerbang Prioritas Pelayanan
         </h2>
         <p class="text-xs sm:text-sm font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-          Pilih jalur pelayanan yang paling sesuai dengan kondisi fisik dan kebutuhan Anda
+          Pilih jalur pelayanan sesuai kondisi fisik dan kebutuhan Anda
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         {priorityGates.map((gate) => (
           <div
-            class={`relative rounded-3xl p-6 border-2 transition-all duration-300 hover:-translate-y-1 shadow-xs hover:shadow-xl flex flex-col justify-between ${gate.borderClass}`}
+            class={`relative rounded-3xl p-5 sm:p-6 border-2 transition-all duration-200 hover:-translate-y-1 shadow-xs flex flex-col justify-between ${gate.borderClass}`}
             :class="temaDisabilitas === 'netra-kontras' ? 'bg-black! border-[#FACC15]! text-[#FACC15]!' : ''"
           >
-            <div class="space-y-4">
+            <div class="space-y-3">
               <div class="flex items-center justify-between gap-2">
-                <span class="w-12 h-12 rounded-2xl bg-white shadow-xs border border-slate-200 flex items-center justify-center text-2xl shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-neutral-900! border-[#FACC15]!' : ''">
+                <span class="w-12 h-12 rounded-2xl bg-white shadow-2xs border border-slate-200 flex items-center justify-center text-2xl shrink-0" :class="temaDisabilitas === 'netra-kontras' ? 'bg-neutral-900! border-[#FACC15]!' : ''">
                   {gate.icon}
                 </span>
-                <span class={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${gate.badgeClass}`} :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''">
+                <span class={`text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${gate.badgeClass}`} :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15]! text-black! border-[#FACC15]!' : ''">
                   {gate.badge}
                 </span>
               </div>
 
               <div>
-                <h3 class="text-lg font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
+                <h3 class="text-base sm:text-lg font-black tracking-tight" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'">
                   {gate.title}
                 </h3>
                 <span class="block text-xs font-bold text-slate-500 mt-0.5" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
@@ -331,10 +303,10 @@ const directoryServices = [
               </p>
             </div>
 
-            <div class="pt-6">
+            <div class="pt-5">
               <a
                 href={gate.link}
-                class="w-full py-3 px-4 rounded-xl text-xs font-black border transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs active:scale-95"
+                class="w-full py-2.5 px-4 rounded-xl text-xs font-black border transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs active:scale-95"
                 :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15] hover:bg-yellow-300' : 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800'"
               >
                 <span>{gate.cta}</span>
@@ -345,22 +317,22 @@ const directoryServices = [
       </div>
     </section>
 
-    <!-- 3. DIREKTORI LENGKAP 11 MODUL LAYANAN TERPADU -->
-    <section id="direktori-layanan" aria-labelledby="direktori-layanan-title" class="space-y-6 pt-4">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
+    <!-- 3. DIREKTORI 11 MODUL LAYANAN TERPADU -->
+    <section id="modul-layanan" aria-labelledby="modul-title" class="space-y-5 pt-2 w-full max-w-full">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-3 border-b" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/40' : 'border-slate-200'">
         <div>
           <span class="text-xs font-extrabold uppercase tracking-wider text-blue-600" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">
-            Portal Mandiri Terintegrasi
+            Katalog Pelayanan Nasional
           </span>
           <h2
-            id="direktori-layanan-title"
-            class="text-2xl sm:text-3xl font-black tracking-tight"
+            id="modul-title"
+            class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight"
             :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : 'text-slate-900'"
           >
             Direktori 11 Modul Layanan Kependudukan
           </h2>
           <p class="text-xs sm:text-sm font-semibold text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
-            Pilih jenis dokumen untuk memulai formulir adaptif (Umum, Lansia, atau Disabilitas)
+            Pilih layanan untuk membuka formulir adaptif (Umum, Lansia, atau Disabilitas)
           </p>
         </div>
 
@@ -372,22 +344,21 @@ const directoryServices = [
         </span>
       </div>
 
-      <!-- Modern Responsive Card Grid (2 di mobile, 3 di tablet, 4 di desktop) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <!-- Responsive Card Grid: 1 kol di HP kecil, 2 di tablet, 3-4 di desktop -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-4 w-full">
         {directoryServices.map((srv) => (
           <a
             href={`/layanan/${srv.slug}`}
-            class="group relative rounded-3xl p-5 border-2 transition-all duration-200 hover:-translate-y-1 flex flex-col justify-between shadow-xs hover:shadow-xl focus:outline-none focus:ring-4 cursor-pointer"
+            class="group relative rounded-3xl p-4 sm:p-5 border-2 transition-all duration-200 hover:-translate-y-1 flex flex-col justify-between shadow-xs hover:shadow-lg focus:outline-none focus:ring-4 cursor-pointer"
             :class="temaDisabilitas === 'netra-kontras'
               ? 'border-[#FACC15] bg-black text-[#FACC15] hover:bg-neutral-900 focus:ring-white'
               : 'border-slate-200 bg-white hover:border-blue-400 focus:ring-blue-300'"
-            aria-label={`Buka formulir pengajuan ${srv.title}`}
+            aria-label={`Buka pengajuan ${srv.title}`}
           >
-            <div class="space-y-3">
-              <!-- Top Row: Icon & Badge Alur -->
+            <div class="space-y-2.5">
               <div class="flex items-start justify-between gap-2">
                 <span
-                  class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shadow-2xs transition-transform duration-200 group-hover:scale-110 shrink-0"
+                  class="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl border shadow-2xs transition-transform duration-200 group-hover:scale-105 shrink-0"
                   :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-slate-50 border-slate-200'"
                   aria-hidden="true"
                 >
@@ -402,72 +373,30 @@ const directoryServices = [
                 </span>
               </div>
 
-              <!-- Title & Category -->
               <div>
                 <span class="block text-[10px] font-black uppercase tracking-wider text-slate-400" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/70' : ''">
                   {srv.category}
                 </span>
-                <h3 class="text-base font-black tracking-tight leading-snug group-hover:text-blue-600 transition-colors" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] group-hover:text-yellow-300' : 'text-slate-900'">
+                <h3 class="text-sm sm:text-base font-black tracking-tight leading-snug group-hover:text-blue-600 transition-colors" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15] group-hover:text-yellow-300' : 'text-slate-900'">
                   {srv.title}
                 </h3>
               </div>
 
-              <!-- Description -->
-              <p class="text-xs font-medium leading-relaxed line-clamp-3" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-600'">
+              <p class="text-xs font-medium leading-relaxed line-clamp-3 text-slate-600" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : ''">
                 {srv.desc}
               </p>
             </div>
 
-            <!-- Bottom Row: SLA & Action Button -->
-            <div class="pt-4 mt-3 border-t flex items-center justify-between gap-2 text-xs font-bold" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/30' : 'border-slate-100'">
+            <div class="pt-3 mt-3 border-t flex items-center justify-between gap-2 text-xs font-bold" :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15]/30' : 'border-slate-100'">
               <span class="text-[11px] text-slate-500" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/80' : ''">
                 ⏱️ {srv.sla}
               </span>
               <span class="text-blue-600 font-black group-hover:translate-x-1 transition-transform inline-flex items-center gap-1" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]' : ''">
-                Daftar ➔
+                Buka Form ➔
               </span>
             </div>
           </a>
         ))}
-      </div>
-    </section>
-
-    <!-- 4. BANNER LAYANAN DARURAT & JEMPUT BOLA LANGSUNG -->
-    <section
-      aria-label="Panggilan Darurat Administrasi Kependudukan"
-      class="rounded-3xl p-6 sm:p-8 border-2 transition-colors relative overflow-hidden"
-      :class="temaDisabilitas === 'netra-kontras' ? 'bg-black border-[#FACC15] text-[#FACC15]' : 'bg-gradient-to-r from-blue-900 to-indigo-950 text-white border-blue-900'"
-    >
-      <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div class="space-y-2 max-w-2xl">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black" :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black' : 'bg-white/10 text-white border border-white/20'">
-            <span>📞</span>
-            <span>Hotline Bantuan & Jemput Bola Dukcapil</span>
-          </div>
-          <h2 class="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-            Warga Tirah Baring atau Kondisi Khusus Belum Ber-KTP?
-          </h2>
-          <p class="text-xs sm:text-sm font-medium leading-relaxed" :class="temaDisabilitas === 'netra-kontras' ? 'text-[#FACC15]/90' : 'text-slate-300'">
-            Hubungi pusat layanan terpadu KITA-KTP. Tim pendataan keliling siap mengunjungi rumah Anda tanpa pungutan biaya sepeser pun.
-          </p>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-3 shrink-0">
-          <a
-            href="/layanan/disabilitas"
-            class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-black border transition-all cursor-pointer shadow-lg active:scale-95 flex items-center gap-2"
-            :class="temaDisabilitas === 'netra-kontras' ? 'bg-[#FACC15] text-black border-[#FACC15]' : 'bg-amber-400 text-slate-950 border-amber-400 hover:bg-amber-300'"
-          >
-            <span>♿ Ajukan Jemput Bola</span>
-          </a>
-          <a
-            href="/lacak"
-            class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-black border transition-all cursor-pointer shadow-lg active:scale-95 flex items-center gap-2"
-            :class="temaDisabilitas === 'netra-kontras' ? 'border-[#FACC15] text-[#FACC15] hover:bg-neutral-900' : 'bg-white/15 text-white border-white/30 hover:bg-white/25'"
-          >
-            <span>🔍 Pantau Jadwal Armada</span>
-          </a>
-        </div>
       </div>
     </section>
 
